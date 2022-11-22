@@ -6,7 +6,11 @@ interface Props {
 export default function TextEditor({ text, setText }: Props) {
   return (
     <div>
-      <div contentEditable={true}>s</div>
+      <textarea
+        rows={50}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
     </div>
   );
 }
