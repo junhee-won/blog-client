@@ -2,23 +2,34 @@ import styled from "styled-components";
 import { useState } from "react";
 import TextEditor from "../src/admin/TextEditor";
 import TextPreview from "../src/admin/TextPreview";
-import SginIn from "../src/admin/SignIn";
+import Login from "../src/admin/Login";
+import apiHelper from "../src/modules/apiHelper";
 
 export default function AdminPage() {
   const [token, setToken] = useState("");
   const [text, setText] = useState("");
+
+  const onClickTest = async () => {
+    const res = await apiHelper({
+      url: process.env.NEXT_PUBLIC_API_TEST,
+      method: "GET",
+      jwt: token,
+    });
+    console.log(res);
+  };
 
   if (token) {
     return (
       <Container>
         <TextEditor text={text} setText={setText} />
         <TextPreview text={text} />
+        <button onClick={onClickTest}>테스트</button>
       </Container>
     );
   } else {
     return (
       <Container>
-        <SginIn setToken={setToken} />
+        <Login setToken={setToken} />
       </Container>
     );
   }

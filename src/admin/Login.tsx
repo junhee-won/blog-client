@@ -1,23 +1,34 @@
 import styled from "styled-components";
 import { useState } from "react";
+import apiHelper from "../modules/apiHelper";
 
 interface Props {
   setToken: (arg: string) => void;
 }
 
-export default function SginIn({ setToken }: Props) {
+export default function Login({ setToken }: Props) {
   const [userId, setUserId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const signIn = (): void => {
-    console.log({ userId, password });
+  const Login = async () => {
+    const res = await apiHelper({
+      url: process.env.NEXT_PUBLIC_API_LOGIN,
+      method: "POST",
+      body: {
+        user_id: userId,
+        password: password,
+      },
+    });
+    if (res) {
+      setToken(res.access_token);
+    }
   };
 
   return (
     <Container>
       <Input value={userId} onChange={(e) => setUserId(e.target.value)} />
       <Input value={password} onChange={(e) => setPassword(e.target.value)} />
-      <Button onClick={signIn}>로그인</Button>
+      <Button onClick={Login}>로그인</Button>
     </Container>
   );
 }
