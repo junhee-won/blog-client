@@ -12,6 +12,7 @@ const DynamicWritePost = dynamic(() => import("../src/admin/WritePost"), {
 export default function AdminPage() {
   const [token, setToken] = useState("");
   const [text, setText] = useState("");
+  const [onWritePost, setOnWritePost] = useState(false);
 
   const onClickTest = async () => {
     const res = await apiHelper({
@@ -22,14 +23,20 @@ export default function AdminPage() {
     console.log(res);
   };
 
+  const offWritePost = () => setOnWritePost(false);
+
   if (token) {
-    return (
-      <Container>
-        <DynamicWritePost />
-        <TextPreview text={text} />
-        <button onClick={onClickTest}>api 테스트</button>
-      </Container>
-    );
+    if (!onWritePost) {
+      return (
+        <Container>
+          <TextPreview text={text} />
+          <button onClick={onClickTest}>api 테스트</button>
+          <button onClick={() => setOnWritePost(true)}>글쓰기</button>
+        </Container>
+      );
+    } else {
+      return <DynamicWritePost offWritePost={offWritePost} />;
+    }
   } else {
     return (
       <Container>

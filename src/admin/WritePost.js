@@ -8,13 +8,17 @@ import { useState } from "react";
 //   setText: (arg: string) => void;
 // }
 
-export default function WritePost() {
+export default function WritePost({ offWritePost }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   const completeWriting = () => {
     console.log(content);
     console.log({ title, content });
+  };
+
+  const stopWriting = () => {
+    if (confirm("!!주의!! 나가기 전에 저장하자")) offWritePost();
   };
 
   return (
@@ -31,7 +35,10 @@ export default function WritePost() {
           setContent(data);
         }}
       />
-      <Button onClick={completeWriting}>완료</Button>
+      <BottomBar>
+        <Button onClick={stopWriting}>나가기</Button>
+        <Button2 onClick={completeWriting}>완료</Button2>
+      </BottomBar>
     </Container>
   );
 }
@@ -51,7 +58,34 @@ const Input = styled.input`
   margin: 30px;
 `;
 
+const BottomBar = styled.div`
+  position: fixed;
+  bottom: 0;
+  height: 80px;
+  width: 100%;
+  background-color: RGB(245, 245, 245);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 10px;
+`;
+
 const Button = styled.div`
+  height: 40px;
+  width: 80px;
+  margin: 10px;
+  background-color: red;
+  color: white;
+  line-height: 40px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(7, 47, 116);
+  }
+`;
+
+const Button2 = styled.div`
   height: 40px;
   width: 80px;
   margin: 10px;
@@ -64,5 +98,4 @@ const Button = styled.div`
   &:hover {
     background-color: rgb(7, 47, 116);
   }
-  margin: 30px;
 `;

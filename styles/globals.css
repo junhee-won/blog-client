@@ -16,8 +16,10 @@ a {
 }
 
 .ck-editor__editable {
-  min-height: 500px;
+  min-height: 550px;
+  max-height: 550px;
   width: 700px;
+  overflow-y: scroll;
 }
 
 @media (prefers-color-scheme: dark) {
