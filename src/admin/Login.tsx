@@ -27,7 +27,11 @@ export default function Login({ setToken }: Props) {
   return (
     <Container>
       <Input value={userId} onChange={(e) => setUserId(e.target.value)} />
-      <Input value={password} onChange={(e) => setPassword(e.target.value)} />
+      <Input
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        type="password"
+      />
       <Button onClick={Login}>로그인</Button>
     </Container>
   );

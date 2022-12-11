@@ -1,9 +1,13 @@
 import styled from "styled-components";
+import dynamic from "next/dynamic";
 import { useState } from "react";
-import TextEditor from "../src/admin/TextEditor";
 import TextPreview from "../src/admin/TextPreview";
 import Login from "../src/admin/Login";
 import apiHelper from "../src/modules/apiHelper";
+
+const DynamicWritePost = dynamic(() => import("../src/admin/WritePost"), {
+  ssr: false,
+});
 
 export default function AdminPage() {
   const [token, setToken] = useState("");
@@ -21,9 +25,9 @@ export default function AdminPage() {
   if (token) {
     return (
       <Container>
-        <TextEditor text={text} setText={setText} />
+        <DynamicWritePost />
         <TextPreview text={text} />
-        <button onClick={onClickTest}>테스트</button>
+        <button onClick={onClickTest}>api 테스트</button>
       </Container>
     );
   } else {
