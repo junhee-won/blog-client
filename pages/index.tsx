@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import Head from "next/head";
+import { useMdeia } from "../src/hooks/useMedia";
 import Header from "../src/components/common/Header";
 import PageTopbar from "../src/components/common/PageTopbar";
 
 export default function Home() {
+  const media = useMdeia();
+  console.log({ media });
   return (
     <Container>
       <Head>
