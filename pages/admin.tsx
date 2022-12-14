@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import dynamic from "next/dynamic";
-import { ReactComponentElement, useState } from "react";
+import { useState } from "react";
 import apiHelper from "../src/modules/apiHelper";
 import Login from "../src/admin/Login";
 import Sidebar from "../src/admin/Sidebar";
@@ -16,7 +16,6 @@ const Components = [Home, ManagePosts, ManageCategories];
 
 export default function AdminPage() {
   const [token, setToken] = useState("");
-  const [text, setText] = useState("");
   const [onWritePost, setOnWritePost] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
