@@ -6,7 +6,6 @@ import PageTopbar from "../src/components/common/PageTopbar";
 
 export default function Home() {
   const media = useMdeia();
-  console.log({ media });
   return (
     <Container>
       <Head>
@@ -14,7 +13,7 @@ export default function Home() {
         <meta name="description" content="준희의 개발 블로그" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
+      <Header media={media} />
       <PageTopbar />
       <Body></Body>
     </Container>
