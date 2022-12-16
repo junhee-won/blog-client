@@ -12,14 +12,14 @@ export default function Login({ setToken }: Props) {
 
   const Login = async () => {
     const res = await apiHelper({
-      url: process.env.NEXT_PUBLIC_API_LOGIN,
+      url: process.env.NEXT_PUBLIC_API_LOGIN_LOCAL,
       method: "POST",
       body: {
         user_id: userId,
         password: password,
       },
     });
-    if (res) {
+    if (res !== "err") {
       setToken(res.access_token);
     }
   };
@@ -45,6 +45,7 @@ const Container = styled.div`
   border: 1px solid black;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  background-color: RGB(233, 236, 239);
   height: 500px;
   width: 500px;
   text-align: center;

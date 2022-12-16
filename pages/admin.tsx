@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import apiHelper from "../src/modules/apiHelper";
 import Login from "../src/admin/Login";
 import Sidebar from "../src/admin/Sidebar";
 import Home from "../src/admin/Home";
@@ -19,18 +18,9 @@ export default function AdminPage() {
   const [onWritePost, setOnWritePost] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const onClickTest = async () => {
-    const res = await apiHelper({
-      url: process.env.NEXT_PUBLIC_API_TEST,
-      method: "GET",
-      jwt: token,
-    });
-    console.log(res);
-  };
-
   const offWritePost = () => setOnWritePost(false);
 
-  if (!token) {
+  if (token) {
     if (!onWritePost) {
       return (
         <Container>
@@ -40,7 +30,7 @@ export default function AdminPage() {
           />
           {Components.map((Component, index) => {
             if (index === activeIndex) {
-              return <Component key={index} />;
+              return <Component key={index} token={token} />;
             }
           })}
         </Container>
@@ -50,9 +40,9 @@ export default function AdminPage() {
     }
   } else {
     return (
-      <Container>
+      <Container2>
         <Login setToken={setToken} />
-      </Container>
+      </Container2>
     );
   }
 }
@@ -65,4 +55,12 @@ const Container = styled.div`
   height: 100vh;
   width: 100vw;
   padding-left: 200px;
+`;
+
+const Container2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 `;
