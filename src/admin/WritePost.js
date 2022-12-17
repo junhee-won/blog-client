@@ -1,32 +1,7 @@
 import styled from "styled-components";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import SourceEditing from "@ckeditor/ckeditor5-source-editing/src/sourceediting";
 import { useState, useEffect } from "react";
-
-const CKEditorConfig = {
-  plugins: [SourceEditing],
-  toolbar: [
-    "heading",
-    "|",
-    "bold",
-    "italic",
-    "blockQuote",
-    "link",
-    "numberedList",
-    "bulletedList",
-    "imageUpload",
-    "insertTable",
-    "tableColumn",
-    "tableRow",
-    "mergeTableCells",
-    "mediaEmbed",
-    "|",
-    "undo",
-    "redo",
-    "sourceEditing",
-  ],
-};
 
 export default function WritePost({ offWritePost, writingMode, targetPost }) {
   const [editor, setEditor] = useState();
@@ -35,14 +10,30 @@ export default function WritePost({ offWritePost, writingMode, targetPost }) {
   );
   const [content, setContent] = useState("");
   const [activeHtml, setActiveHtml] = useState(false);
+  const [editorSource, setEditorSource] = useState("");
 
   const completeWriting = () => {
-    console.log(content);
     console.log({ title, content });
   };
 
   const stopWriting = () => {
     if (confirm("!!주의!! 나가기 전에 저장하자")) offWritePost();
+  };
+
+  const updateSource = (data) => {
+    setContent(data);
+    editor.data.set(data);
+  };
+
+  const onClickHtml = () => {
+    if (!activeHtml) {
+      setEditorSource(editor.data.get());
+      setActiveHtml(true);
+    } else {
+      console.log(editorSource);
+      setActiveHtml(false);
+      editor.data.set(editorSource);
+    }
   };
 
   useEffect(() => {
@@ -51,6 +42,10 @@ export default function WritePost({ offWritePost, writingMode, targetPost }) {
     }
   }, [editor]);
 
+  useEffect(() => {
+    console.log(content);
+  }, [content]);
+
   return (
     <Container>
       <Input
@@ -58,24 +53,26 @@ export default function WritePost({ offWritePost, writingMode, targetPost }) {
         onChange={(e) => setTitle(e.target.value)}
         maxLength="50"
       />
-      {!activeHtml && (
-        <CKEditor
-          editor={ClassicEditor}
-          data={content}
-          onChange={(event, editor) => {
-            const data = editor.getData();
-            console.log(data);
-            setContent(data);
-          }}
-          onReady={(editor) => {
-            setEditor(editor);
-          }}
+      <CKEditor
+        editor={ClassicEditor}
+        data={content}
+        onChange={(event, editor) => {
+          const data = editor.getData();
+          setContent(data);
+        }}
+        onReady={(editor) => {
+          setEditor(editor);
+        }}
+      />
+      {activeHtml && (
+        <HtmlTextEditor
+          value={editorSource}
+          onChange={(e) => setEditorSource(e.target.value)}
         />
       )}
-      {activeHtml && <div>hello</div>}
       <BottomBar>
         <Button
-          onClick={() => setActiveHtml(!activeHtml)}
+          onClick={onClickHtml}
           color="RGB(34, 139, 33)"
           hoverColor="RGB(1, 92, 41)"
         >
@@ -140,4 +137,17 @@ const Button = styled.div`
   &:hover {
     background-color: ${(props) => props.hoverColor};
   }
+`;
+
+const HtmlTextEditor = styled.textarea`
+  z-index: 10;
+  position: fixed;
+  top: 100px;
+  min-height: 600px;
+  max-height: 600px;
+  width: 700px;
+  overflow-y: scroll;
+  padding: 30px;
+  resize: none;
+  box-shadow: 0px 0px 2000px #000;
 `;

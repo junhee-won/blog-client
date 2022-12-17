@@ -11,7 +11,6 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^35.3.2",
     "@ckeditor/ckeditor5-react": "^5.0.3",
-    "@ckeditor/ckeditor5-source-editing": "^35.4.0",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.8",
