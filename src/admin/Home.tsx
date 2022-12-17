@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export default function Home() {
+interface Props {
+  token: string;
+}
+
+export default function Home({ token }: Props) {
   return <Container>홈</Container>;
 }
 const Container = styled.div`

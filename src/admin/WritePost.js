@@ -1,16 +1,40 @@
 import styled from "styled-components";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { useState } from "react";
+import SourceEditing from "@ckeditor/ckeditor5-source-editing/src/sourceediting";
+import { useState, useEffect } from "react";
 
-// interface Props {
-//   text: string;
-//   setText: (arg: string) => void;
-// }
+const CKEditorConfig = {
+  plugins: [SourceEditing],
+  toolbar: [
+    "heading",
+    "|",
+    "bold",
+    "italic",
+    "blockQuote",
+    "link",
+    "numberedList",
+    "bulletedList",
+    "imageUpload",
+    "insertTable",
+    "tableColumn",
+    "tableRow",
+    "mergeTableCells",
+    "mediaEmbed",
+    "|",
+    "undo",
+    "redo",
+    "sourceEditing",
+  ],
+};
 
-export default function WritePost({ offWritePost }) {
-  const [title, setTitle] = useState("");
+export default function WritePost({ offWritePost, writingMode, targetPost }) {
+  const [editor, setEditor] = useState();
+  const [title, setTitle] = useState(
+    targetPost?.title === undefined ? "" : targetPost.title
+  );
   const [content, setContent] = useState("");
+  const [activeHtml, setActiveHtml] = useState(false);
 
   const completeWriting = () => {
     console.log(content);
@@ -21,6 +45,12 @@ export default function WritePost({ offWritePost }) {
     if (confirm("!!주의!! 나가기 전에 저장하자")) offWritePost();
   };
 
+  useEffect(() => {
+    if (editor && targetPost) {
+      setContent(targetPost.content);
+    }
+  }, [editor]);
+
   return (
     <Container>
       <Input
@@ -28,16 +58,43 @@ export default function WritePost({ offWritePost }) {
         onChange={(e) => setTitle(e.target.value)}
         maxLength="50"
       />
-      <CKEditor
-        editor={ClassicEditor}
-        onChange={(event, editor) => {
-          const data = editor.getData();
-          setContent(data);
-        }}
-      />
+      {!activeHtml && (
+        <CKEditor
+          editor={ClassicEditor}
+          data={content}
+          onChange={(event, editor) => {
+            const data = editor.getData();
+            console.log(data);
+            setContent(data);
+          }}
+          onReady={(editor) => {
+            setEditor(editor);
+          }}
+        />
+      )}
+      {activeHtml && <div>hello</div>}
       <BottomBar>
-        <Button onClick={stopWriting}>나가기</Button>
-        <Button2 onClick={completeWriting}>완료</Button2>
+        <Button
+          onClick={() => setActiveHtml(!activeHtml)}
+          color="RGB(34, 139, 33)"
+          hoverColor="RGB(1, 92, 41)"
+        >
+          HTML
+        </Button>
+        <Button
+          onClick={stopWriting}
+          color="RGB(255, 0, 0)"
+          hoverColor="RGB(130, 12, 13)"
+        >
+          나가기
+        </Button>
+        <Button
+          onClick={completeWriting}
+          color="RGB(66, 132, 243)"
+          hoverColor="RGB(7, 47, 116)"
+        >
+          완료
+        </Button>
       </BottomBar>
     </Container>
   );
@@ -74,28 +131,13 @@ const Button = styled.div`
   height: 40px;
   width: 80px;
   margin: 10px;
-  background-color: red;
+  background-color: ${(props) => props.color};
   color: white;
   line-height: 40px;
   border-radius: 10px;
   text-align: center;
   cursor: pointer;
   &:hover {
-    background-color: rgb(7, 47, 116);
-  }
-`;
-
-const Button2 = styled.div`
-  height: 40px;
-  width: 80px;
-  margin: 10px;
-  background-color: RGB(66, 132, 243);
-  color: white;
-  line-height: 40px;
-  border-radius: 10px;
-  text-align: center;
-  cursor: pointer;
-  &:hover {
-    background-color: rgb(7, 47, 116);
+    background-color: ${(props) => props.hoverColor};
   }
 `;

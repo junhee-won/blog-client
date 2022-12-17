@@ -11,14 +11,28 @@ const DynamicWritePost = dynamic(() => import("../src/admin/WritePost"), {
   ssr: false,
 });
 
-const Components = [Home, ManagePosts, ManageCategories];
+interface PostType {
+  id: number;
+  category_id: number;
+  title: string;
+  content: string;
+  public: number;
+  created_at: string;
+  updated_at: string;
+}
 
 export default function AdminPage() {
   const [token, setToken] = useState("");
-  const [onWritePost, setOnWritePost] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [onWritePost, setOnWritePost] = useState(false);
+  const [writingMode, setWritingMode] = useState("create");
+  const [targetPost, setTargetPost] = useState<PostType | null>(null);
 
-  const offWritePost = () => setOnWritePost(false);
+  const offWritePost = () => {
+    setOnWritePost(false);
+    setWritingMode("create");
+    setTargetPost(null);
+  };
 
   if (token) {
     if (!onWritePost) {
@@ -28,15 +42,26 @@ export default function AdminPage() {
             setOnWritePost={setOnWritePost}
             setActiveIndex={setActiveIndex}
           />
-          {Components.map((Component, index) => {
-            if (index === activeIndex) {
-              return <Component key={index} token={token} />;
-            }
-          })}
+          {activeIndex === 0 && <Home token={token} />}
+          {activeIndex === 1 && (
+            <ManagePosts
+              token={token}
+              setOnWritePost={setOnWritePost}
+              setWritingMode={setWritingMode}
+              setTargetPost={setTargetPost}
+            />
+          )}
+          {activeIndex === 2 && <ManageCategories token={token} />}
         </Container>
       );
     } else {
-      return <DynamicWritePost offWritePost={offWritePost} />;
+      return (
+        <DynamicWritePost
+          offWritePost={offWritePost}
+          writingMode={writingMode}
+          targetPost={targetPost}
+        />
+      );
     }
   } else {
     return (

@@ -30,6 +30,7 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
   padding-top: 20px;
+  border-right: 3px solid gray;
 `;
 
 const Button = styled.div`

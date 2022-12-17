@@ -16,11 +16,12 @@ a {
   padding: 0;
 }
 
-.ck-editor__editable {
+.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline {
   min-height: 550px;
   max-height: 550px;
   width: 700px;
   overflow-y: scroll;
+  padding-left: 30px;
 }
 
 @media (prefers-color-scheme: dark) {
