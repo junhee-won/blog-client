@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import apiHelper from "../modules/apiHelper";
 
 interface Props {
@@ -27,7 +27,7 @@ export default function ManagePosts({
 }: Props) {
   const [posts, setPosts] = useState<PostType[]>([]);
 
-  const getPost = async () => {
+  (async function () {
     const res = await apiHelper({
       url: process.env.NEXT_PUBLIC_API_ADMIN_GET_ALL_POSTS,
       method: "GET",
@@ -36,17 +36,13 @@ export default function ManagePosts({
     if (res !== "err") {
       setPosts(res);
     }
-  };
+  })();
 
   const updatePost = (post: PostType) => {
     setTargetPost(post);
     setWritingMode("update");
     setOnWritePost(true);
   };
-
-  useEffect(() => {
-    getPost();
-  }, []);
 
   return (
     <Container>
