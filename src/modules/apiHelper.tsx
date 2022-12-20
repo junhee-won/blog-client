@@ -24,6 +24,6 @@ export default async function apiHelper({ url, method, jwt, body }: Props) {
       return res.data;
     })
     .catch((err) => {
-      return "err";
+      return "error";
     });
 }

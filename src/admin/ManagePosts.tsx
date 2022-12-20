@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import apiHelper from "../modules/apiHelper";
 
 interface Props {
@@ -17,6 +17,7 @@ interface PostType {
   public: number;
   created_at: string;
   updated_at: string;
+  uat: string;
 }
 
 export default function ManagePosts({
@@ -27,21 +28,27 @@ export default function ManagePosts({
 }: Props) {
   const [posts, setPosts] = useState<PostType[]>([]);
 
-  (async function () {
-    const res = await apiHelper({
-      url: process.env.NEXT_PUBLIC_API_ADMIN_GET_ALL_POSTS,
-      method: "GET",
-      jwt: token,
-    });
-    if (res !== "err") {
-      setPosts(res);
-    }
-  })();
+  useEffect(() => {
+    (async function () {
+      const res = await apiHelper({
+        url: process.env.NEXT_PUBLIC_API_ADMIN_GET_ALL_POSTS,
+        method: "GET",
+        jwt: token,
+      });
+      if (res !== "error") {
+        setPosts(res);
+      }
+    })();
+  }, []);
 
   const updatePost = (post: PostType) => {
     setTargetPost(post);
     setWritingMode("update");
     setOnWritePost(true);
+  };
+
+  const convertDateFormat = (date: string): string => {
+    return new Date(date).toISOString().replace(/T/, " ").replace(/\..+/, "");
   };
 
   return (
@@ -52,6 +59,7 @@ export default function ManagePosts({
             <Title>
               <a>{post.title}</a>
             </Title>
+            <DateBox>{convertDateFormat(post.created_at)}</DateBox>
             <Button onClick={() => updatePost(post)}>수정</Button>
           </Post>
         );
@@ -87,6 +95,14 @@ const Title = styled.div`
   padding-left: 50px;
   font-size: 20px;
   font-weight: 500;
+`;
+
+const DateBox = styled.div`
+  line-height: 60px;
+  width: 200px;
+  font-size: 15px;
+  font-weight: 500;
+  color: gray;
 `;
 
 const Button = styled.div`

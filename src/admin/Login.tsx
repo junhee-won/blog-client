@@ -19,7 +19,7 @@ export default function Login({ setToken }: Props) {
         password: password,
       },
     });
-    if (res !== "err") {
+    if (res !== "error") {
       setToken(res.access_token);
     }
   };

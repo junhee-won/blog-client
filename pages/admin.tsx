@@ -60,6 +60,7 @@ export default function AdminPage() {
           offWritePost={offWritePost}
           writingMode={writingMode}
           targetPost={targetPost}
+          token={token}
         />
       );
     }
