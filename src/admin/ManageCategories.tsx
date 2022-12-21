@@ -19,17 +19,21 @@ interface CategoryType {
 export default function ManageCategories({ token }: Props) {
   const [categories, setCategories] = useState<CategoryType[]>([]);
 
+  const getPosts = async () => {
+    const res = await apiHelper({
+      url: process.env.NEXT_PUBLIC_API_ADMIN_GET_ALL_CATEGROIES,
+      method: "GET",
+      jwt: token,
+    });
+    if (res !== "error") {
+      setCategories(res);
+    } else {
+      alert(res);
+    }
+  };
+
   useEffect(() => {
-    (async function () {
-      const res = await apiHelper({
-        url: process.env.NEXT_PUBLIC_API_ADMIN_GET_ALL_CATEGROIES,
-        method: "GET",
-        jwt: token,
-      });
-      if (res !== "error") {
-        setCategories(res);
-      }
-    })();
+    getPosts();
   }, []);
 
   const onChangeInput = (
@@ -61,6 +65,41 @@ export default function ManageCategories({ token }: Props) {
     });
     if (res === "error") {
       alert(res);
+    } else {
+      alert("완료");
+      getPosts();
+    }
+  };
+
+  const onClickAdd = () => {
+    const _categories = JSON.parse(JSON.stringify(categories));
+    const newPost = {
+      name: "제목",
+      parent_category_id: 0,
+      priority: 0,
+      public: 0,
+    };
+    _categories.push(newPost);
+    setCategories(_categories);
+  };
+
+  const create = async (category: CategoryType) => {
+    const res = await apiHelper({
+      url: process.env.NEXT_PUBLIC_API_ADMIN_UPDATE_CATEGORY,
+      method: "POST",
+      jwt: token,
+      body: {
+        name: category.name,
+        parent_category_id: category.parent_category_id,
+        priority: category.priority,
+        public: category.public,
+      },
+    });
+    if (res === "error") {
+      alert(res);
+    } else {
+      alert("완료");
+      getPosts();
     }
   };
 
@@ -96,11 +135,20 @@ export default function ManageCategories({ token }: Props) {
                 checked={category.public === 1 ? true : false}
                 onChange={(e) => onChangeInput(index, "public", e.target.value)}
               />
-              <Button onClick={() => update(category)}>완료</Button>
+              <Button
+                onClick={
+                  category.id === undefined
+                    ? () => create(category)
+                    : () => update(category)
+                }
+              >
+                완료
+              </Button>
             </Category>
           );
         })}
       </CategoryContainer>
+      <Button onClick={onClickAdd}>추가</Button>
     </Container>
   );
 }
@@ -115,6 +163,7 @@ const Container = styled.div`
 
 const CategoryContainer = styled.div`
   background-color: RGB(231, 237, 242);
+  margin-bottom: 30px;
 `;
 
 const Category = styled.div`

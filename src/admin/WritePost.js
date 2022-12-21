@@ -17,7 +17,7 @@ export default function WritePost({
   const [content, setContent] = useState("");
   const [activeHtml, setActiveHtml] = useState(false);
   const [editorSource, setEditorSource] = useState("");
-  const [isPublic, setIsPublic] = useState(targetPost?.public || 1);
+  const [isPublic, setIsPublic] = useState(targetPost?.public || 0);
   const [categories, setCategories] = useState([]);
   const [categroyId, setCategoryId] = useState(targetPost?.category_id || 1);
 
