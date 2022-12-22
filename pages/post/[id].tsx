@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { NextPageContext } from "next";
-import { useRouter } from "next/router";
 import DOMPurify from "isomorphic-dompurify";
 import PageTopbar from "../../src/components/common/PageTopbar";
 import apiHelper from "../../src/modules/apiHelper";
