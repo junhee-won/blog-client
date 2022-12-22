@@ -51,8 +51,8 @@ export default function Home() {
         <MPostsContainer>
           {posts?.map((post, index) => {
             return (
-              <Link href={`/post/${post.id}`}>
-                <MPostBox key={index}>
+              <Link href={`/post/${post.id}`} key={index}>
+                <MPostBox>
                   <MPostTitle>{post.title}</MPostTitle>
                   <MPostBottom>
                     <MPostCategory>{post.category}</MPostCategory>
@@ -78,8 +78,8 @@ export default function Home() {
         <PostsContainer>
           {posts?.map((post, index) => {
             return (
-              <Link href={`/post/${post.id}`}>
-                <PostBox key={index}>
+              <Link href={`/post/${post.id}`} key={index}>
+                <PostBox>
                   <PostTitle>{post.title}</PostTitle>
                   <PostBottom>
                     <PostCategory>{post.category}</PostCategory>
