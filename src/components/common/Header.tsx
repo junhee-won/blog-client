@@ -13,6 +13,8 @@ export default function Header({ media }: Props) {
 }
 
 const Container = styled.div`
+  width: 95vw;
+  min-width: 200px;
   height: 100px;
   border: 3px solid black;
   font-size: 20px;

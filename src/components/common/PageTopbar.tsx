@@ -10,12 +10,12 @@ export default function PageTopbar() {
 }
 
 const Container = styled.div`
+  width: 95vw;
+  min-width: 200px;
+  height: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 30px;
-  padding-left: 10px;
-  padding-right: 10px;
   border-bottom: 3px solid black;
 `;
 
