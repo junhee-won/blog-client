@@ -7,36 +7,19 @@ import Header from "../src/components/common/Header";
 import PageTopbar from "../src/components/common/PageTopbar";
 import apiHelper from "../src/modules/apiHelper";
 
+interface Props {
+  newPosts: PostType[];
+}
 interface PostType {
   id: number;
-  category_id: number;
   title: string;
-  content: string;
-  public: number;
   created_at: string;
-  updated_at: string;
   category: string;
 }
 
-export default function Home() {
+function Home({ newPosts }: Props) {
   const media = useMdeia();
-  const [posts, setPosts] = useState<PostType[]>();
-
-  useEffect(() => {
-    (async function () {
-      const res = await apiHelper({
-        url: process.env.NEXT_PUBLIC_API_GET_NEW_POST,
-        method: "GET",
-      });
-      if (res !== "error") {
-        setPosts(res);
-      }
-    })();
-  }, []);
-
-  const convertDateFormat = (date: string): string => {
-    return new Date(date).toISOString().split("T")[0];
-  };
+  const [posts, setPosts] = useState<PostType[]>(newPosts);
 
   if (media === "mobile") {
     return (
@@ -56,7 +39,7 @@ export default function Home() {
                   <MPostTitle>{post.title}</MPostTitle>
                   <MPostBottom>
                     <MPostCategory>{post.category}</MPostCategory>
-                    <MPostDate>{convertDateFormat(post.created_at)}</MPostDate>
+                    <MPostDate>{post.created_at}</MPostDate>
                   </MPostBottom>
                 </MPostBox>
               </Link>
@@ -83,7 +66,7 @@ export default function Home() {
                   <PostTitle>{post.title}</PostTitle>
                   <PostBottom>
                     <PostCategory>{post.category}</PostCategory>
-                    <PostDate>{convertDateFormat(post.created_at)}</PostDate>
+                    <PostDate>{post.created_at}</PostDate>
                   </PostBottom>
                 </PostBox>
               </Link>
@@ -94,6 +77,18 @@ export default function Home() {
     );
   }
 }
+
+Home.getInitialProps = async () => {
+  const res = await apiHelper({
+    url: process.env.NEXT_PUBLIC_API_GET_NEW_POST,
+    method: "GET",
+  });
+  console.log(res);
+  if (res !== "error") return { newPosts: res };
+  return { newPosts: [] };
+};
+
+export default Home;
 
 const Container = styled.div`
   display: flex;
