@@ -90,13 +90,18 @@ function Home({ newPosts, allCategories }: Props) {
             {categories.map((parentCategory, index) => {
               return (
                 <CategoryBox key={index}>
-                  <Category>{parentCategory.name}</Category>
+                  <Link href={`/category/${parentCategory.id}`}>
+                    <Category>{parentCategory.name}</Category>
+                  </Link>
                   {parentCategory?.children?.map(
                     (childCategory, childIndex) => {
                       return (
-                        <ChildCategory key={childIndex}>
-                          {childCategory.name}
-                        </ChildCategory>
+                        <Link
+                          href={`/category/${childCategory.id}`}
+                          key={childIndex}
+                        >
+                          <ChildCategory>{childCategory.name}</ChildCategory>
+                        </Link>
                       );
                     }
                   )}
