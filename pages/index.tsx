@@ -9,6 +9,7 @@ import apiHelper from "../src/modules/apiHelper";
 
 interface Props {
   newPosts: PostType[];
+  allCategories: CategoryType[];
 }
 interface PostType {
   id: number;
@@ -17,9 +18,19 @@ interface PostType {
   category: string;
 }
 
-function Home({ newPosts }: Props) {
+interface CategoryType {
+  id: number;
+  name: string;
+  children: {
+    id: number;
+    name: string;
+  }[];
+}
+
+function Home({ newPosts, allCategories }: Props) {
   const media = useMdeia();
   const [posts, setPosts] = useState<PostType[]>(newPosts);
+  const [categories, setCategories] = useState<CategoryType[]>(allCategories);
 
   if (media === "mobile") {
     return (
@@ -58,34 +69,60 @@ function Home({ newPosts }: Props) {
         </Head>
         <Header media={media} />
         <PageTopbar />
-        <PostsContainer>
-          {posts?.map((post, index) => {
-            return (
-              <Link href={`/post/${post.id}`} key={index}>
-                <PostBox>
-                  <PostTitle>{post.title}</PostTitle>
-                  <PostBottom>
-                    <PostCategory>{post.category}</PostCategory>
-                    <PostDate>{post.created_at}</PostDate>
-                  </PostBottom>
-                </PostBox>
-              </Link>
-            );
-          })}
-        </PostsContainer>
+        <Body>
+          <PostsContainer>
+            {posts?.map((post, index) => {
+              return (
+                <Link href={`/post/${post.id}`} key={index}>
+                  <PostBox>
+                    <PostTitle>{post.title}</PostTitle>
+                    <PostBottom>
+                      <PostCategory>{post.category}</PostCategory>
+                      <PostDate>{post.created_at}</PostDate>
+                    </PostBottom>
+                  </PostBox>
+                </Link>
+              );
+            })}
+          </PostsContainer>
+          <CategoryContainer>
+            <CategoryTitle>카테고리</CategoryTitle>
+            {categories.map((parentCategory, index) => {
+              return (
+                <CategoryBox key={index}>
+                  <Category>{parentCategory.name}</Category>
+                  {parentCategory?.children?.map(
+                    (childCategory, childIndex) => {
+                      return (
+                        <ChildCategory key={childIndex}>
+                          {childCategory.name}
+                        </ChildCategory>
+                      );
+                    }
+                  )}
+                </CategoryBox>
+              );
+            })}
+          </CategoryContainer>
+        </Body>
       </Container>
     );
   }
 }
 
 Home.getInitialProps = async () => {
-  const res = await apiHelper({
+  const newPostsRes = await apiHelper({
     url: process.env.NEXT_PUBLIC_API_GET_NEW_POST,
     method: "GET",
   });
-  console.log(res);
-  if (res !== "error") return { newPosts: res };
-  return { newPosts: [] };
+  const newPosts = newPostsRes === "error" ? [] : newPostsRes;
+
+  const categoriesRes = await apiHelper({
+    url: process.env.NEXT_PUBLIC_API_GET_ALL_CATEGORIES,
+    method: "GET",
+  });
+  const allCategories = categoriesRes === "error" ? [] : categoriesRes;
+  return { newPosts, allCategories };
 };
 
 export default Home;
@@ -153,11 +190,11 @@ const MPostDate = styled.div`
 `;
 
 const PostsContainer = styled.div`
+  flex: 7;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
   padding-top: 10px;
-  width: 95vw;
 `;
 
 const PostBox = styled.div`
@@ -201,4 +238,52 @@ const PostDate = styled.div`
   font-weight: 500;
   overflow-x: hidden;
   color: gray;
+`;
+
+const Body = styled.div`
+  display: flex;
+  width: 95vw;
+  gap: 10px;
+`;
+
+const CategoryContainer = styled.div`
+  margin-top: 20px;
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+`;
+
+const Category = styled.div`
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  padding-left: 30px;
+  font-size: 20px;
+  border-bottom: 2px solid black;
+`;
+
+const ChildCategory = styled.div`
+  margin-left: 20%;
+  width: 80%;
+  height: 50px;
+  line-height: 50px;
+  padding-left: 30px;
+  font-size: 20px;
+  border-bottom: 2px solid black;
+`;
+
+const CategoryTitle = styled.div`
+  width: 100%;
+  border-bottom: 3px solid black;
+  height: 50px;
+  line-height: 50px;
+  font-size: 25px;
+  text-align: center;
+`;
+
+const CategoryBox = styled.div`
+  width: 95%;
 `;
