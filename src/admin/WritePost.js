@@ -85,7 +85,8 @@ export default function WritePost({
   useEffect(() => {
     (async function () {
       const res = await apiHelper({
-        url: process.env.NEXT_PUBLIC_API_GET_ALL_CATEGORIES,
+        url: process.env.NEXT_PUBLIC_API_ADMIN_GET_ALL_CATEGROIES,
+        jwt: token,
         method: "GET",
       });
       if (res !== "error") {

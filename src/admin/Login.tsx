@@ -12,7 +12,7 @@ export default function Login({ setToken }: Props) {
 
   const Login = async () => {
     const res = await apiHelper({
-      url: process.env.NEXT_PUBLIC_API_LOGIN_LOCAL,
+      url: process.env.NEXT_PUBLIC_API_LOGIN,
       method: "POST",
       body: {
         user_id: userId,
