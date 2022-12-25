@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import apiHelper from "../modules/apiHelper";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import Editor from "ckeditor5-custom-build/build/ckeditor";
 
 export default function WritePost({
   offWritePost,
@@ -103,7 +103,7 @@ export default function WritePost({
         maxLength="50"
       />
       <CKEditor
-        editor={ClassicEditor}
+        editor={Editor}
         data={content}
         onChange={(event, editor) => {
           const data = editor.getData();

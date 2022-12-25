@@ -23,7 +23,7 @@ function CategoryPage({ category, posts }: Props) {
         <h1>{category}</h1>
       </Title>
       <PostContainer>
-        {posts.map((post, index) => {
+        {posts?.map((post, index) => {
           return (
             <Link href={`/post/${post.id}`} key={index}>
               <Post>
