@@ -28,6 +28,25 @@ li {
   padding-left: 30px;
 }
 
+figure.image {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+img {
+  width: 80%;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+figcaption {
+  font-size: 15px;
+  color: gray;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

@@ -50,6 +50,7 @@ const Title = styled.div`
   width: 95vw;
   min-width: 200px;
   height: 100px;
+  min-height: 100px;
   border: 3px solid black;
   font-size: 20px;
   line-height: 100px;
@@ -61,4 +62,5 @@ const Title = styled.div`
 const Content = styled.div`
   width: 95vw;
   padding-top: 30px;
+  align-items: center;
 `;
