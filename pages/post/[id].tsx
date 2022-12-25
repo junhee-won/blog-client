@@ -62,5 +62,6 @@ const Title = styled.div`
 const Content = styled.div`
   width: 95vw;
   padding-top: 30px;
+  padding-bottom: 100px;
   align-items: center;
 `;

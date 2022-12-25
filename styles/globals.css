@@ -53,6 +53,13 @@ figcaption {
   color: gray;
 }
 
+pre {
+  background-color: RGB(28, 27, 27);
+  color: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
