@@ -20,7 +20,7 @@ function PostPage({ created_at, title, content, category }: Props) {
       <Title>
         <h1>{title}</h1>
       </Title>
-      <Content>
+      <Content className="content">
         <div dangerouslySetInnerHTML={{ __html: purifiedHTML }} />
       </Content>
     </Container>

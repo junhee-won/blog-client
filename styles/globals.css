@@ -28,6 +28,11 @@ li {
   padding-left: 30px;
 }
 
+.content a {
+  color: blue;
+  text-decoration: underline;
+}
+
 figure.image {
   width: 100%;
   display: flex;
