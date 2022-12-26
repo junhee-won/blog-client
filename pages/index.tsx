@@ -7,6 +7,7 @@ import { useMdeia } from "../src/hooks/useMedia";
 import Header from "../src/components/common/Header";
 import PageTopbar from "../src/components/common/PageTopbar";
 import apiHelper from "../src/modules/apiHelper";
+import mainImage from "../public/스크린샷 2022-12-27 오전 1.06.52.jpeg";
 
 interface Props {
   newPosts: PostType[];
@@ -97,30 +98,39 @@ function Home({ newPosts, allCategories }: Props) {
               );
             })}
           </PostsContainer>
-          <CategoryContainer>
-            <CategoryTitle>카테고리</CategoryTitle>
-            {categories.map((parentCategory, index) => {
-              return (
-                <CategoryBox key={index}>
-                  <Link href={`/category/${parentCategory.id}`}>
-                    <Category>{parentCategory.name}</Category>
-                  </Link>
-                  {parentCategory?.children?.map(
-                    (childCategory, childIndex) => {
-                      return (
-                        <Link
-                          href={`/category/${childCategory.id}`}
-                          key={childIndex}
-                        >
-                          <ChildCategory>{childCategory.name}</ChildCategory>
-                        </Link>
-                      );
-                    }
-                  )}
-                </CategoryBox>
-              );
-            })}
-          </CategoryContainer>
+          <RightContainr>
+            <MainImage>
+              <Image
+                src="/스크린샷 2022-12-27 오전 1.06.52.jpeg"
+                fill
+                alt="메인 이미지"
+              />
+            </MainImage>
+            <CategoryContainer>
+              <CategoryTitle>카테고리</CategoryTitle>
+              {categories.map((parentCategory, index) => {
+                return (
+                  <CategoryBox key={index}>
+                    <Link href={`/category/${parentCategory.id}`}>
+                      <Category>{parentCategory.name}</Category>
+                    </Link>
+                    {parentCategory?.children?.map(
+                      (childCategory, childIndex) => {
+                        return (
+                          <Link
+                            href={`/category/${childCategory.id}`}
+                            key={childIndex}
+                          >
+                            <ChildCategory>{childCategory.name}</ChildCategory>
+                          </Link>
+                        );
+                      }
+                    )}
+                  </CategoryBox>
+                );
+              })}
+            </CategoryContainer>
+          </RightContainr>
         </Body>
       </Container>
     );
@@ -211,7 +221,6 @@ const PostsContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
-  padding-top: 10px;
 `;
 
 const PostBox = styled.div`
@@ -268,16 +277,34 @@ const Body = styled.div`
   display: flex;
   width: 95vw;
   gap: 10px;
+  padding-top: 30px;
 `;
 
-const CategoryContainer = styled.div`
-  margin-top: 20px;
+const RightContainr = styled.div`
   flex: 3;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+`;
+
+const MainImage = styled.div`
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+`;
+
+const CategoryContainer = styled.div`
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   gap: 10px;
+  margin-top: 30px;
 `;
 
 const Category = styled.div`
