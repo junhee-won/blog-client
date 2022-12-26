@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import Head from "next/head";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import Image from "next/image";
+import { useState } from "react";
 import { useMdeia } from "../src/hooks/useMedia";
 import Header from "../src/components/common/Header";
 import PageTopbar from "../src/components/common/PageTopbar";
@@ -16,6 +17,7 @@ interface PostType {
   title: string;
   created_at: string;
   category: string;
+  thumbnail: string;
 }
 
 interface CategoryType {
@@ -76,6 +78,16 @@ function Home({ newPosts, allCategories }: Props) {
                 <Link href={`/post/${post.id}`} key={index}>
                   <PostBox>
                     <PostTitle>{post.title}</PostTitle>
+                    {post.thumbnail && (
+                      <ImageBox>
+                        <Image
+                          alt="thumbnail"
+                          src={post.thumbnail}
+                          fill
+                          style={{ objectFit: "contain" }}
+                        />
+                      </ImageBox>
+                    )}
                     <PostBottom>
                       <PostCategory>{post.category}</PostCategory>
                       <PostDate>{post.created_at}</PostDate>
@@ -210,6 +222,13 @@ const PostBox = styled.div`
   border: 3px solid black;
   height: 300px;
   padding: 10px;
+`;
+
+const ImageBox = styled.div`
+  position: relative;
+  height: 180px;
+  width: 80%;
+  align-self: center;
 `;
 
 const PostTitle = styled.div`

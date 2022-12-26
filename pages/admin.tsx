@@ -19,6 +19,7 @@ interface PostType {
   public: number;
   created_at: string;
   updated_at: string;
+  thumbnail: string;
 }
 
 export default function AdminPage() {

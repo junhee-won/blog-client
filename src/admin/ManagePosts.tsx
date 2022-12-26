@@ -17,7 +17,7 @@ interface PostType {
   public: number;
   created_at: string;
   updated_at: string;
-  uat: string;
+  thumbnail: string;
 }
 
 export default function ManagePosts({

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import apiHelper from "../modules/apiHelper";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -20,6 +21,7 @@ export default function WritePost({
   const [isPublic, setIsPublic] = useState(targetPost?.public || 0);
   const [categories, setCategories] = useState([]);
   const [categroyId, setCategoryId] = useState(targetPost?.category_id || 1);
+  const [thumbnail, setThumbnail] = useState("/public/vercel.svg");
 
   const completeWriting = () => {
     (async function () {
@@ -34,6 +36,7 @@ export default function WritePost({
             content: content,
             public: isPublic,
             category_id: categroyId,
+            thumbnail,
           },
         });
         if (res === "error") {
@@ -51,6 +54,7 @@ export default function WritePost({
             content: content,
             public: isPublic,
             category_id: categroyId,
+            thumbnail,
           },
         });
         if (res === "error") {
@@ -93,6 +97,9 @@ export default function WritePost({
         setCategories(res);
       }
     })();
+    if (targetPost?.thumbnail) {
+      setThumbnail(targetPost.thumbnail);
+    }
   }, []);
 
   return (
@@ -127,6 +134,18 @@ export default function WritePost({
         >
           HTML
         </Button>
+        <input
+          value={thumbnail}
+          onChange={(e) => setThumbnail(e.target.value)}
+        />
+        <Image
+          alt="thumbnail"
+          style={{ width: "100px" }}
+          src={thumbnail}
+          width={100}
+          height={40}
+          onError={() => setThumbnail("/public/vercel.svg")}
+        />
         <Select
           onChange={(e) => setCategoryId(e.target.value)}
           value={categroyId}
