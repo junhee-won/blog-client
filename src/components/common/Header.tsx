@@ -7,7 +7,7 @@ interface Props {
 export default function Header({ media }: Props) {
   return (
     <Container>
-      <h1>준희의 개발 블로그</h1>
+      <h1>개발자로 살아남기</h1>
     </Container>
   );
 }

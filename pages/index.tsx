@@ -36,8 +36,8 @@ function Home({ newPosts, allCategories }: Props) {
     return (
       <Container>
         <Head>
-          <title>준희의 블로그</title>
-          <meta name="description" content="준희의 개발 블로그" />
+          <title>개발자로 살아남기</title>
+          <meta name="description" content="개발자로 살아남기" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Header media={media} />
@@ -63,8 +63,8 @@ function Home({ newPosts, allCategories }: Props) {
     return (
       <Container>
         <Head>
-          <title>준희의 블로그</title>
-          <meta name="description" content="준희의 개발 블로그" />
+          <title>개발자로 살아남기</title>
+          <meta name="description" content="개발자로 살아남기" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Header media={media} />
