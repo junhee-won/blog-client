@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { NextPageContext } from "next";
+import { useEffect } from "react";
 import DOMPurify from "isomorphic-dompurify";
 import PageTopbar from "../../src/components/common/PageTopbar";
 import apiHelper from "../../src/modules/apiHelper";
@@ -9,10 +10,29 @@ interface Props {
   title: string;
   content: string;
   category: string;
+  id: number;
 }
 
-function PostPage({ created_at, title, content, category }: Props) {
+function PostPage({ created_at, title, content, category, id }: Props) {
   const purifiedHTML: string = DOMPurify.sanitize(content);
+
+  const checkView = () => {
+    const match = document.cookie.match(
+      new RegExp("(^| )" + "view" + "=([^;]+)")
+    );
+    if (!match) {
+      // 서버 API 통신
+      const expire = new Date();
+      expire.setHours(24, 0, 0, 0);
+      document.cookie = `view=true; path=/post/${id}; Expires=${expire.toUTCString()}`;
+    } else {
+      console.log("cookie!");
+    }
+  };
+
+  useEffect(() => {
+    checkView();
+  }, []);
 
   return (
     <Container>
@@ -32,7 +52,7 @@ PostPage.getInitialProps = async ({ query }: NextPageContext) => {
     url: `${process.env.NEXT_PUBLIC_API_GET_POST}${query?.id}`,
     method: "GET",
   });
-  return res;
+  return { ...res, id: query?.id };
 };
 
 export default PostPage;

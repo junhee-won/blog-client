@@ -7,7 +7,6 @@ import { useMdeia } from "../src/hooks/useMedia";
 import Header from "../src/components/common/Header";
 import PageTopbar from "../src/components/common/PageTopbar";
 import apiHelper from "../src/modules/apiHelper";
-import mainImage from "../public/스크린샷 2022-12-27 오전 1.06.52.jpeg";
 
 interface Props {
   newPosts: PostType[];
@@ -101,7 +100,7 @@ function Home({ newPosts, allCategories }: Props) {
           <RightContainr>
             <MainImage>
               <Image
-                src="/스크린샷 2022-12-27 오전 1.06.52.jpeg"
+                src="https://blog-image-bucket-123.s3.ap-northeast-2.amazonaws.com/etc/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2022-12-27+%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB+1.06.52.jpeg"
                 fill
                 alt="메인 이미지"
               />

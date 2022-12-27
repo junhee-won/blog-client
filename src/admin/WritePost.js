@@ -144,7 +144,7 @@ export default function WritePost({
           src={thumbnail}
           width={100}
           height={40}
-          onError={() => setThumbnail("/public/vercel.svg")}
+          onError={() => setThumbnail("/vercel.svg")}
         />
         <Select
           onChange={(e) => setCategoryId(e.target.value)}

@@ -28,6 +28,10 @@ li {
   padding-left: 30px;
 }
 
+.ck-content pre {
+  background-color: RGB(28, 27, 27);
+}
+
 .content a {
   color: blue;
   text-decoration: underline;
