@@ -24,15 +24,16 @@ function PostPage({ created_at, title, content, category, id }: Props) {
     const _ids = match?.[2]?.split(",");
     if (_ids?.find((ele) => ele === _id)) return;
 
-    // 서버 API 통신
-    await apiHelper({
-      url: process.env.NEXT_PUBLIC_API_VIEW_POST,
-      method: "POST",
-      body: {
-        post_id: id,
-        localeDateString: new Date().toLocaleDateString(),
-      },
-    });
+    try {
+      await apiHelper({
+        url: process.env.NEXT_PUBLIC_API_VIEW_POST,
+        method: "POST",
+        body: {
+          post_id: id,
+          localeDateString: new Date().toLocaleDateString(),
+        },
+      });
+    } catch (error) {}
 
     const expire = new Date();
     expire.setHours(23, 59, 59);
