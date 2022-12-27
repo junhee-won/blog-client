@@ -16,17 +16,33 @@ interface Props {
 function PostPage({ created_at, title, content, category, id }: Props) {
   const purifiedHTML: string = DOMPurify.sanitize(content);
 
-  const checkView = () => {
+  const checkView = async () => {
+    const _id = id.toString();
     const match = document.cookie.match(
       new RegExp("(^| )" + "view" + "=([^;]+)")
     );
-    if (!match) {
-      // 서버 API 통신
-      const expire = new Date();
-      expire.setHours(24, 0, 0, 0);
-      document.cookie = `view=true; path=/post/${id}; Expires=${expire.toUTCString()}`;
+    const _ids = match?.[2]?.split(",");
+    if (_ids?.find((ele) => ele === _id)) return;
+
+    // 서버 API 통신
+    await apiHelper({
+      url: process.env.NEXT_PUBLIC_API_VIEW_POST,
+      method: "POST",
+      body: {
+        post_id: id,
+        localeDateString: new Date().toLocaleDateString(),
+      },
+    });
+
+    const expire = new Date();
+    expire.setHours(23, 59, 59);
+
+    if (match === null) {
+      document.cookie = `view=${_id}; Expires=${expire.toUTCString()};`;
     } else {
-      console.log("cookie!");
+      document.cookie = `view=${
+        match[2]
+      },${_id}; Expires=${expire.toUTCString()};`;
     }
   };
 

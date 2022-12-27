@@ -84,7 +84,7 @@ const Post = styled.div`
   width: 90%;
   height: 60px;
   background-color: white;
-  margin: 20px;
+  margin: 10px;
   border: 3px solid black;
   border-radius: 10px;
 `;
