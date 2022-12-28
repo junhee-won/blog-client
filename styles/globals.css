@@ -46,7 +46,7 @@ figure.image {
   margin: auto;
 }
 
-img {
+.content img {
   width: 100%;
   border: 1px solid black;
   border-radius: 5px;
@@ -67,6 +67,7 @@ pre {
 code {
   background-color: RGB(28, 27, 27);
   color: white;
+  font-size: 15px;
 }
 
 @media (prefers-color-scheme: dark) {

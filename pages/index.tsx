@@ -49,6 +49,17 @@ function Home({ newPosts, allCategories }: Props) {
             return (
               <Link href={`/post/${post.id}`} key={index}>
                 <MPostBox>
+                  {post.thumbnail && (
+                    <MImageBox>
+                      <Image
+                        alt="thumbnail"
+                        src={post.thumbnail}
+                        sizes="80%"
+                        fill
+                        style={{ objectFit: "contain" }}
+                      />
+                    </MImageBox>
+                  )}
                   <MPostTitle>{post.title}</MPostTitle>
                   <MPostBottom>
                     <MPostCategory>{post.category}</MPostCategory>
@@ -83,6 +94,7 @@ function Home({ newPosts, allCategories }: Props) {
                         <Image
                           alt="thumbnail"
                           src={post.thumbnail}
+                          sizes="80%"
                           fill
                           style={{ objectFit: "contain" }}
                         />
@@ -100,8 +112,10 @@ function Home({ newPosts, allCategories }: Props) {
           <RightContainr>
             <MainImage>
               <Image
+                sizes="100px"
                 src="https://blog-image-bucket-123.s3.ap-northeast-2.amazonaws.com/etc/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2022-12-27+%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB+1.06.52.jpeg"
                 fill
+                priority
                 alt="메인 이미지"
               />
             </MainImage>
@@ -159,6 +173,7 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
   padding-top: 10px;
+  padding-bottom: 50px;
 `;
 
 const MPostsContainer = styled.div`
@@ -172,9 +187,8 @@ const MPostsContainer = styled.div`
 
 const MPostBox = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: center;
   border: 3px solid black;
   height: 100px;
   width: 95vw;
@@ -230,6 +244,13 @@ const PostBox = styled.div`
   border: 3px solid black;
   height: 300px;
   padding: 10px;
+`;
+
+const MImageBox = styled.div`
+  position: relative;
+  height: 90%;
+  width: 200px;
+  align-self: center;
 `;
 
 const ImageBox = styled.div`

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import DOMPurify from "isomorphic-dompurify";
 import PageTopbar from "../../src/components/common/PageTopbar";
 import apiHelper from "../../src/modules/apiHelper";
+import { useMdeia } from "../../src/hooks/useMedia";
 
 interface Props {
   created_at: string;
@@ -14,6 +15,7 @@ interface Props {
 }
 
 function PostPage({ created_at, title, content, category, id }: Props) {
+  const media = useMdeia();
   const purifiedHTML: string = DOMPurify.sanitize(content);
 
   const checkView = async () => {
@@ -57,9 +59,15 @@ function PostPage({ created_at, title, content, category, id }: Props) {
       <Title>
         <h1>{title}</h1>
       </Title>
-      <Content className="content">
-        <div dangerouslySetInnerHTML={{ __html: purifiedHTML }} />
-      </Content>
+      {media === "mobile" ? (
+        <MContent className="content">
+          <div dangerouslySetInnerHTML={{ __html: purifiedHTML }} />
+        </MContent>
+      ) : (
+        <Content className="content">
+          <div dangerouslySetInnerHTML={{ __html: purifiedHTML }} />
+        </Content>
+      )}
     </Container>
   );
 }
@@ -97,8 +105,17 @@ const Title = styled.div`
 `;
 
 const Content = styled.div`
-  width: 95vw;
-  padding-top: 30px;
-  padding-bottom: 100px;
+  width: 50vw;
+  padding: 50px 20px 100px;
   align-items: center;
+  line-height: 30px;
+  font-size: 18px;
+`;
+
+const MContent = styled.div`
+  width: 95vw;
+  padding: 50px 10px 100px;
+  align-items: center;
+  line-height: 30px;
+  font-size: 18px;
 `;
