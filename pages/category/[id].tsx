@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Head from "next/head";
 import { NextPageContext } from "next";
 import Link from "next/link";
 import apiHelper from "../../src/modules/apiHelper";
@@ -18,6 +19,11 @@ interface PostType {
 function CategoryPage({ category, posts }: Props) {
   return (
     <Container>
+      <Head>
+        <title>{category}</title>
+        <meta name="description" content={category} />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <PageTopbar />
       <Title>
         <h1>{category}</h1>

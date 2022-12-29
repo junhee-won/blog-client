@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Head from "next/head";
 import { NextPageContext } from "next";
 import { useEffect } from "react";
 import DOMPurify from "isomorphic-dompurify";
@@ -55,6 +56,11 @@ function PostPage({ created_at, title, content, category, id }: Props) {
 
   return (
     <Container>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={title} />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <PageTopbar />
       <Title>
         <h1>{title}</h1>
