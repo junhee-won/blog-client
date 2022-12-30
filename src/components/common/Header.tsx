@@ -1,24 +1,86 @@
 import styled from "styled-components";
+import Image from "next/image";
 
 interface Props {
   media: string;
 }
 
 export default function Header({ media }: Props) {
-  return (
-    <Container>
-      <h1>개발자로 살아남기</h1>
-    </Container>
-  );
+  if (media === "mobile") {
+    return (
+      <MContainer>
+        <h1>개발자로 살아남기</h1>
+        <a href="https://github.com/junhee-won" target="_blank">
+          <MLogoContainer>
+            <Image
+              src="/github-mark.svg"
+              alt="github"
+              width={30}
+              height={30}
+              priority
+            />
+          </MLogoContainer>
+        </a>
+      </MContainer>
+    );
+  } else {
+    return (
+      <Container>
+        <h1>개발자로 살아남기</h1>
+        <a href="https://github.com/junhee-won" target="_blank">
+          <LogoContainer>
+            <Image
+              src="/github-mark.svg"
+              alt="github"
+              width={50}
+              height={50}
+              priority
+            />
+          </LogoContainer>
+        </a>
+      </Container>
+    );
+  }
 }
 
 const Container = styled.div`
-  width: 95vw;
-  min-width: 200px;
-  height: 100px;
+  position: relative;
+  width: 1400px;
+  height: 150px;
   border: 3px solid black;
+  line-height: 150px;
+  text-align: center;
   font-size: 20px;
-  line-height: 100px;
+`;
+
+const MContainer = styled.div`
+  position: relative;
+  width: 95%;
+  height: 120px;
+  border: 3px solid black;
+  line-height: 120px;
   text-align: center;
   overflow: hidden;
+`;
+
+const LogoContainer = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  bottom: 10px;
+  right: 10px;
+`;
+
+const MLogoContainer = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  bottom: 10px;
+  right: 10px;
 `;

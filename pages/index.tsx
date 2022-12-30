@@ -43,7 +43,7 @@ function Home({ newPosts, allCategories }: Props) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Header media={media} />
-        <PageTopbar />
+        <PageTopbar media={media} />
         <MPostsContainer>
           {posts?.map((post, index) => {
             return (
@@ -81,7 +81,7 @@ function Home({ newPosts, allCategories }: Props) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Header media={media} />
-        <PageTopbar />
+        <PageTopbar media={media} />
         <Body>
           <PostsContainer>
             {posts?.map((post, index) => {
