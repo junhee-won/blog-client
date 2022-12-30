@@ -10,7 +10,11 @@ export default function Header({ media }: Props) {
     return (
       <MContainer>
         <h1>개발자로 살아남기</h1>
-        <a href="https://github.com/junhee-won" target="_blank">
+        <a
+          href="https://github.com/junhee-won"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <MLogoContainer>
             <Image
               src="/github-mark.svg"
@@ -27,7 +31,11 @@ export default function Header({ media }: Props) {
     return (
       <Container>
         <h1>개발자로 살아남기</h1>
-        <a href="https://github.com/junhee-won" target="_blank">
+        <a
+          href="https://github.com/junhee-won"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <LogoContainer>
             <Image
               src="/github-mark.svg"
