@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Head from "next/head";
 import { NextPageContext } from "next";
 import Link from "next/link";
+import Image from "next/image";
+import { useMedia } from "../../src/hooks/useMedia";
 import apiHelper from "../../src/modules/apiHelper";
 import PageTopbar from "../../src/components/common/PageTopbar";
 
@@ -17,6 +19,7 @@ interface PostType {
 }
 
 function CategoryPage({ category, posts }: Props) {
+  const media = useMedia();
   return (
     <Container>
       <Head>
@@ -24,22 +27,64 @@ function CategoryPage({ category, posts }: Props) {
         <meta name="description" content={category} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PageTopbar />
-      <Title>
-        <h1>{category}</h1>
-      </Title>
-      <PostContainer>
-        {posts?.map((post, index) => {
-          return (
-            <Link href={`/post/${post.id}`} key={index}>
-              <Post>
-                <PostTitle>{post.title}</PostTitle>
-                <PostDate>{post.created_at}</PostDate>
-              </Post>
+      <PageTopbar media={media} />
+      {media === "mobile" ? (
+        <>
+          <MTitle>
+            <h1>{category}</h1>
+            <Link href="/">
+              <HomeIcon>
+                <Image
+                  src="/home-fill-svgrepo-com.svg"
+                  alt="home page"
+                  width={50}
+                  height={50}
+                />
+              </HomeIcon>
             </Link>
-          );
-        })}
-      </PostContainer>
+          </MTitle>
+          <PostContainer>
+            {posts?.map((post, index) => {
+              return (
+                <Link href={`/post/${post.id}`} key={index}>
+                  <MPost>
+                    <PostTitle>{post.title}</PostTitle>
+                    <PostDate>{post.created_at}</PostDate>
+                  </MPost>
+                </Link>
+              );
+            })}
+          </PostContainer>
+        </>
+      ) : (
+        <>
+          <Title>
+            <h1>{category}</h1>
+            <Link href="/">
+              <HomeIcon>
+                <Image
+                  src="/home-fill-svgrepo-com.svg"
+                  alt="home page"
+                  width={50}
+                  height={50}
+                />
+              </HomeIcon>
+            </Link>
+          </Title>
+          <PostContainer>
+            {posts?.map((post, index) => {
+              return (
+                <Link href={`/post/${post.id}`} key={index}>
+                  <Post>
+                    <PostTitle>{post.title}</PostTitle>
+                    <PostDate>{post.created_at}</PostDate>
+                  </Post>
+                </Link>
+              );
+            })}
+          </PostContainer>
+        </>
+      )}
     </Container>
   );
 }
@@ -59,34 +104,50 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  height: 100vh;
-  width: 100vw;
 `;
 
 const Title = styled.div`
-  width: 95vw;
-  min-width: 200px;
+  position: relative;
+  width: 1200px;
   height: 100px;
+  margin-top: 10px;
   border: 3px solid black;
   font-size: 20px;
   line-height: 100px;
   text-align: center;
   overflow: hidden;
+`;
+
+const MTitle = styled.div`
+  position: relative;
+  width: 95%;
+  height: 100px;
   margin-top: 10px;
+  border: 3px solid black;
+  font-size: 20px;
+  line-height: 100px;
+  text-align: center;
+  overflow: hidden;
 `;
 
 const PostContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: flex-start;
+  align-items: center;
   gap: 10px;
   padding-top: 20px;
 `;
 
 const Post = styled.div`
+  width: 1200px;
+  border: 3px solid black;
+  height: 80px;
+`;
+
+const MPost = styled.div`
   width: 95vw;
-  border: 2px solid black;
+  border: 3px solid black;
   height: 80px;
 `;
 
@@ -103,4 +164,12 @@ const PostDate = styled.div`
   font-size: 15px;
   padding-left: 20px;
   color: gray;
+`;
+
+const HomeIcon = styled.div`
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 50px;
+  height: 50px;
 `;

@@ -53,9 +53,10 @@ export default function Header({ media }: Props) {
 
 const Container = styled.div`
   position: relative;
-  width: 1400px;
+  width: 1200px;
   height: 150px;
   border: 3px solid black;
+  margin-top: 30px;
   line-height: 150px;
   text-align: center;
   font-size: 20px;
@@ -65,6 +66,7 @@ const MContainer = styled.div`
   position: relative;
   width: 95%;
   height: 120px;
+  margin-top: 10px;
   border: 3px solid black;
   line-height: 120px;
   text-align: center;

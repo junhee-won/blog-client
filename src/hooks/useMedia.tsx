@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export function useMdeia() {
+export function useMedia() {
   const [media, setMedia] = useState("pc");
 
   const getMediaType = (width: number): string => {

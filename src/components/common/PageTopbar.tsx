@@ -23,7 +23,7 @@ export default function PageTopbar({ media }: Props) {
 }
 
 const Container = styled.div`
-  width: 1400px;
+  width: 1200px;
   height: 50px;
   padding: 20px 50px 0px;
   display: flex;

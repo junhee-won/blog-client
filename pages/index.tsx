@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { useMdeia } from "../src/hooks/useMedia";
+import { useMedia } from "../src/hooks/useMedia";
 import Header from "../src/components/common/Header";
 import PageTopbar from "../src/components/common/PageTopbar";
 import apiHelper from "../src/modules/apiHelper";
@@ -30,24 +30,21 @@ interface CategoryType {
 }
 
 function Home({ newPosts, allCategories }: Props) {
-  const media = useMdeia();
+  const media = useMedia();
   const [posts, setPosts] = useState<PostType[]>(newPosts);
   const [categories, setCategories] = useState<CategoryType[]>(allCategories);
 
-  if (media === "mobile") {
-    return (
-      <Container>
-        <Head>
-          <title>개발자로 살아남기</title>
-          <meta name="description" content="개발자로 살아남기" />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-          />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <Header media={media} />
-        <PageTopbar media={media} />
+  return (
+    <Container>
+      <Head>
+        <title>개발자로 살아남기</title>
+        <meta name="description" content="개발자로 살아남기" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Header media={media} />
+      <PageTopbar media={media} />
+      {media === "mobile" ? (
         <MPostsContainer>
           {posts?.map((post, index) => {
             return (
@@ -58,34 +55,24 @@ function Home({ newPosts, allCategories }: Props) {
                       <Image
                         alt="thumbnail"
                         src={post.thumbnail}
-                        sizes="80%"
-                        fill
-                        style={{ objectFit: "contain" }}
+                        width={167}
+                        height={94}
                       />
                     </MImageBox>
                   )}
-                  <MPostTitle>{post.title}</MPostTitle>
-                  <MPostBottom>
-                    <MPostCategory>{post.category}</MPostCategory>
-                    <MPostDate>{post.created_at}</MPostDate>
-                  </MPostBottom>
+                  <Container>
+                    <MPostTitle>{post.title}</MPostTitle>
+                    <MPostBottom>
+                      <MPostCategory>{post.category}</MPostCategory>
+                      <MPostDate>{post.created_at}</MPostDate>
+                    </MPostBottom>
+                  </Container>
                 </MPostBox>
               </Link>
             );
           })}
         </MPostsContainer>
-      </Container>
-    );
-  } else {
-    return (
-      <Container>
-        <Head>
-          <title>개발자로 살아남기</title>
-          <meta name="description" content="개발자로 살아남기" />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <Header media={media} />
-        <PageTopbar media={media} />
+      ) : (
         <Body>
           <PostsContainer>
             {posts?.map((post, index) => {
@@ -98,9 +85,8 @@ function Home({ newPosts, allCategories }: Props) {
                         <Image
                           alt="thumbnail"
                           src={post.thumbnail}
-                          sizes="80%"
-                          fill
-                          style={{ objectFit: "contain" }}
+                          width="330"
+                          height="186"
                         />
                       </ImageBox>
                     )}
@@ -116,11 +102,10 @@ function Home({ newPosts, allCategories }: Props) {
           <RightContainr>
             <MainImage>
               <Image
-                sizes="100px"
-                src="https://blog-image-bucket-123.s3.ap-northeast-2.amazonaws.com/etc/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2022-12-27+%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB+1.06.52.jpeg"
-                fill
-                priority
                 alt="메인 이미지"
+                src="https://blog-image-bucket-123.s3.ap-northeast-2.amazonaws.com/etc/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2022-12-27+%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB+1.06.52.jpeg"
+                width={250}
+                height={250}
               />
             </MainImage>
             <CategoryContainer>
@@ -149,9 +134,9 @@ function Home({ newPosts, allCategories }: Props) {
             </CategoryContainer>
           </RightContainr>
         </Body>
-      </Container>
-    );
-  }
+      )}
+    </Container>
+  );
 }
 
 Home.getInitialProps = async () => {
@@ -176,8 +161,8 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding-top: 10px;
-  padding-bottom: 50px;
+  width: 100%;
+  height: 100%;
 `;
 
 const MPostsContainer = styled.div`
@@ -197,20 +182,22 @@ const MPostBox = styled.div`
   height: 100px;
   width: 95vw;
   min-width: 200px;
-  padding: 10px;
 `;
 
 const MPostTitle = styled.div`
+  width: 90%;
   height: 50px;
+  margin-top: 10px;
+  text-align: center;
   line-height: 50px;
   font-size: 20px;
   font-weight: 500;
-  overflow-x: hidden;
+  overflow: hidden;
 `;
 
 const MPostBottom = styled.div`
   display: flex;
-  width: 100%;
+  width: 90%;
   justify-content: space-between;
   align-items: center;
 `;
@@ -234,38 +221,41 @@ const MPostDate = styled.div`
 `;
 
 const PostsContainer = styled.div`
-  flex: 7;
+  flex: 6;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 40px;
 `;
 
 const PostBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  width: 336px;
+  height: 330px;
   border: 3px solid black;
-  height: 300px;
-  padding: 10px;
 `;
 
 const MImageBox = styled.div`
   position: relative;
-  height: 90%;
-  width: 200px;
-  align-self: center;
+  height: 94px;
+  width: 167px;
 `;
 
 const ImageBox = styled.div`
   position: relative;
+  width: 100%;
   height: 180px;
-  width: 80%;
   align-self: center;
 `;
 
 const PostTitle = styled.div`
+  width: 100%;
   height: 50px;
+  margin: 10px 0 0;
+  text-align: center;
   line-height: 50px;
   font-size: 20px;
   font-weight: 500;
@@ -274,9 +264,10 @@ const PostTitle = styled.div`
 
 const PostBottom = styled.div`
   display: flex;
-  width: 100%;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  padding: 0 20px 0;
 `;
 
 const PostCategory = styled.div`
@@ -299,13 +290,15 @@ const PostDate = styled.div`
 
 const Body = styled.div`
   display: flex;
-  width: 95vw;
+  justify-content: center;
+  align-items: flex-start;
+  width: 1200px;
   gap: 10px;
   padding-top: 30px;
 `;
 
 const RightContainr = styled.div`
-  flex: 3;
+  flex: 4;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -314,21 +307,21 @@ const RightContainr = styled.div`
 
 const MainImage = styled.div`
   position: relative;
-  width: 100%;
-  padding-bottom: 100%;
+  width: 250px;
+  height: 250px;
+  margin: 30px 0 0;
   border-radius: 50%;
   overflow: hidden;
 `;
 
 const CategoryContainer = styled.div`
-  width: 100%;
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
-  margin-top: 30px;
+  width: 100%;
+  margin: 50px 0 0;
 `;
 
 const Category = styled.div`

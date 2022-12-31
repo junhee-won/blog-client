@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import Head from "next/head";
+import Link from "next/link";
+import Image from "next/image";
 import { NextPageContext } from "next";
 import { useEffect } from "react";
 import DOMPurify from "isomorphic-dompurify";
 import PageTopbar from "../../src/components/common/PageTopbar";
 import apiHelper from "../../src/modules/apiHelper";
-import { useMdeia } from "../../src/hooks/useMedia";
+import { useMedia } from "../../src/hooks/useMedia";
 
 interface Props {
   created_at: string;
@@ -16,7 +18,7 @@ interface Props {
 }
 
 function PostPage({ created_at, title, content, category, id }: Props) {
-  const media = useMdeia();
+  const media = useMedia();
   const purifiedHTML: string = DOMPurify.sanitize(content);
 
   const checkView = async () => {
@@ -61,18 +63,45 @@ function PostPage({ created_at, title, content, category, id }: Props) {
         <meta name="description" content={title} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PageTopbar />
-      <Title>
-        <h1>{title}</h1>
-      </Title>
+      <PageTopbar media={media} />
       {media === "mobile" ? (
-        <MContent className="content">
-          <div dangerouslySetInnerHTML={{ __html: purifiedHTML }} />
-        </MContent>
+        <>
+          <MTitle>
+            <h1>{title}</h1>
+            <Link href="/">
+              <HomeIcon>
+                <Image
+                  src="/home-fill-svgrepo-com.svg"
+                  alt="home page"
+                  width={50}
+                  height={50}
+                />
+              </HomeIcon>
+            </Link>
+          </MTitle>
+          <MContent className="content">
+            <div dangerouslySetInnerHTML={{ __html: purifiedHTML }} />
+          </MContent>
+        </>
       ) : (
-        <Content className="content">
-          <div dangerouslySetInnerHTML={{ __html: purifiedHTML }} />
-        </Content>
+        <>
+          <Title>
+            <h1>{title}</h1>
+            <Link href="/">
+              <HomeIcon>
+                <Image
+                  src="/home-fill-svgrepo-com.svg"
+                  alt="home page"
+                  width={50}
+                  height={50}
+                />
+              </HomeIcon>
+            </Link>
+          </Title>
+          <Content className="content">
+            <div dangerouslySetInnerHTML={{ __html: purifiedHTML }} />
+          </Content>
+        </>
       )}
     </Container>
   );
@@ -93,25 +122,34 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  height: 100vh;
-  width: 100vw;
 `;
 
 const Title = styled.div`
-  width: 95vw;
-  min-width: 200px;
+  position: relative;
+  width: 1200px;
   height: 100px;
   min-height: 100px;
+  margin-top: 10px;
   border: 3px solid black;
   font-size: 20px;
   line-height: 100px;
   text-align: center;
-  overflow: hidden;
+  overflow-x: hidden;
+`;
+
+const MTitle = styled.div`
+  position: relative;
+  width: 95%;
+  height: auto;
   margin-top: 10px;
+  border: 3px solid black;
+  padding: 0 40px 0;
+  font-size: 20px;
+  line-height: 60px;
 `;
 
 const Content = styled.div`
-  width: 50vw;
+  width: 800px;
   padding: 50px 20px 100px;
   align-items: center;
   line-height: 30px;
@@ -119,9 +157,17 @@ const Content = styled.div`
 `;
 
 const MContent = styled.div`
-  width: 95vw;
+  width: 95%;
   padding: 50px 10px 100px;
   align-items: center;
   line-height: 30px;
   font-size: 18px;
+`;
+
+const HomeIcon = styled.div`
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 50px;
+  height: 50px;
 `;
