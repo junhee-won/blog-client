@@ -40,6 +40,10 @@ function Home({ newPosts, allCategories }: Props) {
         <Head>
           <title>개발자로 살아남기</title>
           <meta name="description" content="개발자로 살아남기" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Header media={media} />

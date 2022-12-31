@@ -14,10 +14,11 @@ export function useMdeia() {
   };
 
   useEffect(() => {
-    setMedia(getMediaType(window.innerWidth));
     const handleResize = () => {
-      setMedia(getMediaType(window.innerWidth));
+      const width = Math.min(window.innerWidth, window.screen.width);
+      setMedia(getMediaType(width));
     };
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
