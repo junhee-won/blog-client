@@ -2,15 +2,14 @@ import styled from "styled-components";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
 import { useMedia } from "../src/hooks/useMedia";
 import Header from "../src/components/common/Header";
 import PageTopbar from "../src/components/common/PageTopbar";
 import apiHelper from "../src/modules/apiHelper";
 
 interface Props {
-  newPosts: PostType[];
-  allCategories: CategoryType[];
+  posts: PostType[];
+  categories: CategoryType[];
 }
 interface PostType {
   id: number;
@@ -29,10 +28,8 @@ interface CategoryType {
   }[];
 }
 
-function Home({ newPosts, allCategories }: Props) {
+function Home({ posts, categories }: Props) {
   const media = useMedia();
-  const [posts, setPosts] = useState<PostType[]>(newPosts);
-  const [categories, setCategories] = useState<CategoryType[]>(allCategories);
 
   return (
     <Container>
@@ -140,18 +137,18 @@ function Home({ newPosts, allCategories }: Props) {
 }
 
 Home.getInitialProps = async () => {
-  const newPostsRes = await apiHelper({
+  const postsRes = await apiHelper({
     url: process.env.NEXT_PUBLIC_API_GET_NEW_POST,
     method: "GET",
   });
-  const newPosts = newPostsRes === "error" ? [] : newPostsRes;
+  const posts = postsRes === "error" ? [] : postsRes;
 
   const categoriesRes = await apiHelper({
     url: process.env.NEXT_PUBLIC_API_GET_ALL_CATEGORIES,
     method: "GET",
   });
-  const allCategories = categoriesRes === "error" ? [] : categoriesRes;
-  return { newPosts, allCategories };
+  const categories = categoriesRes === "error" ? [] : categoriesRes;
+  return { posts, categories };
 };
 
 export default Home;
