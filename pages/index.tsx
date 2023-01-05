@@ -300,6 +300,7 @@ const RightContainr = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  padding-left: 100px;
 `;
 
 const MainImage = styled.div`
@@ -319,6 +320,8 @@ const CategoryContainer = styled.div`
   gap: 10px;
   width: 100%;
   margin: 50px 0 0;
+  border: 3px solid black;
+  padding-bottom: 20px;
 `;
 
 const Category = styled.div`
@@ -342,8 +345,8 @@ const ChildCategory = styled.div`
 
 const CategoryTitle = styled.div`
   width: 100%;
-  border-bottom: 3px solid black;
   height: 50px;
+  border-bottom: 3px solid black;
   line-height: 50px;
   font-size: 25px;
   text-align: center;
