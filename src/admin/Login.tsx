@@ -19,8 +19,8 @@ export default function Login({ setToken }: Props) {
         password: password,
       },
     });
-    if (res !== "error") {
-      setToken(res.access_token);
+    if (res.success) {
+      setToken(res.data.access_token);
     }
   };
 

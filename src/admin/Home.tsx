@@ -20,10 +20,10 @@ export default function Home({ token }: Props) {
         url: process.env.NEXT_PUBLIC_API_VIEW_LAST_DAYS,
         method: "GET",
       });
-      if (res !== "error") {
-        setLastDaysViews(res);
+      if (res.success) {
+        setLastDaysViews(res.data);
       } else {
-        alert(res);
+        alert("error");
       }
     };
     getResent7Days();

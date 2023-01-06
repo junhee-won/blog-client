@@ -39,8 +39,8 @@ export default function WritePost({
             thumbnail,
           },
         });
-        if (res === "error") {
-          alert(res);
+        if (!res.success) {
+          alert("error");
         } else {
           offWritePost();
         }
@@ -57,8 +57,8 @@ export default function WritePost({
             thumbnail,
           },
         });
-        if (res === "error") {
-          alert(res);
+        if (!res.success) {
+          alert("error");
         } else {
           offWritePost();
         }
@@ -93,8 +93,8 @@ export default function WritePost({
         jwt: token,
         method: "GET",
       });
-      if (res !== "error") {
-        setCategories(res);
+      if (res.success) {
+        setCategories(res.data);
       }
     })();
     if (targetPost?.thumbnail) {

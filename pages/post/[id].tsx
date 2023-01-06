@@ -8,6 +8,7 @@ import DOMPurify from "isomorphic-dompurify";
 import PageTopbar from "../../src/components/common/PageTopbar";
 import apiHelper from "../../src/modules/apiHelper";
 import { useMedia } from "../../src/hooks/useMedia";
+import ErrorPage from "../_error";
 
 interface Props {
   created_at: string;
@@ -15,9 +16,19 @@ interface Props {
   content: string;
   category: string;
   id: number;
+  success: boolean;
 }
 
-function PostPage({ created_at, title, content, category, id }: Props) {
+function PostPage({
+  success,
+  created_at,
+  title,
+  content,
+  category,
+  id,
+}: Props) {
+  if (!success) return <ErrorPage />;
+
   const media = useMedia();
   const purifiedHTML: string = DOMPurify.sanitize(content);
 
@@ -112,7 +123,8 @@ PostPage.getInitialProps = async ({ query }: NextPageContext) => {
     url: `${process.env.NEXT_PUBLIC_API_GET_POST}${query?.id}`,
     method: "GET",
   });
-  return { ...res, id: query?.id };
+  const data = res.data;
+  return { ...data, id: query?.id, success: res.success };
 };
 
 export default PostPage;

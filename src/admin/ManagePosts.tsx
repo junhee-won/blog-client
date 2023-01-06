@@ -35,8 +35,8 @@ export default function ManagePosts({
         method: "GET",
         jwt: token,
       });
-      if (res !== "error") {
-        setPosts(res);
+      if (res.success) {
+        setPosts(res.data);
       }
     })();
   }, []);

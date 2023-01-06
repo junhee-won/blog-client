@@ -141,13 +141,13 @@ Home.getInitialProps = async () => {
     url: process.env.NEXT_PUBLIC_API_GET_NEW_POST,
     method: "GET",
   });
-  const posts = postsRes === "error" ? [] : postsRes;
+  const posts = postsRes.success ? postsRes.data : [];
 
   const categoriesRes = await apiHelper({
     url: process.env.NEXT_PUBLIC_API_GET_ALL_CATEGORIES,
     method: "GET",
   });
-  const categories = categoriesRes === "error" ? [] : categoriesRes;
+  const categories = categoriesRes.success ? categoriesRes.data : [];
   return { posts, categories };
 };
 

@@ -6,8 +6,10 @@ import Image from "next/image";
 import { useMedia } from "../../src/hooks/useMedia";
 import apiHelper from "../../src/modules/apiHelper";
 import PageTopbar from "../../src/components/common/PageTopbar";
+import ErrorPage from "../_error";
 
 interface Props {
+  success: boolean;
   category: string;
   posts: PostType[];
 }
@@ -18,7 +20,9 @@ interface PostType {
   title: string;
 }
 
-function CategoryPage({ category, posts }: Props) {
+function CategoryPage({ success, category, posts }: Props) {
+  if (!success) return <ErrorPage />;
+
   const media = useMedia();
   return (
     <Container>
@@ -94,7 +98,8 @@ CategoryPage.getInitialProps = async ({ query }: NextPageContext) => {
     url: `${process.env.NEXT_PUBLIC_API_GET_POSTS_BY_CATEGORY}${query?.id}`,
     method: "GET",
   });
-  return res;
+  const data = res.data;
+  return { ...data, success: res.success };
 };
 
 export default CategoryPage;

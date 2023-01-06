@@ -21,9 +21,10 @@ export default async function apiHelper({ url, method, jwt, body }: Props) {
     headers: headers,
   })
     .then((res) => {
-      return res.data;
+      const data = res.data;
+      return { data, success: true };
     })
     .catch((err) => {
-      return "error";
+      return { success: false, data: null };
     });
 }

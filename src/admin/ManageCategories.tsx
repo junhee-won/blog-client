@@ -25,10 +25,10 @@ export default function ManageCategories({ token }: Props) {
       method: "GET",
       jwt: token,
     });
-    if (res !== "error") {
-      setCategories(res);
+    if (res.success) {
+      setCategories(res.data);
     } else {
-      alert(res);
+      alert("error");
     }
   };
 
@@ -63,8 +63,8 @@ export default function ManageCategories({ token }: Props) {
         public: category.public,
       },
     });
-    if (res === "error") {
-      alert(res);
+    if (!res.success) {
+      alert("error");
     } else {
       alert("완료");
       getPosts();
@@ -95,8 +95,8 @@ export default function ManageCategories({ token }: Props) {
         public: category.public,
       },
     });
-    if (res === "error") {
-      alert(res);
+    if (!res.success) {
+      alert("error");
     } else {
       alert("완료");
       getPosts();
