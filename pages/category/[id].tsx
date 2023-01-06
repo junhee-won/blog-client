@@ -21,9 +21,9 @@ interface PostType {
 }
 
 function CategoryPage({ success, category, posts }: Props) {
-  if (!success) return <ErrorPage />;
-
   const media = useMedia();
+
+  if (!success) return <ErrorPage />;
   return (
     <Container>
       <Head>

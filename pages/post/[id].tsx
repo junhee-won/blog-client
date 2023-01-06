@@ -27,8 +27,6 @@ function PostPage({
   category,
   id,
 }: Props) {
-  if (!success) return <ErrorPage />;
-
   const media = useMedia();
   const purifiedHTML: string = DOMPurify.sanitize(content);
 
@@ -67,6 +65,7 @@ function PostPage({
     checkView();
   }, []);
 
+  if (!success) return <ErrorPage />;
   return (
     <Container>
       <Head>
