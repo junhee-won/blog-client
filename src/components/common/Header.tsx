@@ -9,7 +9,7 @@ export default function Header({ media }: Props) {
   if (media === "mobile") {
     return (
       <MContainer>
-        <h1>개발자로 살아남기</h1>
+        <h1>개발이 개발새발</h1>
         <a
           href="https://github.com/junhee-won"
           target="_blank"
@@ -30,7 +30,7 @@ export default function Header({ media }: Props) {
   } else {
     return (
       <Container>
-        <h1>개발자로 살아남기</h1>
+        <h1>개발이 개발새발</h1>
         <a
           href="https://github.com/junhee-won"
           target="_blank"
