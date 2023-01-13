@@ -4,7 +4,7 @@ interface Props {
   media?: string;
 }
 
-export default function PageTopbar({ media }: Props) {
+export default function Topbar({ media }: Props) {
   if (media === "mobile") {
     return (
       <MContainer>
@@ -23,13 +23,15 @@ export default function PageTopbar({ media }: Props) {
 }
 
 const Container = styled.div`
-  width: 1200px;
-  height: 50px;
-  padding: 20px 50px 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 3px solid black;
+  background-color: #e8785f;
+  width: 1200px;
+  height: 40px;
+  margin-top: 10px;
+  padding: 0px 50px 0px;
+  color: white;
 `;
 
 const MContainer = styled.div`
@@ -43,7 +45,7 @@ const MContainer = styled.div`
 `;
 
 const TextBox = styled.div`
-  line-height: 30px;
-  font-size: 15px;
+  line-height: 40px;
+  font-size: 16px;
   font-weight: 700;
 `;

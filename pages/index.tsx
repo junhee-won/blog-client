@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useMedia } from "../src/hooks/useMedia";
 import Header from "../src/components/common/Header";
-import PageTopbar from "../src/components/common/PageTopbar";
 import apiHelper from "../src/modules/apiHelper";
 
 interface Props {
@@ -40,7 +39,6 @@ function Home({ posts, categories }: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header media={media} />
-      <PageTopbar media={media} />
       {media === "mobile" ? (
         <MPostsContainer>
           {posts?.map((post, index) => {
@@ -71,6 +69,16 @@ function Home({ posts, categories }: Props) {
         </MPostsContainer>
       ) : (
         <Body>
+          <LeftContainer>
+            <Temp>
+              <Image
+                alt="메인 이미지"
+                src="/under-construction.svg"
+                width={200}
+                height={200}
+              />
+            </Temp>
+          </LeftContainer>
           <PostsContainer>
             {posts?.map((post, index) => {
               return (
@@ -82,8 +90,8 @@ function Home({ posts, categories }: Props) {
                         <Image
                           alt="thumbnail"
                           src={post.thumbnail}
-                          width="330"
-                          height="186"
+                          width="276"
+                          height="155"
                         />
                       </ImageBox>
                     )}
@@ -100,9 +108,9 @@ function Home({ posts, categories }: Props) {
             <MainImage>
               <Image
                 alt="메인 이미지"
-                src="https://blog-image-bucket-123.s3.ap-northeast-2.amazonaws.com/etc/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2022-12-27+%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB+1.06.52.jpeg"
-                width={250}
-                height={250}
+                src="/under-construction.svg"
+                width={200}
+                height={200}
               />
             </MainImage>
             <CategoryContainer>
@@ -158,8 +166,6 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 100%;
-  height: 100%;
 `;
 
 const MPostsContainer = styled.div`
@@ -218,10 +224,11 @@ const MPostDate = styled.div`
 `;
 
 const PostsContainer = styled.div`
-  flex: 6;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 40px;
+  gap: 24px;
+  width: 588px;
+  padding-top: 24px;
 `;
 
 const PostBox = styled.div`
@@ -229,9 +236,8 @@ const PostBox = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 20px;
-  width: 336px;
-  height: 330px;
+  width: 282px;
+  height: 300px;
   border: 3px solid black;
 `;
 
@@ -244,19 +250,20 @@ const MImageBox = styled.div`
 const ImageBox = styled.div`
   position: relative;
   width: 100%;
-  height: 180px;
+  height: 155px;
   align-self: center;
 `;
 
-const PostTitle = styled.div`
-  width: 100%;
-  height: 50px;
-  margin: 10px 0 0;
+const PostTitle = styled.h3`
+  width: 282px;
+  height: 60px;
+  margin: 15px 0 15px;
+  padding: 10px;
   text-align: center;
-  line-height: 50px;
-  font-size: 20px;
-  font-weight: 500;
-  overflow-x: hidden;
+  line-height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const PostBottom = styled.div`
@@ -264,24 +271,28 @@ const PostBottom = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  height: 50px;
   padding: 0 20px 0;
 `;
 
 const PostCategory = styled.div`
   height: 30px;
   line-height: 30px;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
-  overflow-x: hidden;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: gray;
 `;
 
 const PostDate = styled.div`
   height: 30px;
   line-height: 30px;
-  font-size: 15px;
-  font-weight: 500;
-  overflow-x: hidden;
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: gray;
 `;
 
@@ -290,25 +301,29 @@ const Body = styled.div`
   justify-content: center;
   align-items: flex-start;
   width: 1200px;
-  gap: 10px;
-  padding-top: 30px;
+  gap: 24px;
 `;
 
-const RightContainr = styled.div`
-  flex: 4;
+const LeftContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding-left: 100px;
+  width: 282px;
+`;
+
+const RightContainr = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 282px;
 `;
 
 const MainImage = styled.div`
-  position: relative;
-  width: 250px;
-  height: 250px;
-  margin: 30px 0 0;
-  border-radius: 50%;
+  margin-top: 50px;
+  width: 200px;
+  height: 200px;
   overflow: hidden;
 `;
 
@@ -354,4 +369,10 @@ const CategoryTitle = styled.div`
 
 const CategoryBox = styled.div`
   width: 95%;
+`;
+
+const Temp = styled.div`
+  margin-top: 200px;
+  width: 200px;
+  height: 200px;
 `;

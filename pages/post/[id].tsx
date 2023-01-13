@@ -5,7 +5,7 @@ import Image from "next/image";
 import { NextPageContext } from "next";
 import { useEffect } from "react";
 import DOMPurify from "isomorphic-dompurify";
-import PageTopbar from "../../src/components/common/PageTopbar";
+import Topbar from "../../src/components/common/Topbar";
 import apiHelper from "../../src/modules/apiHelper";
 import { useMedia } from "../../src/hooks/useMedia";
 import ErrorPage from "../_error";
@@ -73,7 +73,7 @@ function PostPage({
         <meta name="description" content={title} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PageTopbar media={media} />
+      <Topbar media={media} />
       {media === "mobile" ? (
         <>
           <MTitle>
