@@ -38,12 +38,7 @@ function CategoryPage({ success, category, posts }: Props) {
             <h1>{category}</h1>
             <Link href="/">
               <HomeIcon>
-                <Image
-                  src="/home-fill-svgrepo-com.svg"
-                  alt="home page"
-                  width={50}
-                  height={50}
-                />
+                <Image src="/home.svg" alt="home page" width={50} height={50} />
               </HomeIcon>
             </Link>
           </MTitle>
@@ -66,12 +61,7 @@ function CategoryPage({ success, category, posts }: Props) {
             <h1>{category}</h1>
             <Link href="/">
               <HomeIcon>
-                <Image
-                  src="/home-fill-svgrepo-com.svg"
-                  alt="home page"
-                  width={50}
-                  height={50}
-                />
+                <Image src="/home.svg" alt="home page" width={50} height={50} />
               </HomeIcon>
             </Link>
           </Title>

@@ -1,12 +1,20 @@
 import styled from "styled-components";
 import Link from "next/link";
+import Head from "next/head";
+import Image from "next/image";
 
 export default function ErrorPage() {
   return (
     <Container>
+      <Head>
+        <title>!잘못된 접근!</title>
+        <meta name="description" content="개발자로 살아남기" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Text>페이지가 존재하지 않습니다</Text>
       <Link href="/">
-        <Button>홈으로</Button>
+        <Image src="/home.svg" alt="home page" width={200} height={200} />
       </Link>
     </Container>
   );
@@ -17,21 +25,10 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 100px;
   height: 100vh;
 `;
 
 const Text = styled.div`
-  font-size: 50px;
-`;
-
-const Button = styled.div`
-  width: 200px;
-  height: 80px;
-  margin: 30px;
-  border: 3px solid black;
-  border-radius: 10px;
-  padding: 20;
-  text-align: center;
-  line-height: 80px;
-  font-size: 30px;
+  font-size: 100px;
 `;
