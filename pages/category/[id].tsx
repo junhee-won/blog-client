@@ -107,7 +107,6 @@ const Title = styled.div`
   height: 100px;
   margin-top: 10px;
   border: 3px solid black;
-  font-size: 20px;
   line-height: 100px;
   text-align: center;
   overflow: hidden;
@@ -151,6 +150,7 @@ const PostTitle = styled.div`
   line-height: 50px;
   font-size: 25px;
   padding-left: 20px;
+  overflow: hidden;
 `;
 
 const PostDate = styled.div`

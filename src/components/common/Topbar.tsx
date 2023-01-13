@@ -26,12 +26,11 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #e8785f;
   width: 1200px;
   height: 40px;
   margin-top: 10px;
+  border-bottom: 3px solid black;
   padding: 0px 50px 0px;
-  color: white;
 `;
 
 const MContainer = styled.div`

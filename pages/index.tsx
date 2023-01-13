@@ -166,6 +166,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  width: 100%;
 `;
 
 const MPostsContainer = styled.div`
@@ -187,14 +188,12 @@ const MPostBox = styled.div`
   min-width: 200px;
 `;
 
-const MPostTitle = styled.div`
+const MPostTitle = styled.h3`
   width: 90%;
   height: 50px;
   margin-top: 10px;
   text-align: center;
   line-height: 50px;
-  font-size: 20px;
-  font-weight: 500;
   overflow: hidden;
 `;
 
