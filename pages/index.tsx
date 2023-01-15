@@ -37,6 +37,10 @@ function Home({ posts, categories }: Props) {
         <meta name="description" content="개발이 개발새발" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/favicon.ico" />
+        <meta
+          name="google-site-verification"
+          content="NdpeE1O9cq2cINgWWi4KQsDytrXaSMknBnf7psY5oyE"
+        />
       </Head>
       <Header media={media} />
       {media === "mobile" ? (
