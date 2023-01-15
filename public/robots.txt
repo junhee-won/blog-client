@@ -1,0 +1,11 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /admin
+
+# Host
+Host: https://junhee.kr
+
+# Sitemaps
+Sitemap: https://junhee.kr/sitemap.xml
+Sitemap: https://junhee.kr/server-sitemap.xml
