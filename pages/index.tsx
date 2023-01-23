@@ -54,8 +54,11 @@ function Home({ posts, categories }: Props) {
                       <Image
                         alt="thumbnail"
                         src={post.thumbnail}
+                        priority
+                        sizes="167px"
                         width={167}
                         height={94}
+                        placeholder="empty"
                       />
                     </MImageBox>
                   )}
@@ -94,8 +97,11 @@ function Home({ posts, categories }: Props) {
                         <Image
                           alt="thumbnail"
                           src={post.thumbnail}
+                          priority
+                          sizes="276px"
                           width="276"
                           height="155"
+                          placeholder="empty"
                         />
                       </ImageBox>
                     )}

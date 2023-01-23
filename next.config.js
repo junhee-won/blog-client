@@ -5,7 +5,14 @@ const nextConfig = {
     styledComponents: true,
   },
   images: {
-    domains: [process.env.IMAGE_URL],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: process.env.IMAGE_URL,
+        port: "",
+        pathname: "/**",
+      },
+    ],
   },
 };
 module.exports = nextConfig;
