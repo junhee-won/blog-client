@@ -5,10 +5,10 @@ import Image from "next/image";
 import { NextPageContext } from "next";
 import { useEffect } from "react";
 import DOMPurify from "isomorphic-dompurify";
-import Topbar from "../../src/components/common/Topbar";
 import apiHelper from "../../src/modules/apiHelper";
 import { useMedia } from "../../src/hooks/useMedia";
 import ErrorPage from "../_error";
+import HomeLogo from "../../public/home.svg";
 
 interface Props {
   created_at: string;
@@ -73,14 +73,13 @@ function PostPage({
         <meta name="description" content={title} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Topbar media={media} />
       {media === "mobile" ? (
         <>
           <MTitle>
-            <h1>{title}</h1>
+            <TitleText>{title}</TitleText>
             <Link href="/">
               <HomeIcon>
-                <Image src="/home.svg" alt="home page" width={50} height={50} />
+                <Image src={HomeLogo} alt="home page" width={30} height={30} />
               </HomeIcon>
             </Link>
           </MTitle>
@@ -91,10 +90,10 @@ function PostPage({
       ) : (
         <>
           <Title>
-            <h1>{title}</h1>
+            <TitleText>{title}</TitleText>
             <Link href="/">
               <HomeIcon>
-                <Image src="/home.svg" alt="home page" width={50} height={50} />
+                <Image src={HomeLogo} alt="home page" width={50} height={50} />
               </HomeIcon>
             </Link>
           </Title>
@@ -127,26 +126,31 @@ const Container = styled.div`
 
 const Title = styled.div`
   position: relative;
-  width: 1200px;
-  height: 100px;
-  min-height: 100px;
-  margin-top: 10px;
-  border: 3px solid black;
-  font-size: 20px;
-  line-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 150px;
+  background-color: #4e5684;
+`;
+
+const TitleText = styled.h1`
   text-align: center;
+  line-height: 50px;
+  font-size: 40px;
+  color: white;
   overflow-x: hidden;
 `;
 
 const MTitle = styled.div`
   position: relative;
-  width: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 150px;
   height: auto;
-  margin-top: 10px;
-  border: 3px solid black;
-  padding: 0 40px 0;
-  font-size: 20px;
-  line-height: 60px;
+  background-color: #4e5684;
 `;
 
 const Content = styled.div`
@@ -169,6 +173,6 @@ const HomeIcon = styled.div`
   position: absolute;
   bottom: 10px;
   right: 10px;
-  width: 50px;
-  height: 50px;
+  width: auto;
+  height: auto;
 `;

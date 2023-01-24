@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useMedia } from "../src/hooks/useMedia";
 import Header from "../src/components/common/Header";
 import apiHelper from "../src/modules/apiHelper";
+import GithubLogo from "../public/github-mark.svg";
+import TistoryLogo from "../public/tistory-logo.svg";
 
 interface Props {
   posts: PostType[];
@@ -31,7 +33,7 @@ function Home({ posts, categories }: Props) {
   const media = useMedia();
 
   return (
-    <Container>
+    <>
       <Head>
         <title>개발이 개발새발</title>
         <meta name="description" content="개발이 개발새발" />
@@ -42,79 +44,105 @@ function Home({ posts, categories }: Props) {
           content="NdpeE1O9cq2cINgWWi4KQsDytrXaSMknBnf7psY5oyE"
         />
       </Head>
-      <Header media={media} />
       {media === "mobile" ? (
-        <MPostsContainer>
-          {posts?.map((post, index) => {
-            return (
-              <Link href={`/post/${post.id}`} key={index}>
-                <MPostBox>
-                  {post.thumbnail && (
-                    <MImageBox>
-                      <Image
-                        alt="thumbnail"
-                        src={post.thumbnail}
-                        priority
-                        sizes="167px"
-                        width={167}
-                        height={94}
-                        placeholder="empty"
-                      />
-                    </MImageBox>
-                  )}
-                  <Container>
-                    <MPostTitle>{post.title}</MPostTitle>
-                    <MPostBottom>
-                      <MPostCategory>{post.category}</MPostCategory>
-                      <MPostDate>{post.created_at}</MPostDate>
-                    </MPostBottom>
-                  </Container>
-                </MPostBox>
-              </Link>
-            );
-          })}
-        </MPostsContainer>
-      ) : (
-        <Body>
-          <LeftContainer>
-            <Temp>
-              <Image
-                alt="메인 이미지"
-                src="/under-construction.svg"
-                width={200}
-                height={200}
-              />
-            </Temp>
-          </LeftContainer>
-          <PostsContainer>
+        <MContainer>
+          <Header media={media} />
+          <MPostsContainer>
             {posts?.map((post, index) => {
               return (
                 <Link href={`/post/${post.id}`} key={index}>
-                  <PostBox>
-                    <PostTitle>{post.title}</PostTitle>
+                  <MPostBox>
                     {post.thumbnail && (
-                      <ImageBox>
+                      <MImageBox>
                         <Image
                           alt="thumbnail"
                           src={post.thumbnail}
                           priority
-                          sizes="276px"
-                          width="276"
-                          height="155"
+                          sizes="167px"
+                          width={167}
+                          height={94}
                           placeholder="empty"
                         />
-                      </ImageBox>
+                      </MImageBox>
                     )}
-                    <PostBottom>
-                      <PostCategory>{post.category}</PostCategory>
-                      <PostDate>{post.created_at}</PostDate>
-                    </PostBottom>
-                  </PostBox>
+                    <_Container>
+                      <MPostTitle>{post.title}</MPostTitle>
+                      <MPostBottom>
+                        <MPostCategory>{post.category}</MPostCategory>
+                        <MPostDate>{post.created_at}</MPostDate>
+                      </MPostBottom>
+                    </_Container>
+                  </MPostBox>
                 </Link>
               );
             })}
-          </PostsContainer>
-          <RightContainr>
+          </MPostsContainer>
+        </MContainer>
+      ) : (
+        <Container>
+          <Left>
+            <TitleContainer>
+              <BlindTitle>개발이 개발새발</BlindTitle>
+              <Title dir="start">개발이</Title>
+              <Title dir="end">개발새발</Title>
+            </TitleContainer>
+            <LogoContainer>
+              <a
+                href="https://github.com/junhee-won"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <LogoBox>
+                  <Image src={GithubLogo} alt="github" width={50} height={50} />
+                </LogoBox>
+              </a>
+              <a
+                href="https://junhee-hee.tistory.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <LogoBox>
+                  <Image
+                    src={TistoryLogo}
+                    alt="tistory"
+                    width={50}
+                    height={50}
+                  />
+                </LogoBox>
+              </a>
+            </LogoContainer>
+          </Left>
+          <Right>
+            <PostContainer>
+              {posts?.map((post, index) => {
+                return (
+                  <Link href={`/post/${post.id}`} key={index}>
+                    <PostCard>
+                      <PostTitle>{post.title}</PostTitle>
+                      {post.thumbnail && (
+                        <ImageBox>
+                          <Image
+                            alt="thumbnail"
+                            src={post.thumbnail}
+                            priority
+                            sizes="276px"
+                            width="276"
+                            height="155"
+                            placeholder="empty"
+                          />
+                        </ImageBox>
+                      )}
+                      <PostBottom>
+                        <PostCategory>{post.category}</PostCategory>
+                        <PostDate>{post.created_at}</PostDate>
+                      </PostBottom>
+                    </PostCard>
+                  </Link>
+                );
+              })}
+            </PostContainer>
+          </Right>
+          {/* <RightContainr>
             <MainImage>
               <Image
                 alt="메인 이미지"
@@ -147,10 +175,10 @@ function Home({ posts, categories }: Props) {
                 );
               })}
             </CategoryContainer>
-          </RightContainr>
-        </Body>
+          </RightContainr> */}
+        </Container>
       )}
-    </Container>
+    </>
   );
 }
 
@@ -172,6 +200,94 @@ Home.getInitialProps = async () => {
 export default Home;
 
 const Container = styled.div`
+  display: flex;
+  width: 100vw;
+`;
+
+const MContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+`;
+
+const Left = styled.div`
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 320px;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #4e5684;
+  color: white;
+`;
+
+const TitleContainer = styled.div`
+  position: relative;
+  width: 270px;
+  height: 200px;
+  transform: rotate(-5deg);
+`;
+
+const Title = styled.div`
+  width: 100%;
+  text-align: ${(props) => props.dir};
+  line-height: 100px;
+  font-size: 60px;
+  font-weight: 500;
+`;
+
+const BlindTitle = styled.h1`
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+`;
+
+const LogoContainer = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 20px;
+  bottom: 20px;
+  width: 100%;
+  height: 50px;
+  padding: 0 20px 0;
+`;
+
+const LogoBox = styled.div`
+  height: 50px;
+  width: 50px;
+`;
+
+const Right = styled.div`
+  flex: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+
+const PostContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 300px));
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-height: 100vh;
+  padding: 50px;
+  overflow-y: scroll;
+`;
+
+const _Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -232,22 +348,19 @@ const MPostDate = styled.div`
   color: gray;
 `;
 
-const PostsContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  width: 588px;
-  padding-top: 24px;
-`;
-
-const PostBox = styled.div`
+const PostCard = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 282px;
+  width: 276px;
   height: 300px;
-  border: 3px solid black;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transition: all 0.2s linear;
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 const MImageBox = styled.div`
@@ -303,85 +416,4 @@ const PostDate = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   color: gray;
-`;
-
-const Body = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  width: 1200px;
-  gap: 24px;
-`;
-
-const LeftContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  width: 282px;
-`;
-
-const RightContainr = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  width: 282px;
-`;
-
-const MainImage = styled.div`
-  margin-top: 50px;
-  width: 200px;
-  height: 200px;
-  overflow: hidden;
-`;
-
-const CategoryContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  margin: 50px 0 0;
-  border: 3px solid black;
-  padding-bottom: 20px;
-`;
-
-const Category = styled.div`
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  padding-left: 30px;
-  font-size: 20px;
-  border-bottom: 2px solid black;
-`;
-
-const ChildCategory = styled.div`
-  margin-left: 20%;
-  width: 80%;
-  height: 50px;
-  line-height: 50px;
-  padding-left: 30px;
-  font-size: 20px;
-  border-bottom: 2px solid black;
-`;
-
-const CategoryTitle = styled.div`
-  width: 100%;
-  height: 50px;
-  border-bottom: 3px solid black;
-  line-height: 50px;
-  font-size: 25px;
-  text-align: center;
-`;
-
-const CategoryBox = styled.div`
-  width: 95%;
-`;
-
-const Temp = styled.div`
-  margin-top: 200px;
-  width: 200px;
-  height: 200px;
 `;

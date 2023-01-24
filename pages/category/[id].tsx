@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useMedia } from "../../src/hooks/useMedia";
 import apiHelper from "../../src/modules/apiHelper";
-import Topbar from "../../src/components/common/Topbar";
 import ErrorPage from "../_error";
 
 interface Props {
@@ -31,7 +30,6 @@ function CategoryPage({ success, category, posts }: Props) {
         <meta name="description" content={category} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Topbar media={media} />
       {media === "mobile" ? (
         <>
           <MTitle>
