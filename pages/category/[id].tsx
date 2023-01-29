@@ -33,7 +33,7 @@ function CategoryPage({ success, category, posts }: Props) {
       {media === "mobile" ? (
         <>
           <MTitle>
-            <h1>{category}</h1>
+            <TitleText>{category}</TitleText>
             <Link href="/">
               <HomeIcon>
                 <Image src="/home.svg" alt="home page" width={50} height={50} />
@@ -56,7 +56,7 @@ function CategoryPage({ success, category, posts }: Props) {
       ) : (
         <>
           <Title>
-            <h1>{category}</h1>
+            <TitleText>{category}</TitleText>
             <Link href="/">
               <HomeIcon>
                 <Image src="/home.svg" alt="home page" width={50} height={50} />
@@ -101,25 +101,31 @@ const Container = styled.div`
 
 const Title = styled.div`
   position: relative;
-  width: 1200px;
-  height: 100px;
-  margin-top: 10px;
-  border: 3px solid black;
-  line-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 150px;
+  background-color: #4e5684;
+`;
+
+const TitleText = styled.h1`
   text-align: center;
-  overflow: hidden;
+  line-height: 50px;
+  font-size: 40px;
+  color: white;
+  overflow-x: hidden;
 `;
 
 const MTitle = styled.div`
   position: relative;
-  width: 95%;
-  height: 100px;
-  margin-top: 10px;
-  border: 3px solid black;
-  font-size: 20px;
-  line-height: 100px;
-  text-align: center;
-  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 150px;
+  height: auto;
+  background-color: #4e5684;
 `;
 
 const PostContainer = styled.div`
