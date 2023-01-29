@@ -2,11 +2,14 @@ import styled from "styled-components";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 import { useMedia } from "../src/hooks/useMedia";
 import Header from "../src/components/common/Header";
 import apiHelper from "../src/modules/apiHelper";
 import GithubLogo from "../public/github-mark.svg";
 import TistoryLogo from "../public/tistory-logo.svg";
+import Hamburger from "../public/hamburger.svg";
+import XLogo from "../public/x.svg";
 
 interface Props {
   posts: PostType[];
@@ -30,7 +33,13 @@ interface CategoryType {
 }
 
 function Home({ posts, categories }: Props) {
+  console.log(categories);
   const media = useMedia();
+  const [activeCategoryModal, setActiveCategoryModal] = useState(false);
+
+  const toggleActiveCategoryModal = () => {
+    setActiveCategoryModal(!activeCategoryModal);
+  };
 
   return (
     <>
@@ -141,41 +150,48 @@ function Home({ posts, categories }: Props) {
                 );
               })}
             </PostContainer>
-          </Right>
-          {/* <RightContainr>
-            <MainImage>
+            <CategoryHamburger onClick={toggleActiveCategoryModal}>
               <Image
-                alt="메인 이미지"
-                src="/under-construction.svg"
-                width={200}
-                height={200}
+                src={Hamburger}
+                alt="hamburger-menu"
+                width={50}
+                height={50}
               />
-            </MainImage>
-            <CategoryContainer>
-              <CategoryTitle>카테고리</CategoryTitle>
-              {categories.map((parentCategory, index) => {
-                return (
-                  <CategoryBox key={index}>
-                    <Link href={`/category/${parentCategory.id}`}>
-                      <Category>{parentCategory.name}</Category>
-                    </Link>
-                    {parentCategory?.children?.map(
-                      (childCategory, childIndex) => {
-                        return (
-                          <Link
-                            href={`/category/${childCategory.id}`}
-                            key={childIndex}
-                          >
-                            <ChildCategory>{childCategory.name}</ChildCategory>
-                          </Link>
-                        );
-                      }
-                    )}
-                  </CategoryBox>
-                );
-              })}
-            </CategoryContainer>
-          </RightContainr> */}
+            </CategoryHamburger>
+          </Right>
+          {activeCategoryModal && (
+            <CategoryModalBack onClick={toggleActiveCategoryModal}>
+              <CategoryModalContainer onClick={(e) => e.stopPropagation()}>
+                <CategoryHamburger onClick={toggleActiveCategoryModal}>
+                  <Image src={XLogo} alt="x" width={50} height={50} />
+                </CategoryHamburger>
+                {/* <AllPosts>전체보기</AllPosts> */}
+                {categories.map((parentCategory, index) => {
+                  return (
+                    <ParentCategory key={index}>
+                      <Link href={`/category/${parentCategory.id}`}>
+                        {parentCategory.name}
+                      </Link>
+                      {parentCategory?.children?.map(
+                        (childCategory, childIndex) => {
+                          return (
+                            <ChildCategory key={childIndex}>
+                              <Link
+                                href={`/category/${childCategory.id}`}
+                                key={childIndex}
+                              >
+                                - {childCategory.name}
+                              </Link>
+                            </ChildCategory>
+                          );
+                        }
+                      )}
+                    </ParentCategory>
+                  );
+                })}
+              </CategoryModalContainer>
+            </CategoryModalBack>
+          )}
         </Container>
       )}
     </>
@@ -416,4 +432,59 @@ const PostDate = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   color: gray;
+`;
+
+const CategoryHamburger = styled.div`
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  height: 50px;
+  width: 50px;
+`;
+
+const CategoryModalBack = styled.div`
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
+const CategoryModalContainer = styled.div`
+  position: fixed;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 320px;
+  height: 100vh;
+  padding: 100px 50px 100px;
+  background-color: #4e5684;
+  color: white;
+`;
+
+const AllPosts = styled.div`
+  margin-bottom: 50px;
+  font-size: 24px;
+  font-weight: 700;
+`;
+
+const ParentCategory = styled.div`
+  width: 220px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+const ChildCategory = styled.div`
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 12px;
+  padding-left: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
