@@ -33,7 +33,6 @@ interface CategoryType {
 }
 
 function Home({ posts, categories }: Props) {
-  console.log(categories);
   const media = useMedia();
   const [activeCategoryModal, setActiveCategoryModal] = useState(false);
 
@@ -159,39 +158,43 @@ function Home({ posts, categories }: Props) {
               />
             </CategoryHamburger>
           </Right>
-          {activeCategoryModal && (
-            <CategoryModalBack onClick={toggleActiveCategoryModal}>
-              <CategoryModalContainer onClick={(e) => e.stopPropagation()}>
-                <CategoryHamburger onClick={toggleActiveCategoryModal}>
-                  <Image src={XLogo} alt="x" width={50} height={50} />
-                </CategoryHamburger>
-                {/* <AllPosts>전체보기</AllPosts> */}
-                {categories.map((parentCategory, index) => {
-                  return (
-                    <ParentCategory key={index}>
-                      <Link href={`/category/${parentCategory.id}`}>
-                        {parentCategory.name}
-                      </Link>
-                      {parentCategory?.children?.map(
-                        (childCategory, childIndex) => {
-                          return (
-                            <ChildCategory key={childIndex}>
-                              <Link
-                                href={`/category/${childCategory.id}`}
-                                key={childIndex}
-                              >
-                                - {childCategory.name}
-                              </Link>
-                            </ChildCategory>
-                          );
-                        }
-                      )}
-                    </ParentCategory>
-                  );
-                })}
-              </CategoryModalContainer>
-            </CategoryModalBack>
-          )}
+          <CategoryModalBack
+            onClick={toggleActiveCategoryModal}
+            active={activeCategoryModal}
+          >
+            <CategoryModalContainer
+              onClick={(e) => e.stopPropagation()}
+              active={activeCategoryModal}
+            >
+              <CategoryHamburger onClick={toggleActiveCategoryModal}>
+                <Image src={XLogo} alt="x" width={50} height={50} />
+              </CategoryHamburger>
+              {/* <AllPosts>전체보기</AllPosts> */}
+              {categories.map((parentCategory, index) => {
+                return (
+                  <ParentCategory key={index}>
+                    <Link href={`/category/${parentCategory.id}`}>
+                      {parentCategory.name}
+                    </Link>
+                    {parentCategory?.children?.map(
+                      (childCategory, childIndex) => {
+                        return (
+                          <ChildCategory key={childIndex}>
+                            <Link
+                              href={`/category/${childCategory.id}`}
+                              key={childIndex}
+                            >
+                              - {childCategory.name}
+                            </Link>
+                          </ChildCategory>
+                        );
+                      }
+                    )}
+                  </ParentCategory>
+                );
+              })}
+            </CategoryModalContainer>
+          </CategoryModalBack>
         </Container>
       )}
     </>
@@ -441,17 +444,18 @@ const CategoryHamburger = styled.div`
   height: 50px;
   width: 50px;
 `;
-
-const CategoryModalBack = styled.div`
+const CategoryModalBack = styled.div<{ active: boolean }>`
   position: fixed;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
+  opacity: ${(props) => (props.active ? 1 : 0)};
+  visibility: ${(props) => !props.active && "hidden"};
+  transition: all 0.2s ease-in-out;
 `;
 
-const CategoryModalContainer = styled.div`
+const CategoryModalContainer = styled.div<{ active: boolean }>`
   position: fixed;
-  right: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -461,6 +465,8 @@ const CategoryModalContainer = styled.div`
   padding: 100px 50px 100px;
   background-color: #4e5684;
   color: white;
+  right: ${(props) => (props.active ? "0px" : "-320px")};
+  transition: all 0.2s ease-in-out;
 `;
 
 const AllPosts = styled.div`
