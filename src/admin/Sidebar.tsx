@@ -13,8 +13,6 @@ export default function Sidebar({ setOnWritePost, setActiveIndex }: Props) {
       <Divider />
       <Button onClick={() => setActiveIndex(1)}>글 관리</Button>
       <Button onClick={() => setActiveIndex(2)}>카테고리 관리</Button>
-      <Button></Button>
-      <Button></Button>
     </Container>
   );
 }
