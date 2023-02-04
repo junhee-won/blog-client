@@ -10,16 +10,23 @@ import GithubLogo from "../public/github-mark.svg";
 import TistoryLogo from "../public/tistory-logo.svg";
 import Hamburger from "../public/hamburger.svg";
 import XLogo from "../public/x.svg";
+import { Row } from "../src/components/common/Row";
 
 interface Props {
   posts: PostType[];
   categories: CategoryType[];
 }
+
+interface CategoryTree {
+  id: number;
+  name: string;
+}
+
 interface PostType {
   id: number;
   title: string;
   created_at: string;
-  category: string;
+  categoryTree: CategoryTree[];
   thumbnail: string;
 }
 
@@ -74,11 +81,11 @@ function Home({ posts, categories }: Props) {
                       </MImageBox>
                     )}
                     <_Container>
-                      <MPostTitle>{post.title}</MPostTitle>
+                      {/* <MPostTitle>{post.title}</MPostTitle>
                       <MPostBottom>
                         <MPostCategory>{post.category}</MPostCategory>
                         <MPostDate>{post.created_at}</MPostDate>
-                      </MPostBottom>
+                      </MPostBottom> */}
                     </_Container>
                   </MPostBox>
                 </Link>
@@ -124,8 +131,8 @@ function Home({ posts, categories }: Props) {
             <PostContainer>
               {posts?.map((post, index) => {
                 return (
-                  <Link href={`/post/${post.id}`} key={index}>
-                    <PostCard>
+                  <PostCard key={index}>
+                    <Link href={`/post/${post.id}`}>
                       <PostTitle>{post.title}</PostTitle>
                       {post.thumbnail && (
                         <ImageBox>
@@ -140,12 +147,30 @@ function Home({ posts, categories }: Props) {
                           />
                         </ImageBox>
                       )}
-                      <PostBottom>
-                        <PostCategory>{post.category}</PostCategory>
-                        <PostDate>{post.created_at}</PostDate>
-                      </PostBottom>
-                    </PostCard>
-                  </Link>
+                    </Link>
+                    <PostBottom>
+                      <Row>
+                        <Link href={`/category/${post.categoryTree[0].id}`}>
+                          <PostCategory>
+                            {post.categoryTree[0].name + " "}
+                          </PostCategory>
+                        </Link>
+                        {post.categoryTree[1] && (
+                          <>
+                            &nbsp;/&nbsp;
+                            <PostCategory>
+                              <Link
+                                href={`/category/${post.categoryTree[1].id}`}
+                              >
+                                {post.categoryTree[1].name}
+                              </Link>
+                            </PostCategory>
+                          </>
+                        )}
+                      </Row>
+                      <PostDate>{post.created_at}</PostDate>
+                    </PostBottom>
+                  </PostCard>
                 );
               })}
             </PostContainer>
@@ -390,13 +415,13 @@ const MImageBox = styled.div`
 
 const ImageBox = styled.div`
   position: relative;
-  width: 100%;
+  width: 276px;
   height: 155px;
   align-self: center;
 `;
 
 const PostTitle = styled.h3`
-  width: 282px;
+  width: 276px;
   height: 60px;
   margin: 15px 0 15px;
   padding: 10px;
@@ -414,9 +439,11 @@ const PostBottom = styled.div`
   width: 100%;
   height: 50px;
   padding: 0 20px 0;
+  color: gray;
 `;
 
 const PostCategory = styled.div`
+  max-width: 90px;
   height: 30px;
   line-height: 30px;
   font-size: 16px;
@@ -425,6 +452,9 @@ const PostCategory = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   color: gray;
+  &:hover {
+    color: black;
+  }
 `;
 
 const PostDate = styled.div`
