@@ -29,7 +29,6 @@ function PostPage({
 }: Props) {
   const media = useMedia();
   const purifiedHTML: string = DOMPurify.sanitize(content);
-
   const checkView = async () => {
     const _id = id.toString();
     const match = document.cookie.match(
@@ -63,6 +62,12 @@ function PostPage({
 
   useEffect(() => {
     checkView();
+    const script = document.createElement("script");
+    script.text = "hljs.highlightAll()";
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
   }, []);
 
   if (!success) return <ErrorPage />;
