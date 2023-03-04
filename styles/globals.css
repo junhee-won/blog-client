@@ -65,11 +65,9 @@ pre {
 }
 
 code {
-  background-color: RGB(28, 27, 27);
-  color: white;
   font-size: 15px;
 }
-
+/* 
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
@@ -78,4 +76,4 @@ code {
     color: white;
     background: black;
   }
-}
+} */
