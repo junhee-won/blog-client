@@ -82,28 +82,12 @@ function PostPage({
       <Header media={media} />
       {media === "mobile" ? (
         <>
-          <MTitle>
-            <TitleText>{title}</TitleText>
-            <Link href="/">
-              <HomeIcon>
-                <Image src={HomeLogo} alt="home page" width={30} height={30} />
-              </HomeIcon>
-            </Link>
-          </MTitle>
           <MContent className="content">
             <div dangerouslySetInnerHTML={{ __html: purifiedHTML }} />
           </MContent>
         </>
       ) : (
         <>
-          <Title>
-            <TitleText>{title}</TitleText>
-            <Link href="/">
-              <HomeIcon>
-                <Image src={HomeLogo} alt="home page" width={50} height={50} />
-              </HomeIcon>
-            </Link>
-          </Title>
           <Content className="content">
             <div dangerouslySetInnerHTML={{ __html: purifiedHTML }} />
           </Content>
@@ -119,6 +103,7 @@ PostPage.getInitialProps = async ({ query }: NextPageContext) => {
     method: "GET",
   });
   const data = res.data;
+  console.log(data);
   return { ...data, id: query?.id, success: res.success };
 };
 
@@ -130,35 +115,6 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
   padding-top: 60px;
-`;
-
-const Title = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 150px;
-  background-color: #4e5684;
-`;
-
-const TitleText = styled.h1`
-  text-align: center;
-  line-height: 50px;
-  font-size: 40px;
-  color: white;
-  overflow-x: hidden;
-`;
-
-const MTitle = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 150px;
-  height: auto;
-  background-color: #4e5684;
 `;
 
 const Content = styled.div`
