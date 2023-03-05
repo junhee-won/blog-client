@@ -100,6 +100,9 @@ export default function WritePost({
     if (targetPost?.thumbnail) {
       setThumbnail(targetPost.thumbnail);
     }
+    window.onbeforeunload = function () {
+      return "Are you sure to leave this page?";
+    };
   }, []);
 
   return (
