@@ -58,6 +58,10 @@ function Home({ posts, categories }: Props) {
           name="google-site-verification"
           content="NdpeE1O9cq2cINgWWi4KQsDytrXaSMknBnf7psY5oyE"
         />
+        <meta
+          name="naver-site-verification"
+          content="13d7b00d31715c3eb02b20f1da5a84e345ed34e1"
+        />
       </Head>
       {media === "mobile" ? (
         <MContainer>
