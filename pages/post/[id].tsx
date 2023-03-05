@@ -17,6 +17,7 @@ interface Props {
   id: number;
   success: boolean;
   thumbnail: string;
+  category_id: number;
 }
 
 function PostPage({
@@ -27,6 +28,7 @@ function PostPage({
   category,
   id,
   thumbnail,
+  category_id,
 }: Props) {
   const media = useMedia();
   const purifiedHTML: string = DOMPurify.sanitize(content);
@@ -86,6 +88,7 @@ function PostPage({
         title={title}
         createdAt={created_at}
         category={category}
+        categoryId={category_id}
       />
       {media === "mobile" ? (
         <>
@@ -126,6 +129,7 @@ const Container = styled.div`
 
 const Content = styled.div`
   width: 800px;
+  max-width: 95%;
   padding: 50px 20px 100px;
   align-items: center;
   line-height: 30px;

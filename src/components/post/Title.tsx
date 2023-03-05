@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Props {
   media: string;
@@ -7,6 +8,7 @@ interface Props {
   title: string;
   category: string;
   thumbnail: string;
+  categoryId: number;
 }
 
 export default function Title({
@@ -15,10 +17,17 @@ export default function Title({
   thumbnail,
   createdAt,
   category,
+  categoryId,
 }: Props) {
   return (
     <Container media={media}>
-      {/* <TextWrapper>{title}</TextWrapper> */}
+      <TextWrapper>
+        <TitleText media={media}>{title}</TitleText>
+        <Link href={`/category/${categoryId}`}>
+          <SubText>{category}</SubText>
+        </Link>
+        <SubText>{createdAt}</SubText>
+      </TextWrapper>
       <GrayFilter />
       <Cover>
         <Image
@@ -39,6 +48,9 @@ export default function Title({
 
 const Container = styled.div<{ media: string }>`
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   width: 100%;
   height: 400px;
 `;
@@ -46,7 +58,25 @@ const Container = styled.div<{ media: string }>`
 const TextWrapper = styled.div`
   position: relative;
   z-index: 3;
-  font-size: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  width: 794px;
+  max-width: 95%;
+  margin-bottom: 30px;
+`;
+
+const TitleText = styled.h1<{ media: string }>`
+  padding-bottom: 50px;
+  color: white;
+  font-size: ${(props) => (props.media === "mobile" ? "36px" : "50px")};
+`;
+
+const SubText = styled.div`
+  color: #e9ecef;
+  font-size: 18px;
 `;
 
 const GrayFilter = styled.div`
