@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useMedia } from "../src/hooks/useMedia";
-import Header from "../src/components/common/Header";
+import MobileNavbar from "../src/components/MobileNavbar";
 import apiHelper from "../src/modules/apiHelper";
 import GithubLogo from "../public/github-mark.svg";
 import TistoryLogo from "../public/tistory-logo.svg";
@@ -61,7 +61,7 @@ function Home({ posts, categories }: Props) {
       </Head>
       {media === "mobile" ? (
         <MContainer>
-          <Header media={media} />
+          <MobileNavbar media={media} />
           <MPostsContainer>
             {posts?.map((post, index) => {
               return (
