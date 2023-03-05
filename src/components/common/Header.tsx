@@ -6,7 +6,6 @@ interface Props {
 }
 
 export default function Header({ media }: Props) {
-  console.log(media);
   return (
     <Container media={media}>
       <Link href="/">
