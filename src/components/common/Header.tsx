@@ -20,6 +20,7 @@ export default function Header({ media }: Props) {
 
 const Container = styled.div<{ media: string }>`
   position: fixed;
+  z-index: 10;
   top: 0;
   display: flex;
   justify-content: flex-start;
