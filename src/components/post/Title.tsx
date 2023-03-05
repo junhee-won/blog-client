@@ -38,8 +38,7 @@ export default function Title({
             objectPosition: "50% 50%",
           }}
           alt="thumbnail"
-          placeholder="blur"
-          blurDataURL={thumbnail}
+          placeholder="empty"
         />
       </Cover>
     </Container>
