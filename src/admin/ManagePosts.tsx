@@ -59,7 +59,8 @@ export default function ManagePosts({
             <Title>
               <a>{post.title}</a>
             </Title>
-            <DateBox>{convertDateFormat(post.created_at)}</DateBox>
+            <DateBox>created_at:{convertDateFormat(post.created_at)}</DateBox>
+            <DateBox>updated_at:{convertDateFormat(post.updated_at)}</DateBox>
             <Button onClick={() => updatePost(post)}>수정</Button>
           </Post>
         );
@@ -100,7 +101,7 @@ const Title = styled.div`
 const DateBox = styled.div`
   line-height: 60px;
   width: 200px;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 500;
   color: gray;
 `;
