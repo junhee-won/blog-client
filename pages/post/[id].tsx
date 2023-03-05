@@ -9,6 +9,7 @@ import apiHelper from "../../src/modules/apiHelper";
 import { useMedia } from "../../src/hooks/useMedia";
 import ErrorPage from "../_error";
 import HomeLogo from "../../public/home.svg";
+import Header from "../../src/components/common/Header";
 
 interface Props {
   created_at: string;
@@ -78,6 +79,7 @@ function PostPage({
         <meta name="description" content={title} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Header media={media} />
       {media === "mobile" ? (
         <>
           <MTitle>
@@ -127,6 +129,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  padding-top: 60px;
 `;
 
 const Title = styled.div`
