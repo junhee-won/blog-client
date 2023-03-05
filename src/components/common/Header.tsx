@@ -37,6 +37,10 @@ const TextWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
+  transition: all 0.1s linear;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 const Text = styled.div`
