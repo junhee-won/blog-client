@@ -113,7 +113,6 @@ PostPage.getInitialProps = async ({ query }: NextPageContext) => {
     method: "GET",
   });
   const data = res.data;
-  console.log(data);
   return { ...data, id: query?.id, success: res.success };
 };
 
