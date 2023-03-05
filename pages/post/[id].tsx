@@ -90,19 +90,9 @@ function PostPage({
         category={category}
         categoryId={category_id}
       />
-      {media === "mobile" ? (
-        <>
-          <MContent className="content">
-            <div dangerouslySetInnerHTML={{ __html: purifiedHTML }} />
-          </MContent>
-        </>
-      ) : (
-        <>
-          <Content className="content">
-            <div dangerouslySetInnerHTML={{ __html: purifiedHTML }} />
-          </Content>
-        </>
-      )}
+      <Content className="content">
+        <div dangerouslySetInnerHTML={{ __html: purifiedHTML }} />
+      </Content>
     </Container>
   );
 }
@@ -129,14 +119,6 @@ const Container = styled.div`
 const Content = styled.div`
   width: 800px;
   max-width: 95%;
-  padding: 50px 20px 100px;
-  align-items: center;
-  line-height: 30px;
-  font-size: 18px;
-`;
-
-const MContent = styled.div`
-  width: 95%;
   padding: 50px 10px 100px;
   align-items: center;
   line-height: 30px;
