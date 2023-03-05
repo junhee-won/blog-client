@@ -21,7 +21,9 @@ export default function WritePost({
   const [isPublic, setIsPublic] = useState(targetPost?.public || 0);
   const [categories, setCategories] = useState([]);
   const [categroyId, setCategoryId] = useState(targetPost?.category_id || 1);
-  const [thumbnail, setThumbnail] = useState("/public/vercel.svg");
+  const [thumbnail, setThumbnail] = useState(
+    "https://blog-image-bucket-123.s3.ap-northeast-2.amazonaws.com/default.jpeg"
+  );
 
   const completeWriting = () => {
     (async function () {
@@ -103,6 +105,9 @@ export default function WritePost({
     window.onbeforeunload = function () {
       return "Are you sure to leave this page?";
     };
+    return () => {
+      window.onbeforeunload = null;
+    };
   }, []);
 
   return (
@@ -147,7 +152,11 @@ export default function WritePost({
           src={thumbnail}
           width={100}
           height={40}
-          onError={() => setThumbnail("/vercel.svg")}
+          onError={() =>
+            setThumbnail(
+              "https://blog-image-bucket-123.s3.ap-northeast-2.amazonaws.com/default.jpeg"
+            )
+          }
         />
         <Select
           onChange={(e) => setCategoryId(e.target.value)}
