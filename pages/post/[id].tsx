@@ -1,15 +1,13 @@
 import styled from "styled-components";
 import Head from "next/head";
-import Link from "next/link";
-import Image from "next/image";
 import { NextPageContext } from "next";
 import { useEffect } from "react";
 import DOMPurify from "isomorphic-dompurify";
 import apiHelper from "../../src/modules/apiHelper";
 import { useMedia } from "../../src/hooks/useMedia";
 import ErrorPage from "../_error";
-import HomeLogo from "../../public/home.svg";
 import Header from "../../src/components/common/Header";
+import Title from "../../src/components/post/Title";
 
 interface Props {
   created_at: string;
@@ -18,6 +16,7 @@ interface Props {
   category: string;
   id: number;
   success: boolean;
+  thumbnail: string;
 }
 
 function PostPage({
@@ -27,6 +26,7 @@ function PostPage({
   content,
   category,
   id,
+  thumbnail,
 }: Props) {
   const media = useMedia();
   const purifiedHTML: string = DOMPurify.sanitize(content);
@@ -80,6 +80,13 @@ function PostPage({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header media={media} />
+      <Title
+        media={media}
+        thumbnail={thumbnail}
+        title={title}
+        createdAt={created_at}
+        category={category}
+      />
       {media === "mobile" ? (
         <>
           <MContent className="content">
@@ -131,12 +138,4 @@ const MContent = styled.div`
   align-items: center;
   line-height: 30px;
   font-size: 18px;
-`;
-
-const HomeIcon = styled.div`
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  width: auto;
-  height: auto;
 `;
