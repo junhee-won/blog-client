@@ -39,6 +39,7 @@ export default function Title({
           }}
           alt="thumbnail"
           placeholder="empty"
+          priority
         />
       </Cover>
     </Container>
