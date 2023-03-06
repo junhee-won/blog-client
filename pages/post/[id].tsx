@@ -1,6 +1,6 @@
 import styled from "styled-components";
+import { NextPage } from "next";
 import Head from "next/head";
-import { NextPageContext } from "next";
 import { useEffect } from "react";
 import DOMPurify from "isomorphic-dompurify";
 import apiHelper from "../../src/modules/apiHelper";
@@ -8,6 +8,7 @@ import { useMedia } from "../../src/hooks/useMedia";
 import ErrorPage from "../_error";
 import Header from "../../src/components/common/Header";
 import Title from "../../src/components/post/Title";
+import { parseContents } from "../../src/modules/parseContents";
 
 interface Props {
   created_at: string;
@@ -18,9 +19,14 @@ interface Props {
   success: boolean;
   thumbnail: string;
   category_id: number;
+  Headings: {
+    type: string;
+    id: string;
+    text: string;
+  };
 }
 
-function PostPage({
+const PostPage: NextPage<Props> = ({
   success,
   created_at,
   title,
@@ -29,7 +35,8 @@ function PostPage({
   id,
   thumbnail,
   category_id,
-}: Props) {
+  Headings,
+}) => {
   const media = useMedia();
   const purifiedHTML: string = DOMPurify.sanitize(content);
   const checkView = async () => {
@@ -95,15 +102,27 @@ function PostPage({
       </Content>
     </Container>
   );
-}
+};
 
-PostPage.getInitialProps = async ({ query }: NextPageContext) => {
+PostPage.getInitialProps = async ({ query }) => {
+  let _Headings, _content;
   const res = await apiHelper({
     url: `${process.env.NEXT_PUBLIC_API_GET_POST}${query?.id}`,
     method: "GET",
   });
   const data = res.data;
-  return { ...data, id: query?.id, success: res.success };
+  if (res.success) {
+    const { Headings, content } = parseContents(data);
+    _Headings = Headings;
+    _content = content;
+  }
+  return {
+    ...data,
+    id: query?.id,
+    success: res.success,
+    content: _content,
+    Headings: _Headings,
+  };
 };
 
 export default PostPage;
