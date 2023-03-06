@@ -79,17 +79,35 @@ function Home({ posts, categories }: Props) {
                           priority
                           sizes="167px"
                           width={167}
-                          height={94}
+                          height={98}
                           placeholder="empty"
                         />
                       </MImageBox>
                     )}
                     <_Container>
-                      {/* <MPostTitle>{post.title}</MPostTitle>
+                      <MPostTitle>{post.title}</MPostTitle>
                       <MPostBottom>
-                        <MPostCategory>{post.category}</MPostCategory>
+                        <Row>
+                          {/* <Link href={`/category/${post.categoryTree[0].id}`}> */}
+                          <MPostCategory>
+                            {post.categoryTree[0].name + " "}
+                          </MPostCategory>
+                          {/* </Link> */}
+                          {post.categoryTree[1] && (
+                            <>
+                              &nbsp;/&nbsp;
+                              <MPostCategory>
+                                {/* <Link
+                                  href={`/category/${post.categoryTree[1].id}`}
+                                > */}
+                                {post.categoryTree[1].name}
+                                {/* </Link> */}
+                              </MPostCategory>
+                            </>
+                          )}
+                        </Row>
                         <MPostDate>{post.created_at}</MPostDate>
-                      </MPostBottom> */}
+                      </MPostBottom>
                     </_Container>
                   </MPostBox>
                 </Link>
@@ -339,8 +357,9 @@ const _Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
+  padding: 5px 10px 5px;
 `;
 
 const MPostsContainer = styled.div`
@@ -356,7 +375,7 @@ const MPostBox = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  border: 3px solid black;
+  border: 1px solid black;
   height: 100px;
   width: 95vw;
   min-width: 200px;
@@ -366,16 +385,16 @@ const MPostTitle = styled.h3`
   width: 90%;
   height: 50px;
   margin-top: 10px;
-  text-align: center;
   line-height: 50px;
   overflow: hidden;
 `;
 
 const MPostBottom = styled.div`
   display: flex;
-  width: 90%;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
+  color: gray;
 `;
 
 const MPostCategory = styled.div`
@@ -384,16 +403,14 @@ const MPostCategory = styled.div`
   font-size: 15px;
   font-weight: 500;
   overflow-x: hidden;
-  color: gray;
 `;
 
 const MPostDate = styled.div`
   height: 30px;
   line-height: 30px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   overflow-x: hidden;
-  color: gray;
 `;
 
 const PostCard = styled.div`
@@ -413,7 +430,7 @@ const PostCard = styled.div`
 
 const MImageBox = styled.div`
   position: relative;
-  height: 94px;
+  height: 98px;
   width: 167px;
 `;
 
