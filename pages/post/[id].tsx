@@ -9,6 +9,7 @@ import ErrorPage from "../_error";
 import Header from "../../src/components/common/Header";
 import Title from "../../src/components/post/Title";
 import { parseContents } from "../../src/modules/parseContents";
+import Contents from "../../src/components/post/Contents";
 
 interface Props {
   created_at: string;
@@ -23,7 +24,7 @@ interface Props {
     type: string;
     id: string;
     text: string;
-  };
+  }[];
 }
 
 const PostPage: NextPage<Props> = ({
@@ -97,9 +98,15 @@ const PostPage: NextPage<Props> = ({
         category={category}
         categoryId={category_id}
       />
-      <Content className="content">
-        <div dangerouslySetInnerHTML={{ __html: purifiedHTML }} />
-      </Content>
+      <Body>
+        <SideWrapper />
+        <Content className="content">
+          <div dangerouslySetInnerHTML={{ __html: purifiedHTML }} />
+        </Content>
+        <SideWrapper>
+          <Contents Headings={Headings} />
+        </SideWrapper>
+      </Body>
     </Container>
   );
 };
@@ -133,6 +140,22 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
   padding-top: 60px;
+`;
+
+const Body = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+`;
+
+const SideWrapper = styled.div`
+  flex: 1;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 `;
 
 const Content = styled.div`

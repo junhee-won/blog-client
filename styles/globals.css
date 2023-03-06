@@ -2,6 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
+  scroll-behavior: smooth !important;
   /* background-color: RGB(243, 219, 182); */
 }
 
@@ -18,6 +19,10 @@ li {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+h2 {
+  scroll-margin-top: 100px;
 }
 
 .ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline {
