@@ -136,9 +136,9 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
-  width: 800px;
+  width: 794px;
   max-width: 95%;
-  padding: 50px 10px 100px;
+  padding: 50px 0 100px;
   align-items: center;
   line-height: 30px;
   font-size: 18px;
