@@ -1,4 +1,3 @@
-// import { getServerSideSitemap } from "next-sitemap";
 import apiHelper from "../src/modules/apiHelper";
 
 interface Res {
