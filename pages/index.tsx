@@ -54,6 +54,15 @@ function Home({ posts, categories }: Props) {
         <meta name="description" content="개발이 개발새발" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/favicon.ico" />
+        <meta property="og:title" content="개발이 개발새발" />
+        <meta property="og:site_name" content="개발이 개발새발" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://junhee.kr" />
+        <meta property="og:description" content="개발새발 개발 블로그" />
+        <meta
+          property="og:image"
+          content="https://blog-image-bucket-123.s3.ap-northeast-2.amazonaws.com/etc/og-image.png"
+        />
         <meta
           name="google-site-verification"
           content="NdpeE1O9cq2cINgWWi4KQsDytrXaSMknBnf7psY5oyE"

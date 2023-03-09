@@ -8,6 +8,7 @@ import apiHelper from "../../src/modules/apiHelper";
 import ErrorPage from "../_error";
 
 interface Props {
+  id: number;
   success: boolean;
   category: string;
   posts: PostType[];
@@ -19,8 +20,10 @@ interface PostType {
   title: string;
 }
 
-function CategoryPage({ success, category, posts }: Props) {
+function CategoryPage({ success, category, posts, id }: Props) {
   const media = useMedia();
+
+  const ogUrl = `https://junhee.kr/category/${id}`;
 
   if (!success) return <ErrorPage />;
   return (
@@ -29,6 +32,15 @@ function CategoryPage({ success, category, posts }: Props) {
         <title>{category}</title>
         <meta name="description" content={category} />
         <link rel="icon" href="/favicon.ico" />
+        <meta property="og:title" content={category} />
+        <meta property="og:site_name" content="개발이 개발새발" />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={ogUrl} />
+        <meta property="og:description" content="개발새발 개발 블로그" />
+        <meta
+          property="og:image"
+          content="https://blog-image-bucket-123.s3.ap-northeast-2.amazonaws.com/etc/og-image.png"
+        />
       </Head>
       {media === "mobile" ? (
         <>
@@ -87,7 +99,7 @@ CategoryPage.getInitialProps = async ({ query }: NextPageContext) => {
     method: "GET",
   });
   const data = res.data;
-  return { ...data, success: res.success };
+  return { ...data, success: res.success, id: query?.id };
 };
 
 export default CategoryPage;

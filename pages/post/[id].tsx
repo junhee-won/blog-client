@@ -81,6 +81,8 @@ const PostPage: NextPage<Props> = ({
     };
   }, []);
 
+  const ogUrl = `https://junhee.kr/post/${id}`;
+
   if (!success) return <ErrorPage />;
   return (
     <Container>
@@ -88,6 +90,15 @@ const PostPage: NextPage<Props> = ({
         <title>{title}</title>
         <meta name="description" content={title} />
         <link rel="icon" href="/favicon.ico" />
+        <meta property="og:title" content={title} />
+        <meta property="og:site_name" content="개발이 개발새발" />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={ogUrl} />
+        <meta property="og:description" content="개발새발 개발 블로그" />
+        <meta
+          property="og:image"
+          content="https://blog-image-bucket-123.s3.ap-northeast-2.amazonaws.com/etc/og-image.png"
+        />
       </Head>
       <Header media={media} />
       <Title

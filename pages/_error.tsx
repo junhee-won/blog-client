@@ -14,6 +14,17 @@ export default function ErrorPage() {
         <meta name="description" content="개발이 개발새발" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/favicon.ico" />
+        <meta
+          property="og:title"
+          content="띠요잉! 존재하지 않는 페이지 입니다"
+        />
+        <meta property="og:site_name" content="개발이 개발새발" />
+        <meta property="og:type" content="article" />
+        <meta property="og:description" content="개발새발 개발 블로그" />
+        <meta
+          property="og:image"
+          content="https://blog-image-bucket-123.s3.ap-northeast-2.amazonaws.com/etc/og-image.png"
+        />
       </Head>
       <Header media={media} />
       <WarningWrapper>
