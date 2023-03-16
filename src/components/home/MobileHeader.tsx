@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import Image from "next/image";
-import GithubLogo from "../../public/github-mark.svg";
-import TistoryLogo from "../../public/tistory-logo.svg";
+import GithubLogo from "../../../public/github-mark.svg";
+import TistoryLogo from "../../../public/tistory-logo.svg";
 
 interface Props {
   media: string;
 }
 
-export default function MobileNavbar({ media }: Props) {
+export default function MobileHeader({ media }: Props) {
   if (media === "mobile") {
     return (
       <MContainer>
