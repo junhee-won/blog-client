@@ -1,15 +1,18 @@
 import styled from "styled-components";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import Login from "../src/admin/Login";
-import Sidebar from "../src/admin/Sidebar";
-import Home from "../src/admin/Home";
-import ManagePosts from "../src/admin/ManagePosts";
-import ManageCategories from "../src/admin/ManageCategories";
+import Login from "../src/components/admin/Login";
+import Sidebar from "../src/components/admin/Sidebar";
+import Home from "../src/components/admin/Home";
+import ManagePosts from "../src/components/admin/ManagePosts";
+import ManageCategories from "../src/components/admin/ManageCategories";
 
-const DynamicWritePost = dynamic(() => import("../src/admin/WritePost"), {
-  ssr: false,
-});
+const DynamicWritePost = dynamic(
+  () => import("../src/components/admin/WritePost"),
+  {
+    ssr: false,
+  }
+);
 
 interface PostType {
   id: number;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import apiHelper from "../modules/apiHelper";
+import apiHelper from "../../modules/apiHelper";
 
 interface Props {
   token: string;

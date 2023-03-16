@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import apiHelper from "../modules/apiHelper";
+import apiHelper from "../../modules/apiHelper";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import Editor from "ckeditor5-custom-build/build/ckeditor";
 
