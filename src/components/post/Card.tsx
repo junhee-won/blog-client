@@ -61,7 +61,7 @@ const Container = styled.div`
   height: 300px;
   border-radius: 5px;
   overflow: hidden;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.35);
   transition: all 0.1s linear;
   &:hover {
     transform: scale(1.03);
