@@ -54,7 +54,6 @@ const MContainer = styled.div`
   position: relative;
   width: 100%;
   height: 120px;
-  margin-top: 10px;
   background-color: #4e5684;
   color: white;
 `;
