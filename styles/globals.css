@@ -21,9 +21,13 @@ li {
   padding: 0;
 }
 
+h1 {
+  word-wrap: break-word;
+}
 h2,
 h3 {
   scroll-margin-top: 100px;
+  word-wrap: break-word;
 }
 
 .ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline {

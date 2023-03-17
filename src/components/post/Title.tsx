@@ -69,6 +69,7 @@ const TextWrapper = styled.div`
 `;
 
 const TitleText = styled.h1<{ media: string }>`
+  max-width: 100%;
   padding-bottom: 50px;
   color: white;
   font-size: ${(props) => (props.media === "mobile" ? "36px" : "50px")};
