@@ -22,7 +22,7 @@ export default function WritePost({
   const [categories, setCategories] = useState([]);
   const [categroyId, setCategoryId] = useState(targetPost?.category_id || 1);
   const [thumbnail, setThumbnail] = useState(
-    "https://blog-image-bucket-123.s3.ap-northeast-2.amazonaws.com/default.jpeg"
+    "https://d1qlsar6961fb5.cloudfront.net/default.jpeg"
   );
 
   const completeWriting = () => {
@@ -153,9 +153,7 @@ export default function WritePost({
           width={100}
           height={40}
           onError={() =>
-            setThumbnail(
-              "https://blog-image-bucket-123.s3.ap-northeast-2.amazonaws.com/default.jpeg"
-            )
+            setThumbnail("https://d1qlsar6961fb5.cloudfront.net/default.jpeg")
           }
         />
         <Select

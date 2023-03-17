@@ -39,7 +39,7 @@ function CategoryPage({ success, category, posts, id }: Props) {
         <meta property="og:description" content="개발새발 개발 블로그" />
         <meta
           property="og:image"
-          content="https://blog-image-bucket-123.s3.ap-northeast-2.amazonaws.com/etc/og-image.png"
+          content="https://d1qlsar6961fb5.cloudfront.net/etc/og-image.png"
         />
       </Head>
       {media === "mobile" ? (
