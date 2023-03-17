@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Card from "../post/Card";
-import { PostCardInterface } from "../../interfaces/PostCardInterface";
+import { PostCardInterface } from "../../types/interfaces";
 
 interface Props {
   postCards: PostCardInterface[];

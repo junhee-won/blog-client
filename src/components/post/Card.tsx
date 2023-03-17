@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
-import { PostCardInterface } from "../../interfaces/PostCardInterface";
+import { PostCardInterface } from "../../types/interfaces";
 import { Row } from "../common/Row";
 
 interface Props {

@@ -1,3 +1,12 @@
+export interface CategoryInterface {
+  id: number;
+  name: string;
+  children: {
+    id: number;
+    name: string;
+  }[];
+}
+
 interface CategoryTree {
   id: number;
   name: string;
