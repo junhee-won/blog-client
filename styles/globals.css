@@ -9,6 +9,7 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+  word-wrap: break-word;
 }
 
 li {
@@ -24,6 +25,7 @@ li {
 h1 {
   word-wrap: break-word;
 }
+
 h2,
 h3 {
   scroll-margin-top: 100px;
