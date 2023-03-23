@@ -10,6 +10,7 @@ import Header from "../../src/components/common/Header";
 import Title from "../../src/components/post/Title";
 import { parseContents } from "../../src/modules/parseContents";
 import Contents from "../../src/components/post/Contents";
+import hljs from "highlight.js";
 
 interface Props {
   created_at: string;
@@ -73,12 +74,7 @@ const PostPage: NextPage<Props> = ({
 
   useEffect(() => {
     checkView();
-    const script = document.createElement("script");
-    script.text = "hljs.highlightAll()";
-    document.body.appendChild(script);
-    return () => {
-      document.body.removeChild(script);
-    };
+    hljs.highlightAll();
   }, []);
 
   const ogUrl = `https://junhee.kr/post/${id}`;
