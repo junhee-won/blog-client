@@ -22,7 +22,6 @@ function Home({ postCards, categories }: Props) {
         <title>개발이 개발새발</title>
         <meta name="description" content="개발이 개발새발" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href="/favicon.ico" />
         <meta property="og:title" content="개발이 개발새발" />
         <meta property="og:site_name" content="개발이 개발새발" />
         <meta property="og:type" content="website" />
@@ -36,6 +35,7 @@ function Home({ postCards, categories }: Props) {
           name="naver-site-verification"
           content="13d7b00d31715c3eb02b20f1da5a84e345ed34e1"
         />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container isMobile={media === "mobile"}>
         {media === "mobile" ? <MobileHeader media={media} /> : <LeftSide />}

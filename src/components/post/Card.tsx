@@ -16,12 +16,15 @@ export default function Card({ postCard }: Props) {
         {thumbnail && (
           <ImageBox>
             <Image
-              alt="thumbnail"
+              alt={`${title} - 대표 이미지`}
               src={thumbnail}
               priority
-              sizes="276px"
-              width="276"
-              height="155"
+              width={288}
+              height={162}
+              style={{
+                objectFit: "cover",
+                objectPosition: "50% 50%",
+              }}
               placeholder="empty"
             />
           </ImageBox>
@@ -57,7 +60,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 276px;
+  width: 288px;
   height: 300px;
   border-radius: 5px;
   overflow: hidden;
@@ -69,26 +72,31 @@ const Container = styled.div`
 `;
 
 const ImageBox = styled.div`
+  display: block;
   position: relative;
-  width: 276px;
-  height: 155px;
-  align-self: center;
+  overflow: hidden;
+  width: 288px;
+  height: 162px;
 `;
 
 const TitleWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 99px;
-  padding: 20px;
+  height: 90px;
+  border-top: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+  padding: 0px 20px;
 `;
 
-const Title = styled.h3`
+const Title = styled.h2`
   display: -webkit-box;
-  width: 236px;
-  line-height: 27px;
   margin: 0px;
   padding: 0px;
+  width: 236px;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 25px;
   text-overflow: ellipsis;
   overflow: hidden;
   -webkit-box-orient: vertical;
@@ -100,10 +108,9 @@ const Bottom = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 51px;
+  height: 100%;
   padding: 0 20px 0;
   color: gray;
-  border-top: 1px solid #dee2e6;
 `;
 
 const Category = styled.div`
