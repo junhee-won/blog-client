@@ -20,7 +20,7 @@ export default function Title({
   categoryId,
 }: Props) {
   return (
-    <Container media={media}>
+    <Container>
       <TextWrapper>
         <TitleText media={media}>{title}</TitleText>
         <Link href={`/category/${categoryId}`}>
@@ -31,28 +31,31 @@ export default function Title({
       <GrayFilter />
       <Cover>
         <Image
+          alt="thumbnail"
           src={thumbnail}
+          priority
           fill
+          sizes="110vw"
           style={{
             objectFit: "cover",
             objectPosition: "50% 50%",
           }}
-          alt="thumbnail"
           placeholder="empty"
-          priority
         />
       </Cover>
     </Container>
   );
 }
 
-const Container = styled.div<{ media: string }>`
+const Container = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  width: 100%;
-  height: 400px;
+  width: 100vw;
+  height: 30vw;
+  min-height: 400px;
+  overflow: hidden;
 `;
 
 const TextWrapper = styled.div`
@@ -92,12 +95,12 @@ const GrayFilter = styled.div`
 `;
 
 const Cover = styled.div`
+  display: block;
   position: absolute;
   z-index: 1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  top: -5%;
+  left: -5%;
+  width: 110%;
+  height: 110%;
   filter: blur(2px);
 `;

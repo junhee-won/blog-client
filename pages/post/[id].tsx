@@ -89,7 +89,6 @@ const PostPage: NextPage<Props> = ({
       <Head>
         <title>{title}</title>
         <meta name="description" content={title} />
-        <link rel="icon" href="/favicon.ico" />
         <meta property="og:title" content={title} />
         <meta property="og:site_name" content="개발이 개발새발" />
         <meta property="og:type" content="article" />
@@ -99,6 +98,7 @@ const PostPage: NextPage<Props> = ({
           property="og:image"
           content="https://d1qlsar6961fb5.cloudfront.net/etc/og-image.png"
         />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header media={media} />
       <Title
