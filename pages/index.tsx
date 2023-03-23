@@ -33,10 +33,6 @@ function Home({ postCards, categories }: Props) {
           content="https://d1qlsar6961fb5.cloudfront.net/etc/og-image.png"
         />
         <meta
-          name="google-site-verification"
-          content="NdpeE1O9cq2cINgWWi4KQsDytrXaSMknBnf7psY5oyE"
-        />
-        <meta
           name="naver-site-verification"
           content="13d7b00d31715c3eb02b20f1da5a84e345ed34e1"
         />
