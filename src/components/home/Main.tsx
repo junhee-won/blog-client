@@ -32,10 +32,10 @@ const Container = styled.div<{ isMobile: boolean }>`
 
 const PostCardContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(276px, 276px));
+  grid-template-columns: repeat(auto-fill, minmax(288px, 288px));
   justify-content: center;
   justify-items: center;
   align-items: center;
-  gap: 15px;
+  gap: 18px;
   width: 100%;
 `;
