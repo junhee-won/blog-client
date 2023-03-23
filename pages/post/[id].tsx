@@ -11,6 +11,7 @@ import Title from "../../src/components/post/Title";
 import { parseContents } from "../../src/modules/parseContents";
 import Contents from "../../src/components/post/Contents";
 import hljs from "highlight.js";
+import Cookies from "js-cookie";
 
 interface Props {
   created_at: string;
@@ -42,13 +43,10 @@ const PostPage: NextPage<Props> = ({
   const media = useMedia();
   const purifiedHTML: string = DOMPurify.sanitize(content);
   const checkView = async () => {
-    const _id = id.toString();
-    const match = document.cookie.match(
-      new RegExp("(^| )" + "view" + "=([^;]+)")
-    );
-    const _ids = match?.[2]?.split(",");
-    if (_ids?.find((ele) => ele === _id)) return;
-
+    const idStr = id.toString();
+    const viewCookie = Cookies.get("view") || "";
+    const idStrArr = viewCookie.split(",");
+    if (idStrArr?.find((ele) => ele === idStr)) return;
     try {
       await apiHelper({
         url: process.env.NEXT_PUBLIC_API_VIEW_POST,
@@ -63,13 +61,13 @@ const PostPage: NextPage<Props> = ({
     const expire = new Date();
     expire.setHours(23, 59, 59);
 
-    if (match === null) {
-      document.cookie = `view=${_id}; Expires=${expire.toUTCString()};`;
+    let newViewCookie: string;
+    if (viewCookie === "") {
+      newViewCookie = idStr;
     } else {
-      document.cookie = `view=${
-        match[2]
-      },${_id}; Expires=${expire.toUTCString()};`;
+      newViewCookie = viewCookie + `,${idStr}`;
     }
+    Cookies.set("view", newViewCookie, { expires: expire });
   };
 
   useEffect(() => {
