@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { useState } from "react";
+import Cookies from "js-cookie";
 import apiHelper from "../../modules/apiHelper";
 
 interface Props {
-  setToken: (arg: string) => void;
+  closeLoginModal: (arg: void) => void;
 }
 
-export default function Login({ setToken }: Props) {
+export default function Login({ closeLoginModal }: Props) {
   const [userId, setUserId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -20,7 +21,8 @@ export default function Login({ setToken }: Props) {
       },
     });
     if (res.success) {
-      setToken(res.data.access_token);
+      Cookies.set("jwt", res.data.access_token);
+      closeLoginModal();
     }
   };
 
