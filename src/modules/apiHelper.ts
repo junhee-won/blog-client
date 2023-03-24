@@ -1,9 +1,10 @@
 import axios, { RawAxiosRequestHeaders } from "axios";
+import Cookies from "js-cookie";
 
 interface Props {
   url: string | undefined;
   method: string;
-  jwt?: string;
+  jwt?: boolean;
   body?: Object;
 }
 
@@ -12,6 +13,7 @@ export default async function apiHelper({ url, method, jwt, body }: Props) {
     "Content-Type": "application/json",
   };
   if (jwt) {
+    const jwt = Cookies.get("jwt");
     headers.Authorization = "Bearer " + jwt;
   }
   return axios({
