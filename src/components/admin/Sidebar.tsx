@@ -1,15 +1,18 @@
 import styled from "styled-components";
 
 interface Props {
-  setOnWritePost: (arg: boolean) => void;
+  setIsWritingModalOpen: (arg: boolean) => void;
   setActiveIndex: (arg: number) => void;
 }
 
-export default function Sidebar({ setOnWritePost, setActiveIndex }: Props) {
+export default function Sidebar({
+  setIsWritingModalOpen,
+  setActiveIndex,
+}: Props) {
   return (
     <Container>
       <Button onClick={() => setActiveIndex(0)}>홈</Button>
-      <Button onClick={() => setOnWritePost(true)}>글쓰기</Button>
+      <Button onClick={() => setIsWritingModalOpen(true)}>글쓰기</Button>
       <Divider />
       <Button onClick={() => setActiveIndex(1)}>글 관리</Button>
       <Button onClick={() => setActiveIndex(2)}>카테고리 관리</Button>

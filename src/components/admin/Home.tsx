@@ -2,16 +2,14 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import apiHelper from "../../modules/apiHelper";
 
-interface Props {
-  token: string;
-}
+interface Props {}
 
 interface DayView {
   localeDateString: string;
   count: number;
 }
 
-export default function Home({ token }: Props) {
+export default function Home({}: Props) {
   const [lastDaysViews, setLastDaysViews] = useState<DayView[]>([]);
 
   useEffect(() => {
@@ -19,6 +17,7 @@ export default function Home({ token }: Props) {
       const res = await apiHelper({
         url: process.env.NEXT_PUBLIC_API_VIEW_LAST_DAYS,
         method: "GET",
+        jwt: true,
       });
       if (res.success) {
         setLastDaysViews(res.data);

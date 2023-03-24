@@ -5,12 +5,7 @@ import apiHelper from "../../modules/apiHelper";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import Editor from "ckeditor5-custom-build/build/ckeditor";
 
-export default function WritePost({
-  offWritePost,
-  writingMode,
-  targetPost,
-  token,
-}) {
+export default function WritePost({ offWritePost, writingMode, targetPost }) {
   const [editor, setEditor] = useState();
   const [title, setTitle] = useState(
     targetPost?.title === undefined ? "" : targetPost.title
@@ -31,7 +26,7 @@ export default function WritePost({
         const res = await apiHelper({
           url: process.env.NEXT_PUBLIC_API_ADMIN_UPDATE_POST,
           method: "PUT",
-          jwt: token,
+          jwt: true,
           body: {
             id: targetPost.id,
             title: title,
@@ -50,7 +45,7 @@ export default function WritePost({
         const res = await apiHelper({
           url: process.env.NEXT_PUBLIC_API_ADMIN_CREATE_POST,
           method: "POST",
-          jwt: token,
+          jwt: true,
           body: {
             title: title,
             content: content,
@@ -92,7 +87,7 @@ export default function WritePost({
     (async function () {
       const res = await apiHelper({
         url: process.env.NEXT_PUBLIC_API_ADMIN_GET_ALL_CATEGROIES,
-        jwt: token,
+        jwt: true,
         method: "GET",
       });
       if (res.success) {

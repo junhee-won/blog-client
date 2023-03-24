@@ -2,9 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import apiHelper from "../../modules/apiHelper";
 
-interface Props {
-  token: string;
-}
+interface Props {}
 
 interface CategoryType {
   id: number;
@@ -16,14 +14,14 @@ interface CategoryType {
   updated_at: string;
 }
 
-export default function ManageCategories({ token }: Props) {
+export default function ManageCategories({}: Props) {
   const [categories, setCategories] = useState<CategoryType[]>([]);
 
   const getPosts = async () => {
     const res = await apiHelper({
       url: process.env.NEXT_PUBLIC_API_ADMIN_GET_ALL_CATEGROIES,
       method: "GET",
-      jwt: token,
+      jwt: true,
     });
     if (res.success) {
       setCategories(res.data);
@@ -54,7 +52,7 @@ export default function ManageCategories({ token }: Props) {
     const res = await apiHelper({
       url: process.env.NEXT_PUBLIC_API_ADMIN_UPDATE_CATEGORY,
       method: "PUT",
-      jwt: token,
+      jwt: true,
       body: {
         id: category.id,
         name: category.name,
@@ -87,7 +85,7 @@ export default function ManageCategories({ token }: Props) {
     const res = await apiHelper({
       url: process.env.NEXT_PUBLIC_API_ADMIN_UPDATE_CATEGORY,
       method: "POST",
-      jwt: token,
+      jwt: true,
       body: {
         name: category.name,
         parent_category_id: category.parent_category_id,

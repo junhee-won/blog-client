@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import apiHelper from "../../modules/apiHelper";
 
 interface Props {
-  token: string;
-  setOnWritePost: (arg: boolean) => void;
+  setIsWritingModalOpen: (arg: boolean) => void;
   setWritingMode: (arg: string) => void;
   setTargetPost: (arg: PostType) => void;
 }
@@ -21,8 +20,7 @@ interface PostType {
 }
 
 export default function ManagePosts({
-  token,
-  setOnWritePost,
+  setIsWritingModalOpen,
   setWritingMode,
   setTargetPost,
 }: Props) {
@@ -33,7 +31,7 @@ export default function ManagePosts({
       const res = await apiHelper({
         url: process.env.NEXT_PUBLIC_API_ADMIN_GET_ALL_POSTS,
         method: "GET",
-        jwt: token,
+        jwt: true,
       });
       if (res.success) {
         setPosts(res.data);
@@ -44,7 +42,7 @@ export default function ManagePosts({
   const updatePost = (post: PostType) => {
     setTargetPost(post);
     setWritingMode("update");
-    setOnWritePost(true);
+    setIsWritingModalOpen(true);
   };
 
   const convertDateFormat = (date: string): string => {

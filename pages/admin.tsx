@@ -29,14 +29,13 @@ interface PostType {
 
 export default function AdminPage() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(true);
-  const [token, setToken] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
-  const [onWritePost, setOnWritePost] = useState(false);
+  const [isWritingModalOpen, setIsWritingModalOpen] = useState(false);
   const [writingMode, setWritingMode] = useState("create");
   const [targetPost, setTargetPost] = useState<PostType | null>(null);
 
   const offWritePost = () => {
-    setOnWritePost(false);
+    setIsWritingModalOpen(false);
     setWritingMode("create");
     setTargetPost(null);
   };
@@ -61,45 +60,35 @@ export default function AdminPage() {
     setIsLoginModalOpen(false);
   };
 
-  return (
-    isLoginModalOpen && (
-      <Container2>
-        <Login closeLoginModal={closeLoginModal} />
-      </Container2>
-    )
-  );
-
-  if (token) {
-    if (!onWritePost) {
-      return (
-        <Container>
-          <Sidebar
-            setOnWritePost={setOnWritePost}
-            setActiveIndex={setActiveIndex}
-          />
-          {activeIndex === 0 && <Home token={token} />}
-          {activeIndex === 1 && (
-            <ManagePosts
-              token={token}
-              setOnWritePost={setOnWritePost}
-              setWritingMode={setWritingMode}
-              setTargetPost={setTargetPost}
-            />
-          )}
-          {activeIndex === 2 && <ManageCategories token={token} />}
-        </Container>
-      );
-    } else {
-      return (
-        <DynamicWritePost
-          offWritePost={offWritePost}
-          writingMode={writingMode}
-          targetPost={targetPost}
-          token={token}
+  return !isLoginModalOpen ? (
+    !isWritingModalOpen ? (
+      <Container>
+        <Sidebar
+          setIsWritingModalOpen={setIsWritingModalOpen}
+          setActiveIndex={setActiveIndex}
         />
-      );
-    }
-  }
+        {activeIndex === 0 && <Home />}
+        {activeIndex === 1 && (
+          <ManagePosts
+            setIsWritingModalOpen={setIsWritingModalOpen}
+            setWritingMode={setWritingMode}
+            setTargetPost={setTargetPost}
+          />
+        )}
+        {activeIndex === 2 && <ManageCategories />}
+      </Container>
+    ) : (
+      <DynamicWritePost
+        offWritePost={offWritePost}
+        writingMode={writingMode}
+        targetPost={targetPost}
+      />
+    )
+  ) : (
+    <Container2>
+      <Login closeLoginModal={closeLoginModal} />
+    </Container2>
+  );
 }
 
 const Container = styled.div`
