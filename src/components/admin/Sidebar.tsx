@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 interface Props {
   setIsWritingModalOpen: (arg: boolean) => void;
@@ -9,9 +10,11 @@ export default function Sidebar({
   setIsWritingModalOpen,
   setActiveIndex,
 }: Props) {
+  const router = useRouter();
   return (
     <Container>
-      <Button onClick={() => setActiveIndex(0)}>홈</Button>
+      <Button onClick={() => router.push("/")}>블로그</Button>
+      <Button onClick={() => setActiveIndex(0)}>어드민 홈</Button>
       <Button onClick={() => setIsWritingModalOpen(true)}>글쓰기</Button>
       <Divider />
       <Button onClick={() => setActiveIndex(1)}>글 관리</Button>
