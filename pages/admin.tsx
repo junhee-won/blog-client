@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useState, useLayoutEffect } from "react";
+import Cookies from "js-cookie";
+import apiHelper from "../src/modules/apiHelper";
 import Login from "../src/components/admin/Login";
 import Sidebar from "../src/components/admin/Sidebar";
 import Home from "../src/components/admin/Home";
@@ -26,6 +28,7 @@ interface PostType {
 }
 
 export default function AdminPage() {
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(true);
   const [token, setToken] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
   const [onWritePost, setOnWritePost] = useState(false);
@@ -37,6 +40,34 @@ export default function AdminPage() {
     setWritingMode("create");
     setTargetPost(null);
   };
+
+  useLayoutEffect(() => {
+    const jwt = Cookies.get("jwt");
+    if (!jwt) return;
+    apiHelper({
+      url: process.env.NEXT_PUBLIC_API_SERVER + "/validate",
+      method: "GET",
+      jwt: true,
+    }).then((res) => {
+      if (res.success) {
+        setIsLoginModalOpen(false);
+      } else {
+        setIsLoginModalOpen(true);
+      }
+    });
+  }, []);
+
+  const closeLoginModal = () => {
+    setIsLoginModalOpen(false);
+  };
+
+  return (
+    isLoginModalOpen && (
+      <Container2>
+        <Login closeLoginModal={closeLoginModal} />
+      </Container2>
+    )
+  );
 
   if (token) {
     if (!onWritePost) {
@@ -68,12 +99,6 @@ export default function AdminPage() {
         />
       );
     }
-  } else {
-    return (
-      <Container2>
-        <Login setToken={setToken} />
-      </Container2>
-    );
   }
 }
 
