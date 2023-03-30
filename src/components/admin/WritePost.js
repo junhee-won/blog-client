@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { createPortal } from "react-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import Editor from "ckeditor5-custom-build/build/ckeditor";
 import apiHelper from "../../modules/apiHelper";
@@ -9,15 +8,13 @@ import View from "../post/View";
 
 export default function WritePost({ isOpen, onClose, post, routeAdminHome }) {
   const [editor, setEditor] = useState();
-  const [title, setTitle] = useState(
-    post?.title === undefined ? "" : post.title
-  );
+  const [title, setTitle] = useState("임시 제목");
   const [content, setContent] = useState("");
   const [isHTMLModalOpen, setIsHTMLModalOpen] = useState(false);
   const [editorSource, setEditorSource] = useState("");
-  const [visibility, setVisibility] = useState(post?.public || 2);
+  const [visibility, setVisibility] = useState(2);
   const [categories, setCategories] = useState([]);
-  const [categroyId, setCategoryId] = useState(post?.category_id || 1);
+  const [categroyId, setCategoryId] = useState(1);
   const [thumbnail, setThumbnail] = useState(
     "https://d1qlsar6961fb5.cloudfront.net/default.jpeg"
   );
@@ -78,6 +75,15 @@ export default function WritePost({ isOpen, onClose, post, routeAdminHome }) {
   };
 
   useEffect(() => {
+    setTitle(post?.title || "임시 제목");
+    setVisibility(post?.public || 2);
+    setCategoryId(post?.category_id || 1);
+    setThumbnail(
+      post?.thumbnail || "https://d1qlsar6961fb5.cloudfront.net/default.jpeg"
+    );
+  }, [post]);
+
+  useEffect(() => {
     if (editor && post) {
       setContent(post.content);
     }
@@ -131,7 +137,7 @@ export default function WritePost({ isOpen, onClose, post, routeAdminHome }) {
       </PreviewWrapper>
     );
 
-  return createPortal(
+  return (
     <Container>
       <Input
         value={title}
@@ -229,8 +235,7 @@ export default function WritePost({ isOpen, onClose, post, routeAdminHome }) {
           저장
         </BottomButton>
       </BottomBar>
-    </Container>,
-    document.body
+    </Container>
   );
 }
 
