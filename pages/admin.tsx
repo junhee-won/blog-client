@@ -28,16 +28,22 @@ interface PostType {
 }
 
 export default function AdminPage() {
+  const [selectedMenu, setSelectedMenu] = useState(0);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(true);
-  const [activeIndex, setActiveIndex] = useState(0);
   const [isWritingModalOpen, setIsWritingModalOpen] = useState(false);
-  const [writingMode, setWritingMode] = useState("create");
-  const [targetPost, setTargetPost] = useState<PostType | null>(null);
+  const [post, setPost] = useState<PostType | null>(null);
 
-  const offWritePost = () => {
+  const closeLoginModal = () => {
+    setIsLoginModalOpen(false);
+  };
+
+  const closeWritingModal = () => {
     setIsWritingModalOpen(false);
-    setWritingMode("create");
-    setTargetPost(null);
+  };
+
+  const openWritingModal = (post: PostType | null) => {
+    setPost(post);
+    setIsWritingModalOpen(true);
   };
 
   useLayoutEffect(() => {
@@ -56,34 +62,25 @@ export default function AdminPage() {
     });
   }, []);
 
-  const closeLoginModal = () => {
-    setIsLoginModalOpen(false);
-  };
-
   return !isLoginModalOpen ? (
-    !isWritingModalOpen ? (
+    <>
       <Container>
         <Sidebar
-          setIsWritingModalOpen={setIsWritingModalOpen}
-          setActiveIndex={setActiveIndex}
+          setSelectedMenu={setSelectedMenu}
+          openWritingModal={openWritingModal}
         />
-        {activeIndex === 0 && <Home />}
-        {activeIndex === 1 && (
-          <ManagePosts
-            setIsWritingModalOpen={setIsWritingModalOpen}
-            setWritingMode={setWritingMode}
-            setTargetPost={setTargetPost}
-          />
+        {selectedMenu === 0 && <Home />}
+        {selectedMenu === 1 && (
+          <ManagePosts openWritingModal={openWritingModal} />
         )}
-        {activeIndex === 2 && <ManageCategories />}
+        {selectedMenu === 2 && <ManageCategories />}
       </Container>
-    ) : (
       <DynamicWritePost
-        offWritePost={offWritePost}
-        writingMode={writingMode}
-        targetPost={targetPost}
+        isOpen={isWritingModalOpen}
+        onClose={closeWritingModal}
+        post={post}
       />
-    )
+    </>
   ) : (
     <Container2>
       <Login closeLoginModal={closeLoginModal} />

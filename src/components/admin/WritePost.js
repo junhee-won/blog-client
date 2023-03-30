@@ -1,85 +1,82 @@
 import styled from "styled-components";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import apiHelper from "../../modules/apiHelper";
+import { createPortal } from "react-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import Editor from "ckeditor5-custom-build/build/ckeditor";
+import apiHelper from "../../modules/apiHelper";
 
-export default function WritePost({ offWritePost, writingMode, targetPost }) {
+export default function WritePost({ isOpen, onClose, post }) {
   const [editor, setEditor] = useState();
   const [title, setTitle] = useState(
-    targetPost?.title === undefined ? "" : targetPost.title
+    post?.title === undefined ? "" : post.title
   );
   const [content, setContent] = useState("");
-  const [activeHtml, setActiveHtml] = useState(false);
+  const [isHTMLModalOpen, setIsHTMLModalOpen] = useState(false);
   const [editorSource, setEditorSource] = useState("");
-  const [isPublic, setIsPublic] = useState(targetPost?.public || 0);
+  const [visibility, setVisibility] = useState(post?.public || 2);
   const [categories, setCategories] = useState([]);
-  const [categroyId, setCategoryId] = useState(targetPost?.category_id || 1);
+  const [categroyId, setCategoryId] = useState(post?.category_id || 1);
   const [thumbnail, setThumbnail] = useState(
     "https://d1qlsar6961fb5.cloudfront.net/default.jpeg"
   );
 
-  const completeWriting = () => {
+  const onClickSaveButton = () => {
     (async function () {
-      if (writingMode === "update") {
-        const res = await apiHelper({
-          url: process.env.NEXT_PUBLIC_API_ADMIN_UPDATE_POST,
-          method: "PUT",
-          jwt: true,
-          body: {
-            id: targetPost.id,
-            title: title,
-            content: content,
-            public: isPublic,
-            category_id: categroyId,
-            thumbnail,
-          },
-        });
-        if (!res.success) {
-          alert("error");
-        } else {
-          offWritePost();
-        }
-      } else if (writingMode === "create") {
-        const res = await apiHelper({
+      let res;
+      if (post === null) {
+        res = await apiHelper({
           url: process.env.NEXT_PUBLIC_API_ADMIN_CREATE_POST,
           method: "POST",
           jwt: true,
           body: {
             title: title,
             content: content,
-            public: isPublic,
+            public: visibility,
             category_id: categroyId,
             thumbnail,
           },
         });
-        if (!res.success) {
-          alert("error");
-        } else {
-          offWritePost();
-        }
+      } else {
+        res = await apiHelper({
+          url: process.env.NEXT_PUBLIC_API_ADMIN_UPDATE_POST,
+          method: "PUT",
+          jwt: true,
+          body: {
+            id: post.id,
+            title: title,
+            content: content,
+            public: visibility,
+            category_id: categroyId,
+            thumbnail,
+          },
+        });
+      }
+      if (!res.success) {
+        alert("error");
+      } else {
+        onClose();
       }
     })();
   };
 
-  const stopWriting = () => {
-    if (confirm("!!주의!! 나가기 전에 저장하자")) offWritePost();
+  const onClickExitButton = () => {
+    if (confirm("!!주의!! 나가기 전에 저장하자")) onClose();
   };
 
   const onClickHtml = () => {
-    if (!activeHtml) {
+    if (!isHTMLModalOpen) {
       setEditorSource(editor.data.get());
-      setActiveHtml(true);
+      setIsHTMLModalOpen(true);
     } else {
-      setActiveHtml(false);
+      setIsHTMLModalOpen(false);
       editor.data.set(editorSource);
     }
   };
 
   useEffect(() => {
-    if (editor && targetPost) {
-      setContent(targetPost.content);
+    if (editor && post) {
+      setContent(post.content);
     }
   }, [editor]);
 
@@ -94,8 +91,8 @@ export default function WritePost({ offWritePost, writingMode, targetPost }) {
         setCategories(res.data);
       }
     })();
-    if (targetPost?.thumbnail) {
-      setThumbnail(targetPost.thumbnail);
+    if (post?.thumbnail) {
+      setThumbnail(post.thumbnail);
     }
     window.onbeforeunload = function () {
       return "Are you sure to leave this page?";
@@ -105,7 +102,9 @@ export default function WritePost({ offWritePost, writingMode, targetPost }) {
     };
   }, []);
 
-  return (
+  if (!isOpen) return null;
+
+  return createPortal(
     <Container>
       <Input
         value={title}
@@ -123,7 +122,7 @@ export default function WritePost({ offWritePost, writingMode, targetPost }) {
           setEditor(editor);
         }}
       />
-      {activeHtml && (
+      {isHTMLModalOpen && (
         <HtmlTextEditor
           value={editorSource}
           onChange={(e) => setEditorSource(e.target.value)}
@@ -165,48 +164,61 @@ export default function WritePost({ offWritePost, writingMode, targetPost }) {
         </Select>
         <Checkbox
           type="checkbox"
-          checked={isPublic}
-          onChange={(e) => setIsPublic(1 - isPublic)}
+          checked={visibility === 2}
+          onChange={() => setVisibility(2)}
+        />
+        임시저장
+        <Checkbox
+          type="checkbox"
+          checked={visibility === 1}
+          onChange={() => setVisibility(1)}
         />
         공개
         <Checkbox
           type="checkbox"
-          checked={!isPublic}
-          onChange={(e) => setIsPublic(1 - isPublic)}
+          checked={visibility === 0}
+          onChange={() => setVisibility(0)}
         />
         비공개
         <FixedButton
-          onClick={stopWriting}
+          onClick={onClickExitButton}
           color="RGB(255, 0, 0)"
           hoverColor="RGB(130, 12, 13)"
         >
           나가기
         </FixedButton>
         <FixedButton
-          onClick={completeWriting}
+          onClick={onClickSaveButton}
           color="RGB(66, 132, 243)"
           hoverColor="RGB(7, 47, 116)"
         >
-          완료
+          저장
         </FixedButton>
       </BottomBar>
-    </Container>
+    </Container>,
+    document.body
   );
 }
 
 const Container = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: green;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  width: 100vw;
+  height: 100vh;
+  padding-top: 30px;
+  gap: 20px;
 `;
 
 const Input = styled.input`
   height: 50px;
   width: 700px;
-  margin: 10px;
   padding: 10px;
-  margin: 30px;
 `;
 
 const BottomBar = styled.div`

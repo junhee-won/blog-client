@@ -2,23 +2,21 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 
 interface Props {
-  setIsWritingModalOpen: (arg: boolean) => void;
-  setActiveIndex: (arg: number) => void;
+  setSelectedMenu: (arg: number) => void;
+  openWritingModal: (arg: null) => void;
 }
 
-export default function Sidebar({
-  setIsWritingModalOpen,
-  setActiveIndex,
-}: Props) {
+export default function Sidebar({ setSelectedMenu, openWritingModal }: Props) {
   const router = useRouter();
+
   return (
     <Container>
       <Button onClick={() => router.push("/")}>블로그</Button>
-      <Button onClick={() => setActiveIndex(0)}>어드민 홈</Button>
-      <Button onClick={() => setIsWritingModalOpen(true)}>글쓰기</Button>
+      <Button onClick={() => setSelectedMenu(0)}>어드민 홈</Button>
       <Divider />
-      <Button onClick={() => setActiveIndex(1)}>글 관리</Button>
-      <Button onClick={() => setActiveIndex(2)}>카테고리 관리</Button>
+      <Button onClick={() => openWritingModal(null)}>글쓰기</Button>
+      <Button onClick={() => setSelectedMenu(1)}>글 관리</Button>
+      <Button onClick={() => setSelectedMenu(2)}>카테고리 관리</Button>
     </Container>
   );
 }

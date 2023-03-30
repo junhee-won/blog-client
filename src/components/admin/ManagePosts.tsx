@@ -3,9 +3,7 @@ import { useState, useEffect } from "react";
 import apiHelper from "../../modules/apiHelper";
 
 interface Props {
-  setIsWritingModalOpen: (arg: boolean) => void;
-  setWritingMode: (arg: string) => void;
-  setTargetPost: (arg: PostType) => void;
+  openWritingModal: (arg: PostType) => void;
 }
 
 interface PostType {
@@ -19,11 +17,7 @@ interface PostType {
   thumbnail: string;
 }
 
-export default function ManagePosts({
-  setIsWritingModalOpen,
-  setWritingMode,
-  setTargetPost,
-}: Props) {
+export default function ManagePosts({ openWritingModal }: Props) {
   const [posts, setPosts] = useState<PostType[]>([]);
   const [visibility, setVisibility] = useState<"draft" | "public" | "private">(
     "public"
@@ -46,9 +40,7 @@ export default function ManagePosts({
   }, []);
 
   const updatePost = (post: PostType) => {
-    setTargetPost(post);
-    setWritingMode("update");
-    setIsWritingModalOpen(true);
+    openWritingModal(post);
   };
 
   const convertDateFormat = (date: string): string => {
