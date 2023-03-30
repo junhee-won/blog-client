@@ -6,9 +6,16 @@ interface Props {
   method: string;
   jwt?: boolean;
   body?: Object;
+  params?: Object;
 }
 
-export default async function apiHelper({ url, method, jwt, body }: Props) {
+export default async function apiHelper({
+  url,
+  method,
+  jwt,
+  body,
+  params,
+}: Props) {
   const headers: RawAxiosRequestHeaders = {
     "Content-Type": "application/json",
   };
@@ -21,6 +28,7 @@ export default async function apiHelper({ url, method, jwt, body }: Props) {
     method,
     data: body,
     headers: headers,
+    params: params,
   })
     .then((res) => {
       const data = res.data;
