@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useEffect, ReactElement } from "react";
 import DOMPurify from "isomorphic-dompurify";
-import { useMedia } from "../../hooks/useMedia";
 import Title from "./Title";
 import Contents from "./Contents";
 import hljs from "highlight.js";

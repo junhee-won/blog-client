@@ -7,7 +7,7 @@ import Editor from "ckeditor5-custom-build/build/ckeditor";
 import apiHelper from "../../modules/apiHelper";
 import View from "../post/View";
 
-export default function WritePost({ isOpen, onClose, post }) {
+export default function WritePost({ isOpen, onClose, post, routeAdminHome }) {
   const [editor, setEditor] = useState();
   const [title, setTitle] = useState(
     post?.title === undefined ? "" : post.title
@@ -58,6 +58,7 @@ export default function WritePost({ isOpen, onClose, post }) {
         alert("error");
       } else {
         onClose();
+        routeAdminHome();
       }
     })();
   };

@@ -62,6 +62,10 @@ export default function AdminPage() {
     });
   }, []);
 
+  const routeAdminHome = () => {
+    setSelectedMenu(0);
+  };
+
   return !isLoginModalOpen ? (
     <>
       <Container>
@@ -79,6 +83,7 @@ export default function AdminPage() {
         isOpen={isWritingModalOpen}
         onClose={closeWritingModal}
         post={post}
+        routeAdminHome={routeAdminHome}
       />
     </>
   ) : (
