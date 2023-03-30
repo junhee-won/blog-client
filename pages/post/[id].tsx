@@ -2,16 +2,13 @@ import styled from "styled-components";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useEffect } from "react";
-import DOMPurify from "isomorphic-dompurify";
 import apiHelper from "../../src/modules/apiHelper";
 import { useMedia } from "../../src/hooks/useMedia";
 import ErrorPage from "../_error";
 import Header from "../../src/components/common/Header";
-import Title from "../../src/components/post/Title";
 import { parseContents } from "../../src/modules/parseContents";
-import Contents from "../../src/components/post/Contents";
-import hljs from "highlight.js";
 import Cookies from "js-cookie";
+import View from "../../src/components/post/View";
 
 interface Props {
   created_at: string;
@@ -41,7 +38,7 @@ const PostPage: NextPage<Props> = ({
   Headings,
 }) => {
   const media = useMedia();
-  const purifiedHTML: string = DOMPurify.sanitize(content);
+
   const checkView = async () => {
     const idStr = id.toString();
     const viewCookie = Cookies.get("view") || "";
@@ -72,14 +69,13 @@ const PostPage: NextPage<Props> = ({
 
   useEffect(() => {
     checkView();
-    hljs.highlightAll();
   }, []);
 
   const ogUrl = `https://junhee.kr/post/${id}`;
 
   if (!success) return <ErrorPage />;
   return (
-    <Container>
+    <>
       <Head>
         <title>{title}</title>
         <meta name="description" content={title} />
@@ -94,25 +90,18 @@ const PostPage: NextPage<Props> = ({
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header media={media} />
-      <Title
-        media={media}
-        thumbnail={thumbnail}
+      <View
+        created_at={created_at}
         title={title}
-        createdAt={created_at}
+        content={content}
         category={category}
-        categoryId={category_id}
+        thumbnail={thumbnail}
+        category_id={category_id}
+        Headings={Headings}
+        component={<Header media={media} />}
+        media={media}
       />
-      <Body>
-        <SideWrapper />
-        <Content className="content">
-          <div dangerouslySetInnerHTML={{ __html: purifiedHTML }} />
-        </Content>
-        <SideWrapper>
-          <Contents Headings={Headings} />
-        </SideWrapper>
-      </Body>
-    </Container>
+    </>
   );
 };
 
@@ -138,37 +127,3 @@ PostPage.getInitialProps = async ({ query }) => {
 };
 
 export default PostPage;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding-top: 60px;
-`;
-
-const Body = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-`;
-
-const SideWrapper = styled.div`
-  flex: 1;
-  align-self: stretch;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding-top: 200px;
-`;
-
-const Content = styled.div`
-  width: 794px;
-  max-width: 95%;
-  padding: 50px 0 100px;
-  align-items: center;
-  line-height: 30px;
-  font-size: 18px;
-`;
