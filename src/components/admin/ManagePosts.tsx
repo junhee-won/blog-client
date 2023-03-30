@@ -25,6 +25,9 @@ export default function ManagePosts({
   setTargetPost,
 }: Props) {
   const [posts, setPosts] = useState<PostType[]>([]);
+  const [visibility, setVisibility] = useState<"draft" | "public" | "private">(
+    "public"
+  );
 
   useEffect(() => {
     (async function () {
@@ -32,6 +35,9 @@ export default function ManagePosts({
         url: process.env.NEXT_PUBLIC_API_ADMIN_GET_ALL_POSTS,
         method: "GET",
         jwt: true,
+        params: {
+          visibility: visibility,
+        },
       });
       if (res.success) {
         setPosts(res.data);
@@ -49,8 +55,45 @@ export default function ManagePosts({
     return new Date(date).toISOString().replace(/T/, " ").replace(/\..+/, "");
   };
 
+  const clickMenu = (menu: "draft" | "public" | "private") => {
+    (async function () {
+      const res = await apiHelper({
+        url: process.env.NEXT_PUBLIC_API_ADMIN_GET_ALL_POSTS,
+        method: "GET",
+        jwt: true,
+        params: {
+          visibility: menu,
+        },
+      });
+      if (res.success) {
+        setPosts(res.data);
+        setVisibility(menu);
+      }
+    })();
+  };
+
   return (
     <Container>
+      <Menu>
+        <Button
+          onClick={() => clickMenu("draft")}
+          selected={visibility === "draft"}
+        >
+          임시 저장
+        </Button>
+        <Button
+          onClick={() => clickMenu("public")}
+          selected={visibility === "public"}
+        >
+          공개
+        </Button>
+        <Button
+          onClick={() => clickMenu("private")}
+          selected={visibility === "private"}
+        >
+          비공개
+        </Button>
+      </Menu>
       {posts.map((post, index) => {
         return (
           <Post key={index}>
@@ -69,18 +112,19 @@ export default function ManagePosts({
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
   justify-content: flex-start;
   align-items: center;
-  padding-top: 50px;
+  width: 100%;
+  height: 100%;
+  margin-top: 80px;
+  overflow: scroll;
 `;
 
 const Post = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 90%;
+  width: 1100px;
   height: 60px;
   background-color: white;
   margin: 10px;
@@ -104,11 +148,12 @@ const DateBox = styled.div`
   color: gray;
 `;
 
-const Button = styled.div`
+const Button = styled.div<{ selected?: boolean }>`
   height: 40px;
   width: 80px;
   margin: 10px;
-  background-color: RGB(66, 132, 243);
+  background-color: ${(props) =>
+    props?.selected ? "rgb(7, 47, 116)" : "rgb(66, 132, 243)"};
   color: white;
   line-height: 40px;
   border-radius: 10px;
@@ -117,4 +162,15 @@ const Button = styled.div`
     background-color: rgb(7, 47, 116);
   }
   text-align: center;
+`;
+
+const Menu = styled.div`
+  position: fixed;
+  top: 0;
+  right: 70px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 1100px;
+  height: 80px;
 `;
