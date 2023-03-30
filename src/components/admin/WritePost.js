@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import Editor from "ckeditor5-custom-build/build/ckeditor";
 import apiHelper from "../../modules/apiHelper";
+import View from "../post/View";
 
 export default function WritePost({ isOpen, onClose, post }) {
   const [editor, setEditor] = useState();
@@ -20,6 +21,7 @@ export default function WritePost({ isOpen, onClose, post }) {
   const [thumbnail, setThumbnail] = useState(
     "https://d1qlsar6961fb5.cloudfront.net/default.jpeg"
   );
+  const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
 
   const onClickSaveButton = () => {
     (async function () {
@@ -103,6 +105,30 @@ export default function WritePost({ isOpen, onClose, post }) {
   }, []);
 
   if (!isOpen) return null;
+  if (isPreviewModalOpen)
+    return (
+      <PreviewWrapper>
+        <View
+          created_at="1998-02-21"
+          title={title}
+          content={content}
+          category={"category"}
+          thumbnail={thumbnail}
+          category_id={0}
+          Headings={[]}
+          component={
+            <PreviewExitButton
+              onClick={() => {
+                setIsPreviewModalOpen(false);
+              }}
+            >
+              Exit
+            </PreviewExitButton>
+          }
+          media={"pc"}
+        />
+      </PreviewWrapper>
+    );
 
   return createPortal(
     <Container>
@@ -180,20 +206,27 @@ export default function WritePost({ isOpen, onClose, post }) {
           onChange={() => setVisibility(0)}
         />
         비공개
-        <FixedButton
+        <BottomButton
+          onClick={() => setIsPreviewModalOpen(true)}
+          color="black"
+          hoverColor="gray"
+        >
+          미리보기
+        </BottomButton>
+        <BottomButton
           onClick={onClickExitButton}
           color="RGB(255, 0, 0)"
           hoverColor="RGB(130, 12, 13)"
         >
           나가기
-        </FixedButton>
-        <FixedButton
+        </BottomButton>
+        <BottomButton
           onClick={onClickSaveButton}
           color="RGB(66, 132, 243)"
           hoverColor="RGB(7, 47, 116)"
         >
           저장
-        </FixedButton>
+        </BottomButton>
       </BottomBar>
     </Container>,
     document.body
@@ -224,21 +257,20 @@ const Input = styled.input`
 const BottomBar = styled.div`
   position: fixed;
   bottom: 0;
-  height: 80px;
-  width: 100%;
   background-color: RGB(245, 245, 245);
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  gap: 10px;
   padding-right: 10px;
+  width: 100%;
+  height: 80px;
 `;
 
-const FixedButton = styled.div`
-  position: fixed;
-  bottom: 20px;
-  right: ${(props) => (props.color === "RGB(255, 0, 0)" ? "120px" : "20px")};
+const BottomButton = styled.div`
   height: 40px;
   width: 80px;
+  margin-left: 10px;
   background-color: ${(props) => props.color};
   color: white;
   line-height: 40px;
@@ -285,4 +317,28 @@ const Checkbox = styled.input`
 const Select = styled.select`
   padding: 10px;
   margin: 10px;
+  width: 400px;
+`;
+
+const PreviewWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  z-index: 500;
+  background-color: white;
+  width: 100vw;
+`;
+
+const PreviewExitButton = styled.div`
+  position: fixed;
+  z-index: 10;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+  cursor: pointer;
 `;

@@ -20,7 +20,7 @@ interface PostType {
 export default function ManagePosts({ openWritingModal }: Props) {
   const [posts, setPosts] = useState<PostType[]>([]);
   const [visibility, setVisibility] = useState<"draft" | "public" | "private">(
-    "public"
+    "draft"
   );
 
   useEffect(() => {
