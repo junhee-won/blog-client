@@ -5,6 +5,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import Editor from "ckeditor5-custom-build/build/ckeditor";
 import apiHelper from "../../modules/apiHelper";
 import View from "../post/View";
+import { MyUploadAdapter } from "../../modules/ckeditor/MyUploadAdapter";
 
 export default function WritePost({ isOpen, onClose, post, routeAdminHome }) {
   const [editor, setEditor] = useState();
@@ -19,6 +20,12 @@ export default function WritePost({ isOpen, onClose, post, routeAdminHome }) {
     "https://d1qlsar6961fb5.cloudfront.net/default.jpeg"
   );
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
+
+  function uploadPlugin(editor) {
+    editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
+      return new MyUploadAdapter(loader);
+    };
+  }
 
   const onClickSaveButton = () => {
     (async function () {
@@ -146,6 +153,9 @@ export default function WritePost({ isOpen, onClose, post, routeAdminHome }) {
       />
       <CKEditor
         editor={Editor}
+        config={{
+          extraPlugins: [uploadPlugin],
+        }}
         data={content}
         onChange={(event, editor) => {
           const data = editor.getData();
@@ -243,7 +253,7 @@ const Container = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  background-color: green;
+  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

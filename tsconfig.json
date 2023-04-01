@@ -19,7 +19,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/components/admin/WritePost.js"
+    "src/components/admin/WritePost.js",
+    "src/modules/ckeditor/MyUploadAdapter.js"
   ],
   "exclude": ["node_modules"]
 }
