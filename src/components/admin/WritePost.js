@@ -88,13 +88,13 @@ export default function WritePost({ isOpen, onClose, post, routeAdminHome }) {
     setThumbnail(
       post?.thumbnail || "https://d1qlsar6961fb5.cloudfront.net/default.jpeg"
     );
-  }, [post]);
+  }, [post, isOpen]);
 
   useEffect(() => {
-    if (editor && post) {
-      setContent(post.content);
+    if (editor) {
+      setContent(post?.content || "");
     }
-  }, [editor]);
+  }, [editor, isOpen]);
 
   useEffect(() => {
     (async function () {
