@@ -27,37 +27,28 @@ export default function WritePost({ isOpen, onClose, post, routeAdminHome }) {
     };
   }
 
-  const onClickSaveButton = () => {
+  const onClickSaveButton = (action) => {
     (async function () {
-      let res;
-      if (post === null) {
-        res = await apiHelper({
-          url: process.env.NEXT_PUBLIC_API_ADMIN_CREATE_POST,
-          method: "POST",
-          jwt: true,
-          body: {
-            title: title,
-            content: content,
-            public: visibility,
-            category_id: categroyId,
-            thumbnail,
-          },
-        });
-      } else {
-        res = await apiHelper({
-          url: process.env.NEXT_PUBLIC_API_ADMIN_UPDATE_POST,
-          method: "PUT",
-          jwt: true,
-          body: {
-            id: post.id,
-            title: title,
-            content: content,
-            public: visibility,
-            category_id: categroyId,
-            thumbnail,
-          },
-        });
+      const body = {
+        title: title,
+        content: content,
+        public: visibility,
+        category_id: categroyId,
+        thumbnail,
+        action: action,
+      };
+      if (post !== null) {
+        body.id = post.id;
       }
+      if (action === "publish") {
+        body.public = 0;
+      }
+      const res = await apiHelper({
+        url: process.env.NEXT_PUBLIC_API_ADMIN_UPDATE_POST,
+        method: "POST",
+        jwt: true,
+        body: body,
+      });
       if (!res.success) {
         alert("error");
       } else {
@@ -83,7 +74,7 @@ export default function WritePost({ isOpen, onClose, post, routeAdminHome }) {
 
   useEffect(() => {
     setTitle(post?.title || "임시 제목");
-    setVisibility(post?.public || 2);
+    setVisibility(post?.public === undefined ? 2 : post.public);
     setCategoryId(post?.category_id || 1);
     setThumbnail(
       post?.thumbnail || "https://d1qlsar6961fb5.cloudfront.net/default.jpeg"
@@ -205,24 +196,22 @@ export default function WritePost({ isOpen, onClose, post, routeAdminHome }) {
             );
           })}
         </Select>
-        <Checkbox
-          type="checkbox"
-          checked={visibility === 2}
-          onChange={() => setVisibility(2)}
-        />
-        임시저장
-        <Checkbox
-          type="checkbox"
-          checked={visibility === 1}
-          onChange={() => setVisibility(1)}
-        />
-        공개
-        <Checkbox
-          type="checkbox"
-          checked={visibility === 0}
-          onChange={() => setVisibility(0)}
-        />
-        비공개
+        {visibility !== 2 && (
+          <>
+            <Checkbox
+              type="checkbox"
+              checked={visibility === 1}
+              onChange={() => setVisibility(1)}
+            />
+            공개
+            <Checkbox
+              type="checkbox"
+              checked={visibility === 0}
+              onChange={() => setVisibility(0)}
+            />
+            비공개
+          </>
+        )}
         <BottomButton
           onClick={() => setIsPreviewModalOpen(true)}
           color="black"
@@ -238,12 +227,21 @@ export default function WritePost({ isOpen, onClose, post, routeAdminHome }) {
           나가기
         </BottomButton>
         <BottomButton
-          onClick={onClickSaveButton}
+          onClick={() => onClickSaveButton("save")}
           color="RGB(66, 132, 243)"
           hoverColor="RGB(7, 47, 116)"
         >
           저장
         </BottomButton>
+        {visibility === 2 && (
+          <BottomButton
+            onClick={() => onClickSaveButton("publish")}
+            color="gray"
+            hoverColor="RGB(7, 47, 116)"
+          >
+            발행
+          </BottomButton>
+        )}
       </BottomBar>
     </Container>
   );
