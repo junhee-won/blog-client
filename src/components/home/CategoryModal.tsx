@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import HamburgerIcon from "../../../public/hamburger.svg";
+import Hamburger from "../../../public/hamburger.svg";
 import XIcon from "../../../public/x.svg";
 import { CategoryInterface } from "../../types/interfaces";
 
@@ -20,12 +19,7 @@ export default function CategoryModal({ categories }: Props) {
   return (
     <>
       <Button onClick={toggleModal}>
-        <Image
-          src={HamburgerIcon}
-          alt="hamburger-menu"
-          width={50}
-          height={50}
-        />
+        <HamburgerSvg alt="hamburger-menu" width={50} height={50} />
       </Button>
       <Container active={isModalOpen}>
         <ModalContainer
@@ -33,7 +27,7 @@ export default function CategoryModal({ categories }: Props) {
           active={isModalOpen}
         >
           <Button onClick={toggleModal}>
-            <Image src={XIcon} alt="x" width={50} height={50} />
+            <XSvg alt="x" width={50} height={50} />
           </Button>
           {/* <AllPosts>전체보기</AllPosts> */}
           {categories.map((parentCategory, index) => {
@@ -63,6 +57,17 @@ export default function CategoryModal({ categories }: Props) {
   );
 }
 
+const HamburgerSvg = styled(Hamburger)`
+  stroke: ${(props) => props.theme.colors.primary};
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+`;
+
+const XSvg = styled(XIcon)`
+  stroke: ${(props) => props.theme.colors.primary};
+`;
+
 const Container = styled.div<{ active: boolean }>`
   position: fixed;
   width: 100vw;
@@ -82,7 +87,7 @@ const ModalContainer = styled.div<{ active: boolean }>`
   width: 320px;
   height: 100vh;
   padding: 100px 50px 100px;
-  background-color: #4e5684;
+  background-color: ${(props) => props.theme.colors.primary};
   color: white;
   right: ${(props) => (props.active ? "0px" : "-320px")};
   transition: all 0.15s ease-in-out;

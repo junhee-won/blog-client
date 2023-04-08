@@ -28,6 +28,7 @@ const Container = styled.div<{ isMobile: boolean }>`
   height: ${(props) => !props.isMobile && "100vh"};
   overflow-y: scroll;
   padding: ${(props) => (props.isMobile ? "20px" : "80px 30px 80px")};
+  background-color: ${(props) => props.theme.colors.secondary};
 `;
 
 const PostCardContainer = styled.div`

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Image from "next/image";
 import GithubLogo from "../../../public/github-mark.svg";
 import TistoryLogo from "../../../public/tistory-logo.svg";
 
@@ -18,7 +17,7 @@ export default function LeftSide() {
           rel="noopener noreferrer"
         >
           <LogoBox>
-            <Image src={GithubLogo} alt="github" width={50} height={50} />
+            <GithubLogo alt="github" width={50} height={50} />
           </LogoBox>
         </a>
         <a
@@ -27,7 +26,7 @@ export default function LeftSide() {
           rel="noopener noreferrer"
         >
           <LogoBox>
-            <Image src={TistoryLogo} alt="tistory" width={50} height={50} />
+            <TistoryLogo alt="tistory" width={50} height={50} />
           </LogoBox>
         </a>
       </LogoContainer>
@@ -45,7 +44,7 @@ const Container = styled.div`
   min-width: 320px;
   height: 100vh;
   overflow: hidden;
-  background-color: #4e5684;
+  background-color: ${(props) => props.theme.colors.primary};
   color: white;
 `;
 

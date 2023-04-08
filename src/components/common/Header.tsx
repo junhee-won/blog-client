@@ -28,7 +28,7 @@ const Container = styled.div<{ media: string }>`
   width: 100%;
   height: 60px;
   padding-left: ${(props) => (props.media === "mobile" ? "5px" : "60px")};
-  background-color: #4e5684;
+  background-color: ${(props) => props.theme.colors.primary};
   color: white;
   overflow: hidden;
 `;

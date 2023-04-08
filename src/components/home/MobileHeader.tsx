@@ -54,7 +54,7 @@ const MContainer = styled.div`
   position: relative;
   width: 100%;
   height: 120px;
-  background-color: #4e5684;
+  background-color: ${(props) => props.theme.colors.primary};
   color: white;
 `;
 
@@ -88,7 +88,7 @@ const Container = styled.div`
   line-height: 150px;
   text-align: center;
   font-size: 20px;
-  background-color: #4e5684;
+  background-color: ${(props) => props.theme.colors.primary};
   color: white;
 `;
 

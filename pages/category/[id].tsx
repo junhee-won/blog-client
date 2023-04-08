@@ -118,7 +118,7 @@ const Title = styled.div`
   align-items: center;
   width: 100%;
   height: 150px;
-  background-color: #4e5684;
+  background-color: ${(props) => props.theme.colors.primary};
 `;
 
 const TitleText = styled.h1`
@@ -137,7 +137,7 @@ const MTitle = styled.div`
   width: 100%;
   min-height: 150px;
   height: auto;
-  background-color: #4e5684;
+  background-color: ${(props) => props.theme.colors.primary};
 `;
 
 const PostContainer = styled.div`

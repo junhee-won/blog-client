@@ -68,6 +68,8 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
   padding-top: 60px;
+  background-color: ${(prpos) => prpos.theme.colors.secondary};
+  min-height: 100vh;
 `;
 
 const Body = styled.div`

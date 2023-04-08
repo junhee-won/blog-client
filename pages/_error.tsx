@@ -4,6 +4,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Header from "../src/components/common/Header";
 import { useMedia } from "../src/hooks/useMedia";
+import HomeIcon from "../public/home.svg";
 
 export default function ErrorPage() {
   const media = useMedia();
@@ -38,12 +39,16 @@ export default function ErrorPage() {
       </WarningWrapper>
       <Link href="/">
         <HomeWrapper isMobile={media === "mobile"}>
-          <Image src="/home.svg" fill sizes="100%" priority alt="home icon" />
+          <HomeSvg width="100%" height="100" alt="home icon" />
         </HomeWrapper>
       </Link>
     </Container>
   );
 }
+
+const HomeSvg = styled(HomeIcon)`
+  fill: ${(props) => props.theme.colors.primary};
+`;
 
 const Container = styled.div`
   display: flex;
