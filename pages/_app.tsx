@@ -3,14 +3,7 @@ import "../styles/stackoverflow-dark.min.css";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "styled-components";
 import { createGlobalStyle } from "styled-components";
-
-const theme = {
-  colors: {
-    primary: "#D3563C",
-    secondary: "#E8E1D7",
-    danger: "#dc3545",
-  },
-};
+import { theme } from "../styles/theme";
 
 const GlobalStyle = createGlobalStyle<{ backgroundColor: string }>`
   body {
