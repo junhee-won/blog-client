@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import IconsBox from "../molecules/IconsBox";
-import Logo from "../atoms/icons/Logo";
+import Logo from "../atoms/Logo";
 
 export default function LogoBar() {
   return (
