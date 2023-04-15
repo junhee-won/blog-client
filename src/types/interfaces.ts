@@ -19,3 +19,8 @@ export interface PostCardInterface {
   categoryTree: CategoryTree[];
   thumbnail: string;
 }
+
+export interface VisitorCount {
+  localeDateString: string;
+  count: number;
+}

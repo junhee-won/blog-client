@@ -5,7 +5,7 @@ interface Props {
   children: ReactNode;
 }
 
-export default function LoginModalPresenter({ children }: Props) {
+export default function Login({ children }: Props) {
   return (
     <Wrapper>
       <Container>{children}</Container>
