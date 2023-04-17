@@ -7,6 +7,18 @@ export interface CategoryInterface {
   }[];
 }
 
+export interface Category {
+  id?: number;
+  name?: string;
+  description?: string;
+  thumbnail?: string;
+  public?: number;
+  priority?: number;
+  created_at?: string;
+  updated_at?: string;
+  parent_category_id?: number;
+}
+
 interface CategoryTree {
   id: number;
   name: string;
