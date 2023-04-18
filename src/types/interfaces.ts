@@ -19,6 +19,17 @@ export interface Category {
   parent_category_id?: number;
 }
 
+export interface Post {
+  id: number;
+  category_id: number;
+  title: string;
+  content: string;
+  public: number;
+  created_at: string;
+  updated_at: string;
+  thumbnail: string;
+}
+
 interface CategoryTree {
   id: number;
   name: string;
