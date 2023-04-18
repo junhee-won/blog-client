@@ -19,7 +19,6 @@ export default function AdminMenuContainer({ setSelectedMenu }: Props) {
       <AdminMenu.item onClick={() => setSelectedMenu("post")}>
         글 관리
       </AdminMenu.item>
-      <AdminMenu.item onClick={() => {}}>글쓰기</AdminMenu.item>
     </AdminMenu>
   );
 }
