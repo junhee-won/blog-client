@@ -1,26 +1,20 @@
-import styled from "styled-components";
 import Head from "next/head";
-import { useMedia } from "../src/hooks/useMedia";
 import apiHelper from "../src/modules/apiHelper";
-import { PostCardInterface, CategoryInterface } from "../src/types/interfaces";
-import MobileHeader from "../src/components/home/MobileHeader";
-import LeftSide from "../src/components/home/LeftSide";
-import Main from "../src/components/home/Main";
-import CategoryModal from "../src/components/home/CategoryModal";
+
+import HomeTemplate from "../src/components/templates/HomeTemplate";
+import { Category, Post } from "../src/types/interfaces";
 
 interface Props {
-  postCards: PostCardInterface[];
-  categories: CategoryInterface[];
+  categories: Category[];
+  posts: Post[];
 }
 
-function Home({ postCards, categories }: Props) {
-  const media = useMedia();
-
+function Home({ categories, posts }: Props) {
   return (
     <>
       <Head>
         <title>개발이 개발새발</title>
-        <meta name="description" content="개발이 개발새발" />
+        <meta name="description" content="개발새발 개발 블로그" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta property="og:title" content="개발이 개발새발" />
         <meta property="og:site_name" content="개발이 개발새발" />
@@ -37,36 +31,24 @@ function Home({ postCards, categories }: Props) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Container isMobile={media === "mobile"}>
-        {media === "mobile" ? <MobileHeader media={media} /> : <LeftSide />}
-        <Main postCards={postCards} media={media} />
-        {media !== "mobile" && <CategoryModal categories={categories} />}
-      </Container>
+      <HomeTemplate categories={categories} posts={posts} />
     </>
   );
 }
 
 Home.getInitialProps = async () => {
-  const postCardsRes = await apiHelper({
-    url: process.env.NEXT_PUBLIC_API_GET_NEW_POST,
+  const postsRes = await apiHelper({
+    url: process.env.NEXT_PUBLIC_API_GET_ALL_POST,
     method: "GET",
   });
-  const postCards = postCardsRes.success ? postCardsRes.data : [];
+  const posts = postsRes.success ? postsRes.data : [];
 
   const categoriesRes = await apiHelper({
     url: process.env.NEXT_PUBLIC_API_GET_ALL_CATEGORIES,
     method: "GET",
   });
   const categories = categoriesRes.success ? categoriesRes.data : [];
-  return { postCards, categories };
+  return { posts, categories };
 };
-
-const Container = styled.div<{ isMobile: boolean }>`
-  display: flex;
-  flex-direction: ${(props) => (props.isMobile ? "column" : "row")};
-  justify-content: flex-start;
-  align-items: center;
-  width: 100vw;
-`;
 
 export default Home;

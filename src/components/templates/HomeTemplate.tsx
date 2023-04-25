@@ -1,16 +1,18 @@
 import styled from "styled-components";
-import { ReactNode } from "react";
 import LogoBar from "../organisms/LogoBar";
+import PostCardsGrid from "../organisms/PostCardsGrid";
+import { Category, Post } from "../../types/interfaces";
 
 interface Props {
-  children: ReactNode;
+  categories: Category[];
+  posts: Post[];
 }
 
-export default function HomeTemplate({ children }: Props) {
+export default function HomeTemplate({ categories, posts }: Props) {
   return (
     <Container>
       <LogoBar />
-      {children}
+      <PostCardsGrid categories={categories} posts={posts} />
     </Container>
   );
 }
