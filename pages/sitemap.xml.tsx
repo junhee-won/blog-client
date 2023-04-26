@@ -51,20 +51,6 @@ export async function getServerSideProps({ res }: any) {
     });
     pages = [...pages, ...posts];
   } catch (e) {}
-  try {
-    const res = await apiHelper({
-      url: process.env.NEXT_PUBLIC_API_GET_ALL_CATEGORIES_MAP,
-      method: "GET",
-    });
-
-    const categories = res.data.map((item: Res) => {
-      return {
-        loc: process.env.SITE_URL + "/category/" + item.id,
-        lastmod: item.updated_at.slice(0, 10),
-      };
-    });
-    pages = [...pages, ...categories];
-  } catch (e) {}
 
   const sitemap = generateSiteMap(pages);
 
