@@ -1,44 +1,20 @@
-import styled from "styled-components";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useEffect } from "react";
-import apiHelper from "../../src/modules/apiHelper";
-import { useMedia } from "../../src/hooks/useMedia";
-import ErrorPage from "../_error";
-import Header from "../../src/components/common/Header";
-import { parseContents } from "../../src/modules/parseContents";
 import Cookies from "js-cookie";
-import View from "../../src/components/post/View";
+import ErrorPage from "../_error";
+import apiHelper from "../../src/modules/apiHelper";
+import { parseContents } from "../../src/modules/parseContents";
+import PostTemplate from "../../src/components/templates/PostTemplate";
+import { Post } from "../../src/types/interfaces";
 
 interface Props {
-  created_at: string;
-  title: string;
-  content: string;
-  category: string;
   id: number;
+  post: Post;
   success: boolean;
-  thumbnail: string;
-  category_id: number;
-  Headings: {
-    type: string;
-    id: string;
-    text: string;
-  }[];
 }
 
-const PostPage: NextPage<Props> = ({
-  success,
-  created_at,
-  title,
-  content,
-  category,
-  id,
-  thumbnail,
-  category_id,
-  Headings,
-}) => {
-  const media = useMedia();
-
+const PostPage: NextPage<Props> = ({ success, post, id }) => {
   const checkView = async () => {
     const idStr = id.toString();
     const viewCookie = Cookies.get("view") || "";
@@ -68,12 +44,15 @@ const PostPage: NextPage<Props> = ({
   };
 
   useEffect(() => {
-    checkView();
+    if (success) {
+      checkView();
+    }
   }, []);
 
-  const ogUrl = `https://junhee.kr/post/${id}`;
-
   if (!success) return <ErrorPage />;
+
+  const ogUrl = `https://junhee.kr/post/${id}`;
+  const { title } = post;
   return (
     <>
       <Head>
@@ -90,40 +69,23 @@ const PostPage: NextPage<Props> = ({
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <View
-        created_at={created_at}
-        title={title}
-        content={content}
-        category={category}
-        thumbnail={thumbnail}
-        category_id={category_id}
-        Headings={Headings}
-        component={<Header media={media} />}
-        media={media}
-      />
+      <PostTemplate post={post} />
     </>
   );
 };
 
 PostPage.getInitialProps = async ({ query }) => {
-  let _Headings, _content;
   const res = await apiHelper({
     url: `${process.env.NEXT_PUBLIC_API_GET_POST}${query?.id}`,
     method: "GET",
   });
-  const data = res.data;
+  const post = res.data;
   if (res.success) {
-    const { Headings, content } = parseContents(data);
-    _Headings = Headings;
-    _content = content;
+    const { headings, content } = parseContents(post);
+    post.headings = headings;
+    post.content = content;
   }
-  return {
-    ...data,
-    id: query?.id,
-    success: res.success,
-    content: _content,
-    Headings: _Headings,
-  };
+  return { post, success: res.success, id: Number(query.id) };
 };
 
 export default PostPage;

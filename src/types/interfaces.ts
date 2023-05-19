@@ -28,6 +28,13 @@ export interface Post {
   created_at: string;
   updated_at: string;
   thumbnail: string;
+  headings?: Heading[];
+}
+
+interface Heading {
+  type: string;
+  id: string;
+  text: string;
 }
 
 interface CategoryTree {
