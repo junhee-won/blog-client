@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useLayoutEffect } from "react";
 import { Post } from "../types/interfaces";
 
 interface Props {
@@ -13,12 +13,21 @@ export function useTag({
 
   const selectTag = (id: number) => {
     setTag(id);
+    sessionStorage.setItem("tag", String(id));
     if (id === 0) {
       setPosts(allPosts);
     } else {
       setPosts(allPosts.filter((post) => post.category_id === id));
     }
   };
+
+  useLayoutEffect(() => {
+    const tag = Number(sessionStorage.getItem("tag"));
+    if (tag) {
+      setTag(tag);
+    }
+    console.log("tag!");
+  }, []);
 
   return [posts, tag, selectTag];
 }
