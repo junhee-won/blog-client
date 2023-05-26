@@ -20,7 +20,8 @@
     "**/*.ts",
     "**/*.tsx",
     "src/components/admin/WritePost.js",
-    "src/modules/ckeditor/MyUploadAdapter.js"
+    "src/modules/ckeditor/ImageUploadAdapter.js",
+    "src/components/organisms/admin/Editor.js"
   ],
   "exclude": ["node_modules"]
 }

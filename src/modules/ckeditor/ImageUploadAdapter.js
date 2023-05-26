@@ -1,7 +1,7 @@
 import S3 from "aws-sdk/clients/s3";
 import { v4 as uuidv4 } from "uuid";
 
-export class MyUploadAdapter {
+export class ImageUploadAdapter {
   constructor(loader) {
     this.loader = loader;
     this.s3 = new S3({
