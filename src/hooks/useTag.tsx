@@ -26,7 +26,6 @@ export function useTag({
     if (tag) {
       setTag(tag);
     }
-    console.log("tag!");
   }, []);
 
   return [posts, tag, selectTag];
