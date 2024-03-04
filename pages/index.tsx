@@ -19,7 +19,7 @@ function Home({ categories, posts }: Props) {
         <meta property="og:title" content="개발이 개발새발" />
         <meta property="og:site_name" content="개발이 개발새발" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://junhee.kr" />
+        <meta property="og:url" content="https://heeground.com" />
         <meta property="og:description" content="개발새발 개발 블로그" />
         <meta
           property="og:image"
@@ -41,6 +41,7 @@ Home.getInitialProps = async () => {
     url: process.env.NEXT_PUBLIC_API_GET_ALL_POST,
     method: "GET",
   });
+
   const posts = postsRes.success ? postsRes.data : [];
 
   const categoriesRes = await apiHelper({

@@ -51,7 +51,7 @@ const PostPage: NextPage<Props> = ({ success, post, id }) => {
 
   if (!success) return <ErrorPage />;
 
-  const ogUrl = `https://junhee.kr/post/${id}`;
+  const ogUrl = `https://heeground.com/post/${id}`;
   const { title } = post;
   return (
     <>

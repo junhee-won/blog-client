@@ -7,9 +7,9 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://junhee.kr
+Host: https://heeground.com
 
 # Sitemaps
-Sitemap: https://junhee.kr/sitemap.xml
+Sitemap: https://heeground.com/sitemap.xml
 
 
